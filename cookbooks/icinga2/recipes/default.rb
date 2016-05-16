@@ -16,7 +16,7 @@ if node["platform"] == "ubuntu"
     not_if "apt-key list | grep Icinga"
   end
 
-  file '/etc/apt/sources.list.d/icinga2.list' do
+  cookbook_file '/etc/apt/sources.list.d/icinga2.list' do
     source "icinga2.list"
     notifies :run, "execute[apt-get update]", :immediately
   end
@@ -28,7 +28,7 @@ if node["platform"] == "ubuntu"
   package "icingaweb2"
   package "icingacli"
 
-  directory '/etc/icingaweb2' do
+  cookbook_directory '/etc/icingaweb2' do
     source 'icingaweb2'
     owner 'root'
     group 'root'

@@ -12,12 +12,12 @@ if node["platform"] == "ubuntu"
   package "curl"
 
   bash "apt-key add docker" do
-    code "curl https://get.docker.io/gpg | apt-key add -"
+    code "apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D"
     not_if "apt-key list | grep Docker"
   end
 
   file '/etc/apt/sources.list.d/docker.list' do
-    content "deb https://get.docker.io/ubuntu docker main"
+    content "deb https://apt.dockerproject.org/repo ubuntu-trusty main"
     notifies :run, "execute[apt-get update]", :immediately
   end
 
