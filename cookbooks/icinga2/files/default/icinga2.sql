@@ -2879,3 +2879,2133 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2016-05-16 14:40:07
+
+-- MySQL dump 10.13  Distrib 5.5.49, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: director
+-- ------------------------------------------------------
+-- Server version	5.5.49-0ubuntu0.14.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `director_activity_log`
+--
+
+DROP TABLE IF EXISTS `director_activity_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `director_activity_log` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `object_type` varchar(64) NOT NULL,
+  `object_name` varchar(255) NOT NULL,
+  `action_name` enum('create','delete','modify') NOT NULL,
+  `old_properties` text COMMENT 'Property hash, JSON',
+  `new_properties` text COMMENT 'Property hash, JSON',
+  `author` varchar(64) NOT NULL,
+  `change_time` datetime NOT NULL,
+  `checksum` varbinary(20) NOT NULL,
+  `parent_checksum` varbinary(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sort_idx` (`change_time`),
+  KEY `search_idx` (`object_name`),
+  KEY `search_idx2` (`object_type`(32),`object_name`(64),`change_time`),
+  KEY `checksum` (`checksum`)
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `director_activity_log`
+--
+
+LOCK TABLES `director_activity_log` WRITE;
+/*!40000 ALTER TABLE `director_activity_log` DISABLE KEYS */;
+INSERT INTO `director_activity_log` VALUES (1,'icinga_apiuser','root','create',NULL,'{\"object_name\":\"root\",\"object_type\":\"external_object\",\"password\":\"a5ffa477794f1c68\"}','admin','2016-05-14 21:35:07','a~Ïoã<Lî½kã[õÐüo²ºQ',NULL),(2,'icinga_zone','icinga2','create',NULL,'{\"object_name\":\"icinga2\",\"object_type\":\"external_object\"}','admin','2016-05-14 21:35:34','ÙñF·ö»(uð5çqö\Zà&Ï]ê','a~Ïoã<Lî½kã[õÐüo²ºQ'),(3,'icinga_endpoint','icinga2','create',NULL,'{\"apiuser\":\"root\",\"host\":\"icinga2\",\"log_duration\":86400,\"object_name\":\"icinga2\",\"object_type\":\"external_object\",\"port\":\"5665\",\"zone\":\"icinga2\"}','admin','2016-05-14 21:35:34','PÔµãHMciBŽ§ÆÆRcp\Z˜','ÙñF·ö»(uð5çqö\Zà&Ï]ê'),(4,'icinga_command','apt','create',NULL,'{\"arguments\":{\"--critical\":{\"value\":\"$apt_critical$\",\"description\":\"If the full package information of any of the upgradable packages match this REGEXP, the plugin will return CRITICAL status. Can be specified multiple times.\"},\"--dist-upgrade\":{\"value\":\"$apt_dist_upgrade$\",\"description\":\"Perform a dist-upgrade instead of normal upgrade. Like with -U OPTS can be provided to override the default options.\"},\"--exclude\":{\"value\":\"$apt_exclude$\",\"description\":\"Exclude packages matching REGEXP from the list of packages that would otherwise be included. Can be specified multiple times.\"},\"--extra-opts\":{\"value\":\"$apt_extra_opts$\",\"description\":\"Read options from an ini file.\"},\"--include\":{\"value\":\"$apt_include$\",\"description\":\"Include only packages matching REGEXP. Can be specified multiple times the values will be combined together.\"},\"--timeout\":{\"value\":\"$apt_timeout$\",\"description\":\"Seconds before plugin times out (default: 10).\"},\"--upgrade\":{\"value\":\"$apt_upgrade$\",\"description\":\"[Default] Perform an upgrade. If an optional OPTS argument is provided, apt-get will be run with these command line options instead of the default.\"}},\"command\":\"check_apt\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"apt\",\"object_type\":\"external_object\",\"timeout\":300}','admin','2016-05-14 21:35:34','†˜\"ÄhÔ6ä¶œ	\'ÎYšNî]','PÔµãHMciBŽ§ÆÆRcp\Z˜'),(5,'icinga_command','by_ssh','create',NULL,'{\"arguments\":{\"-C\":{\"type\":\"Function\",\"body\":\"\\/* Unable to fetch function body through API *\\/\"},\"-H\":\"$by_ssh_address$\",\"-c\":\"$by_ssh_crit$\",\"-i\":\"$by_ssh_identity$\",\"-l\":\"$by_ssh_logname$\",\"-o\":{\"value\":\"$by_ssh_options$\",\"description\":\"Provide ssh options (may be repeated)\"},\"-p\":\"$by_ssh_port$\",\"-q\":{\"set_if\":\"$by_ssh_quiet$\"},\"-t\":\"$by_ssh_timeout$\",\"-w\":\"$by_ssh_warn$\"},\"command\":\"check_by_ssh\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"by_ssh\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"by_ssh_address\":\"$check_address$\",\"by_ssh_quiet\":false,\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":false,\"check_ipv6\":false}}','admin','2016-05-14 21:35:34',',1æ³ûcÑ¶våÆ?¬ç+þ¹º¸','†˜\"ÄhÔ6ä¶œ	\'ÎYšNî]'),(6,'icinga_command','clamd','create',NULL,'{\"arguments\":{\"-A\":{\"set_if\":\"$clamd_all$\",\"description\":\"All expect strings need to occur in server response. Default is any.\"},\"-D\":{\"value\":\"$clamd_certificate$\",\"description\":\"Minimum number of days a certificate has to be valid. 1st value is number of days for warning, 2nd is critical (if not specified: 0) - seperated by comma.\"},\"-E_quit\":{\"order\":\"3\",\"set_if\":\"$clamd_escape_quit$\",\"description\":\"Can use \\n, \\r, \\t or \\\\ in quit string. Default is \\r\\n added to end of quit.\"},\"-E_send\":{\"order\":\"1\",\"set_if\":\"$clamd_escape_send$\",\"description\":\"Enable usage of \\n, \\r, \\t or \\\\ in send string. Default is nothing.\"},\"-H\":{\"value\":\"$clamd_address$\",\"required\":true,\"description\":\"The host\'s address or unix socket (must be an absolute path).\"},\"-M\":{\"value\":\"$clamd_mismatch$\",\"description\":\"Accept expected string mismatches with states ok, warn, crit. Defaults to warn.\"},\"-S\":{\"set_if\":\"$clamd_ssl$\",\"description\":\"Use SSL for the connection.\"},\"-c\":{\"value\":\"$clamd_ctime$\",\"description\":\"Response time to result in critical status (seconds).\"},\"-d\":{\"value\":\"$clamd_delay$\",\"description\":\"Seconds to wait between sending string and polling for response.\"},\"-e\":{\"value\":\"$clamd_expect$\",\"repeat_key\":true,\"description\":\"String to expect in server response (may be repeated).\"},\"-j\":{\"set_if\":\"$clamd_jail$\",\"description\":\"Hide output from TCP socket.\"},\"-m\":{\"value\":\"$clamd_maxbytes$\",\"description\":\"Close connection once more than this number of bytes are received.\"},\"-p\":{\"value\":\"$clamd_port$\",\"description\":\"Port number (default: none).\"},\"-q\":{\"value\":\"$clamd_quit$\",\"order\":\"4\",\"description\":\"String to send server to initiate a clean close of the connection.\"},\"-r\":{\"value\":\"$clamd_refuse$\",\"description\":\"Accept TCP refusals with states ok, warn, crit. Defaults to crit.\"},\"-s\":{\"value\":\"$clamd_send$\",\"order\":\"2\",\"description\":\"String to send to the server.\"},\"-t\":{\"value\":\"$clamd_timeout$\",\"description\":\"Seconds before connection times out. Defaults to 10.\"},\"-w\":{\"value\":\"$clamd_wtime$\",\"description\":\"Response time to result in warning status (seconds).\"}},\"command\":\"check_clamd\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"clamd\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"clamd_mismatch\":\"warn\",\"clamd_refuse\":\"crit\",\"clamd_ssl\":false,\"clamd_timeout\":10}}','admin','2016-05-14 21:35:34','ˆ³.§2zŒf,ñK¬½!aV†Åýß',',1æ³ûcÑ¶våÆ?¬ç+þ¹º¸'),(7,'icinga_command','cluster','create',NULL,'{\"methods_execute\":\"PluginCheck\",\"object_name\":\"cluster\",\"object_type\":\"external_object\",\"timeout\":60}','admin','2016-05-14 21:35:34','«\"Ão‚•!¡]ýhAÜKž!Èè','ˆ³.§2zŒf,ñK¬½!aV†Åýß'),(8,'icinga_command','cluster-zone','create',NULL,'{\"methods_execute\":\"PluginCheck\",\"object_name\":\"cluster-zone\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"cluster_zone\":\"$host.name$\"}}','admin','2016-05-14 21:35:34','ÿŸ/Î^»/¾8T^¨¡jUŒˆœC','«\"Ão‚•!¡]ýhAÜKž!Èè'),(9,'icinga_command','dhcp','create',NULL,'{\"arguments\":{\"-i\":\"$dhcp_interface$\",\"-m\":\"$dhcp_mac$\",\"-r\":\"$dhcp_requestedip$\",\"-s\":\"$dhcp_serverip$\",\"-t\":\"$dhcp_timeout$\",\"-u\":{\"set_if\":\"$dhcp_unicast$\"}},\"command\":\"check_dhcp\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"dhcp\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"dhcp_unicast\":false}}','admin','2016-05-14 21:35:34','9a=7·9›ÔA²y7ÊPS','ÿŸ/Î^»/¾8T^¨¡jUŒˆœC'),(10,'icinga_command','dig','create',NULL,'{\"arguments\":{\"-A\":\"$dig_arguments$\",\"-H\":\"$dig_server$\",\"-T\":\"$dig_record_type$\",\"-a\":\"$dig_expected_address$\",\"-c\":\"$dig_critical$\",\"-l\":{\"value\":\"$dig_lookup$\",\"required\":true},\"-p\":\"$dig_port$\",\"-r\":\"$dig_retries$\",\"-t\":\"$dig_timeout$\",\"-w\":\"$dig_warning$\"},\"command\":\"check_dig\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"dig\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":false,\"check_ipv6\":false,\"dig_server\":\"$check_address$\"}}','admin','2016-05-14 21:35:34','uËˆ¿b®n U\Z‘=v·ÃLH','9a=7·9›ÔA²y7ÊPS'),(11,'icinga_command','disk','create',NULL,'{\"arguments\":{\"-A\":{\"set_if\":\"$disk_all$\",\"description\":\"Explicitly select all paths. This is equivalent to -R .*\"},\"-C\":{\"set_if\":\"$disk_clear$\",\"description\":\"Clear thresholds\"},\"-E\":{\"set_if\":\"$disk_exact_match$\",\"description\":\"For paths or partitions specified with -p, only check for exact paths\"},\"-I\":{\"value\":\"$disk_ignore_eregi_path$\",\"order\":\"2\",\"repeat_key\":true,\"description\":\"Regular expression to ignore selected path\\/partition (case insensitive) (may be repeated)\"},\"-K\":{\"value\":\"$disk_inode_cfree$\",\"description\":\"Exit with CRITICAL status if less than PERCENT of inode space is free\"},\"-L\":{\"set_if\":\"$disk_stat_remote_fs$\",\"description\":\"Only check local filesystems against thresholds. Yet call stat on remote filesystems to test if they are accessible (e.g. to detect Stale NFS Handles)\"},\"-M\":{\"set_if\":\"$disk_mountpoint$\",\"description\":\"Display the mountpoint instead of the partition\"},\"-R\":{\"value\":\"$disk_eregi_path$\",\"repeat_key\":true,\"description\":\"Case insensitive regular expression for path\\/partition (may be repeated)\"},\"-W\":{\"value\":\"$disk_inode_wfree$\",\"description\":\"Exit with WARNING status if less than PERCENT of inode space is free\"},\"-X\":{\"value\":\"$disk_exclude_type$\",\"repeat_key\":true,\"description\":\"Ignore all filesystems of indicated type (may be repeated)\"},\"-c\":{\"value\":\"$disk_cfree$\",\"order\":\"-3\",\"required\":true,\"description\":\"Exit with CRITICAL status if less than INTEGER units of disk are free or Exit with CRITCAL status if less than PERCENT of disk space is free\"},\"-e\":{\"set_if\":\"$disk_errors_only$\",\"description\":\"Display only devices\\/mountpoints with errors\"},\"-f\":{\"set_if\":\"$disk_ignore_reserved$\",\"description\":\"Don\'t account root-reserved blocks into freespace in perfdata\"},\"-g\":{\"value\":\"$disk_group$\",\"description\":\"Group paths. Thresholds apply to (free-)space of all partitions together\"},\"-i\":{\"value\":\"$disk_ignore_ereg_path$\",\"order\":\"2\",\"repeat_key\":true,\"description\":\"Regular expression to ignore selected path or partition (may be repeated)\"},\"-k\":{\"set_if\":\"$disk_kilobytes$\",\"description\":\"Same as --units kB\"},\"-l\":{\"set_if\":\"$disk_local$\",\"description\":\" Only check local filesystems\"},\"-m\":{\"set_if\":\"$disk_megabytes$\",\"description\":\"Same as --units MB\"},\"-p\":{\"value\":\"$disk_partitions$\",\"order\":\"1\",\"repeat_key\":true,\"description\":\"Path or partition (may be repeated)\"},\"-p_old\":{\"value\":\"$disk_partition$\",\"order\":\"1\"},\"-r\":{\"value\":\"$disk_ereg_path$\",\"repeat_key\":true,\"description\":\"Regular expression for path or partition (may be repeated)\"},\"-t\":{\"value\":\"$disk_timeout$\",\"description\":\"Seconds before connection times out (default: 10)\"},\"-u\":{\"value\":\"$disk_units$\",\"description\":\"Choose bytes, kB, MB, GB, TB (default: MB)\"},\"-w\":{\"value\":\"$disk_wfree$\",\"order\":\"-3\",\"required\":true,\"description\":\"Exit with WARNING status if less than INTEGER units of disk are free or Exit with WARNING status if less than PERCENT of disk space is free\"},\"-x\":{\"value\":\"$disk_partitions_excluded$\",\"description\":\"Ignore device (only works if -p unspecified)\"},\"-x_old\":\"$disk_partition_excluded$\"},\"command\":\"check_disk\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"disk\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"disk_cfree\":\"10%\",\"disk_exclude_type\":[\"none\",\"tmpfs\",\"sysfs\",\"proc\",\"devtmpfs\",\"devfs\",\"mtmfs\"],\"disk_inode_cfree\":\"10%\",\"disk_inode_wfree\":\"20%\",\"disk_megabytes\":true,\"disk_wfree\":\"20%\"}}','admin','2016-05-14 21:35:34','ŠÙ«@.Œó6ÌypÆ„¹8','uËˆ¿b®n U\Z‘=v·ÃLH'),(12,'icinga_command','disk_smb','create',NULL,'{\"arguments\":{\"-H\":{\"value\":\"$disk_smb_hostname$\",\"description\":\"NetBIOS name of the server.\"},\"-P\":{\"value\":\"$disk_smb_port$\",\"description\":\"Port to be used to connect to. Some Windows boxes use 139, others 445 (Defaults to smbclient default if omitted).\"},\"-W\":{\"value\":\"$disk_smb_workgroup$\",\"description\":\"Workgroup or Domain used (Defaults to \'WORKGROUP\' if omitted).\"},\"-a\":{\"value\":\"$disk_smb_address$\",\"description\":\"IP-address of HOST (only necessary if HOST is in another network).\"},\"-c\":{\"value\":\"$disk_smb_cused$\",\"description\":\"Percent of used space at which a critical will be generated (Defaults: 95%)\"},\"-p\":{\"value\":\"$disk_smb_password$\",\"description\":\"Password to log in to server. (Defaults to an empty password if omitted).\"},\"-s\":{\"value\":\"$disk_smb_share$\",\"description\":\"Share name to be tested.\"},\"-u\":{\"value\":\"$disk_smb_username$\",\"description\":\"Username to log in to server. (Defaults to \'guest\' if omitted).\"},\"-w\":{\"value\":\"$disk_smb_wused$\",\"description\":\"Percent of used space at which a warning will be generated (Default: 85%).\"}},\"command\":\"check_disk_smb\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"disk_smb\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"disk_smb_cused\":\"95%\",\"disk_smb_wused\":\"85%\"}}','admin','2016-05-14 21:35:34',']²q·4a¾-hÁ(ûd;·@d','ŠÙ«@.Œó6ÌypÆ„¹8'),(13,'icinga_command','dns','create',NULL,'{\"arguments\":{\"-A\":{\"set_if\":\"$dns_authoritative$\"},\"-H\":{\"value\":\"$dns_lookup$\",\"description\":\"The name or address you want to query.\"},\"-a\":{\"value\":\"$dns_expected_answers$\",\"description\":\"Optional ip address or host you expect the DNS server to return. Host must end with a dot (.). This option can be repeated multiple times (Returns OK if any value match). If multiple addresses are returned at once, you have to match the whole string of addresses separated with commas (sorted alphabetically).\"},\"-a_old\":\"$dns_expected_answer$\",\"-c\":{\"value\":\"$dns_ctime$\",\"description\":\"Return critical if elapsed time exceeds value.\"},\"-s\":{\"value\":\"$dns_server$\",\"description\":\"Optional DNS server you want to use for the lookup.\"},\"-t\":{\"value\":\"$dns_timeout$\",\"description\":\"Seconds before connection times out. Defaults to 10.\"},\"-w\":{\"value\":\"$dns_wtime$\",\"description\":\"Return warning if elapsed time exceeds value.\"}},\"command\":\"check_dns\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"dns\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":false,\"check_ipv6\":false,\"dns_expected_answer\":\"$check_address$\",\"dns_lookup\":\"$host.name$\",\"dns_timeout\":10}}','admin','2016-05-14 21:35:34','¨íía;¼¢?ÄÜ»%¬úŸ',']²q·4a¾-hÁ(ûd;·@d'),(14,'icinga_command','dummy','create',NULL,'{\"command\":\"check_dummy $dummy_state$ $dummy_text$\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"dummy\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"dummy_state\":0,\"dummy_text\":\"Check was successful.\"}}','admin','2016-05-14 21:35:35','«‚d]pÍ@ü‘(ÞèüÅëƒñö','¨íía;¼¢?ÄÜ»%¬úŸ'),(15,'icinga_command','fping4','create',NULL,'{\"arguments\":{\"-I\":\"$fping_source_interface$\",\"-S\":\"$fping_source_ip$\",\"-T\":\"$fping_target_timeout$\",\"-b\":\"$fping_bytes$\",\"-c\":\"$fping_crta$,$fping_cpl$%\",\"-i\":\"$fping_interval$\",\"-n\":\"$fping_number$\",\"-w\":\"$fping_wrta$,$fping_wpl$%\"},\"command\":\"check_fping $fping_address$ -4\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"fping4\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"fping_address\":\"$address$\",\"fping_cpl\":15,\"fping_crta\":200,\"fping_interval\":500,\"fping_number\":5,\"fping_wpl\":5,\"fping_wrta\":100}}','admin','2016-05-14 21:35:35','»	3.\\ŽÑbg`Ì‘\r{€âÀ`','«‚d]pÍ@ü‘(ÞèüÅëƒñö'),(16,'icinga_command','fping6','create',NULL,'{\"arguments\":{\"-I\":\"$fping_source_interface$\",\"-S\":\"$fping_source_ip$\",\"-T\":\"$fping_target_timeout$\",\"-b\":\"$fping_bytes$\",\"-c\":\"$fping_crta$,$fping_cpl$%\",\"-i\":\"$fping_interval$\",\"-n\":\"$fping_number$\",\"-w\":\"$fping_wrta$,$fping_wpl$%\"},\"command\":\"check_fping $fping_address$ -6\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"fping6\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"fping_address\":\"$address6$\",\"fping_cpl\":15,\"fping_crta\":200,\"fping_interval\":500,\"fping_number\":5,\"fping_wpl\":5,\"fping_wrta\":100}}','admin','2016-05-14 21:35:35','Fï„–8+ï~4]oôŸ×=Ö\\Qä','»	3.\\ŽÑbg`Ì‘\r{€âÀ`'),(17,'icinga_command','hostalive','create',NULL,'{\"arguments\":{\"-H\":\"$ping_address$\",\"-c\":\"$ping_crta$,$ping_cpl$%\",\"-p\":\"$ping_packets$\",\"-t\":\"$ping_timeout$\",\"-w\":\"$ping_wrta$,$ping_wpl$%\"},\"command\":\"check_ping\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"hostalive\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":false,\"check_ipv6\":false,\"ping_address\":\"$check_address$\",\"ping_cpl\":100,\"ping_crta\":5000,\"ping_wpl\":80,\"ping_wrta\":3000}}','admin','2016-05-14 21:35:35','8S}QÄ-n+PÍ’*','Fï„–8+ï~4]oôŸ×=Ö\\Qä'),(18,'icinga_command','ftp','create',NULL,'{\"arguments\":{\"-A\":{\"set_if\":\"$ftp_all$\",\"description\":\"All expect strings need to occur in server response. Default is any.\"},\"-D\":{\"value\":\"$ftp_certificate$\",\"description\":\"Minimum number of days a certificate has to be valid. 1st value is number of days for warning, 2nd is critical (if not specified: 0) - seperated by comma.\"},\"-E_quit\":{\"order\":\"3\",\"set_if\":\"$ftp_escape_quit$\",\"description\":\"Can use \\n, \\r, \\t or \\\\ in quit string. Default is \\r\\n added to end of quit.\"},\"-E_send\":{\"order\":\"1\",\"set_if\":\"$ftp_escape_send$\",\"description\":\"Enable usage of \\n, \\r, \\t or \\\\ in send string. Default is nothing.\"},\"-H\":{\"value\":\"$ftp_address$\",\"description\":\"The host\'s address. Defaults to $address$ or $address6$ if the address attribute is not set.\"},\"-M\":{\"value\":\"$ftp_mismatch$\",\"description\":\"Accept expected string mismatches with states ok, warn, crit. Defaults to warn.\"},\"-S\":{\"set_if\":\"$ftp_ssl$\",\"description\":\"Use SSL for the connection.\"},\"-c\":{\"value\":\"$ftp_ctime$\",\"description\":\"Response time to result in critical status (seconds).\"},\"-d\":{\"value\":\"$ftp_delay$\",\"description\":\"Seconds to wait between sending string and polling for response.\"},\"-e\":{\"value\":\"$ftp_expect$\",\"description\":\"String to expect in server response (may be repeated).\"},\"-j\":{\"set_if\":\"$ftp_jail$\",\"description\":\"Hide output from TCP socket.\"},\"-m\":{\"value\":\"$ftp_maxbytes$\",\"description\":\"Close connection once more than this number of bytes are received.\"},\"-p\":{\"value\":\"$ftp_port$\",\"description\":\"The FTP port number. Defaults to none\"},\"-q\":{\"value\":\"$ftp_quit$\",\"order\":\"4\",\"description\":\"String to send server to initiate a clean close of the connection.\"},\"-r\":{\"value\":\"$ftp_refuse$\",\"description\":\"Accept TCP refusals with states ok, warn, crit. Defaults to crit.\"},\"-s\":{\"value\":\"$ftp_send$\",\"order\":\"2\",\"description\":\"String to send to the server.\"},\"-t\":{\"value\":\"$ftp_timeout$\",\"description\":\"Seconds before connection times out. Defaults to 10.\"},\"-w\":{\"value\":\"$ftp_wtime$\",\"description\":\"Response time to result in warning status (seconds).\"}},\"command\":\"check_ftp\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"ftp\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":false,\"check_ipv6\":false,\"ftp_address\":\"$check_address$\",\"ftp_mismatch\":\"warn\",\"ftp_refuse\":\"crit\",\"ftp_ssl\":false,\"ftp_timeout\":10}}','admin','2016-05-14 21:35:35','÷ døOv^ã¼Ò(8µáp*¸^','8S}QÄ-n+PÍ’*'),(19,'icinga_command','hostalive4','create',NULL,'{\"arguments\":{\"-H\":\"$ping_address$\",\"-c\":\"$ping_crta$,$ping_cpl$%\",\"-p\":\"$ping_packets$\",\"-t\":\"$ping_timeout$\",\"-w\":\"$ping_wrta$,$ping_wpl$%\"},\"command\":\"check_ping -4\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"hostalive4\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"ping_address\":\"$address$\",\"ping_cpl\":100,\"ping_crta\":5000,\"ping_wpl\":80,\"ping_wrta\":3000}}','admin','2016-05-14 21:35:35','r÷–›$^\"À´ üæ3Ú\\/51~','÷ døOv^ã¼Ò(8µáp*¸^'),(20,'icinga_command','hostalive6','create',NULL,'{\"arguments\":{\"-H\":\"$ping_address$\",\"-c\":\"$ping_crta$,$ping_cpl$%\",\"-p\":\"$ping_packets$\",\"-t\":\"$ping_timeout$\",\"-w\":\"$ping_wrta$,$ping_wpl$%\"},\"command\":\"check_ping -6\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"hostalive6\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"ping_address\":\"$address6$\",\"ping_cpl\":100,\"ping_crta\":5000,\"ping_wpl\":80,\"ping_wrta\":3000}}','admin','2016-05-14 21:35:35','¤ª\\ó ¸íîã°å*h0ÝÂ×åq','r÷–›$^\"À´ üæ3Ú\\/51~'),(21,'icinga_command','hpjd','create',NULL,'{\"arguments\":{\"-C\":\"$hpjd_community$\",\"-H\":\"$hpjd_address$\",\"-p\":\"$hpjd_port$\"},\"command\":\"check_hpjd\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"hpjd\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":false,\"check_ipv6\":false,\"hpjd_address\":\"$check_address$\"}}','admin','2016-05-14 21:35:35','^Án†6Ûf\'îCKœ°¡ªŽg','¤ª\\ó ¸íîã°å*h0ÝÂ×åq'),(22,'icinga_command','icinga','create',NULL,'{\"methods_execute\":\"PluginCheck\",\"object_name\":\"icinga\",\"object_type\":\"external_object\",\"timeout\":60}','admin','2016-05-14 21:35:35','†)2„”þçÃ¨j\0P†´¢','^Án†6Ûf\'îCKœ°¡ªŽg'),(23,'icinga_command','icmp','create',NULL,'{\"arguments\":{\"-H\":{\"value\":\"$icmp_address$\",\"order\":\"1\",\"repeat_key\":false},\"-I\":\"$icmp_target_interval$\",\"-b\":\"$icmp_data_bytes$\",\"-c\":\"$icmp_crta$,$icmp_cpl$%\",\"-i\":\"$icmp_packet_interval$\",\"-m\":\"$icmp_hosts_alive$\",\"-n\":\"$icmp_packets$\",\"-s\":\"$icmp_source$\",\"-t\":\"$icmp_timeout$\",\"-w\":\"$icmp_wrta$,$icmp_wpl$%\"},\"command\":\"check_icmp\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"icmp\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"icmp_address\":\"$address$\",\"icmp_cpl\":15,\"icmp_crta\":200,\"icmp_wpl\":5,\"icmp_wrta\":100}}','admin','2016-05-14 21:35:35','ÿýü/Œ›˜ V òÑŠÝ#¹^','†)2„”þçÃ¨j\0P†´¢'),(24,'icinga_command','ido','create',NULL,'{\"methods_execute\":\"PluginCheck\",\"object_name\":\"ido\",\"object_type\":\"external_object\",\"timeout\":60}','admin','2016-05-14 21:35:35','¨xE:?é|U\\ÊpƒÇê/YQ3','ÿýü/Œ›˜ V òÑŠÝ#¹^'),(25,'icinga_command','imap','create',NULL,'{\"arguments\":{\"-H\":\"$imap_address$\",\"-p\":\"$imap_port$\",\"-t\":\"$imap_timeout$\"},\"command\":\"check_imap\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"imap\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":false,\"check_ipv6\":false,\"imap_address\":\"$check_address$\"}}','admin','2016-05-14 21:35:35','©ËîMaÃˆ@\\sªüÒÑÍ´Uò’','¨xE:?é|U\\ÊpƒÇê/YQ3'),(26,'icinga_command','http','create',NULL,'{\"arguments\":{\"-6\":{\"set_if\":\"$http_ipv6$\",\"description\":\"Use IPv6 only\"},\"-4\":{\"set_if\":\"$http_ipv4$\",\"description\":\"Use IPv4 only\"},\"--invert-regex\":{\"set_if\":\"$http_invertregex$\",\"description\":\"Return CRITICAL if found, OK if not\"},\"--no-body\":{\"set_if\":\"$http_ignore_body$\"},\"--sni\":{\"set_if\":\"$http_sni$\"},\"-A\":{\"value\":\"$http_useragent$\",\"description\":\"String to be sent in http header as User Agent\"},\"-C\":{\"value\":\"$http_certificate$\",\"description\":\"Minimum number of days a certificate has to be valid. Port defaults to 443.\"},\"-E\":{\"set_if\":\"$http_extendedperfdata$\",\"description\":\"Print additional perfdata\"},\"-H\":\"$http_vhost$\",\"-I\":\"$http_address$\",\"-J\":{\"value\":\"$http_clientcert$\",\"description\":\"Name of file contains the client certificate (PEM format)\"},\"-K\":{\"value\":\"$http_privatekey$\",\"description\":\"Name of file contains the private key (PEM format)\"},\"-M\":{\"value\":\"$http_maxage$\",\"description\":\"Warn if document is more than seconds old\"},\"-P\":{\"value\":\"$http_post$\",\"description\":\"URL encoded http POST data\"},\"-R\":{\"value\":\"$http_expect_body_eregi$\",\"order\":\"2\",\"description\":\"Search page for case-insensitive regex\"},\"-S\":{\"set_if\":\"$http_ssl$\"},\"-S1\":{\"set_if\":\"$http_ssl_force_tlsv1$\"},\"-S1+\":{\"set_if\":\"$http_ssl_force_tlsv1_or_higher$\"},\"-S1.1\":{\"set_if\":\"$http_ssl_force_tlsv1_1$\"},\"-S1.1+\":{\"set_if\":\"$http_ssl_force_tlsv1_1_or_higher$\"},\"-S1.2\":{\"set_if\":\"$http_ssl_force_tlsv1_2$\"},\"-S1.2+\":{\"set_if\":\"$http_ssl_force_tlsv1_2_or_higher$\"},\"-S2\":{\"set_if\":\"$http_ssl_force_sslv2$\"},\"-S2+\":{\"set_if\":\"$http_ssl_force_sslv2_or_higher$\"},\"-S3\":{\"set_if\":\"$http_ssl_force_sslv3$\"},\"-S3+\":{\"set_if\":\"$http_ssl_force_sslv3_or_higher$\"},\"-T\":{\"value\":\"$http_contenttype$\",\"description\":\"Specify Content-Type header when POSTing\"},\"-a\":{\"value\":\"$http_auth_pair$\",\"description\":\"Username:password on sites with basic authentication\"},\"-b\":{\"value\":\"$http_proxy_auth_pair$\",\"description\":\"Username:password on proxy-servers with basic authentication\"},\"-c\":\"$http_critical_time$\",\"-d\":{\"value\":\"$http_headerstring$\",\"description\":\"String to expect in the response headers\"},\"-e\":\"$http_expect$\",\"-f\":{\"value\":\"$http_onredirect$\",\"description\":\"How to handle redirect pages\"},\"-j\":{\"value\":\"$http_method$\",\"description\":\"Set http method (for example: HEAD, OPTIONS, TRACE, PUT, DELETE)\"},\"-k\":{\"value\":\"$http_header$\",\"description\":\"Any other tags to be sent in http header\"},\"-l\":{\"order\":\"1\",\"set_if\":\"$http_linespan$\",\"description\":\"Allow regex to span newline\"},\"-m\":{\"value\":\"$http_pagesize$\",\"description\":\"Minim page size required:Maximum page size required\"},\"-p\":\"$http_port$\",\"-r\":{\"value\":\"$http_expect_body_regex$\",\"order\":\"2\",\"description\":\"Search page for regex\"},\"-s\":{\"value\":\"$http_string$\",\"description\":\"String to expect in the content\"},\"-t\":{\"value\":\"$http_timeout$\",\"description\":\"Seconds before connection times out\"},\"-u\":\"$http_uri$\",\"-w\":\"$http_warn_time$\"},\"command\":\"check_http\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"http\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":\"$http_ipv4$\",\"check_ipv6\":\"$http_ipv6$\",\"http_address\":\"$check_address$\",\"http_invertregex\":false,\"http_linespan\":false,\"http_sni\":false,\"http_ssl\":false}}','admin','2016-05-14 21:35:35','Ìû[„×äVŸÿãÊ³Ó‰','©ËîMaÃˆ@\\sªüÒÑÍ´Uò’'),(27,'icinga_command','ldap','create',NULL,'{\"arguments\":{\"-3\":{\"set_if\":\"$ldap_v3$\",\"description\":\"Use LDAP protocol version 3\"},\"-2\":{\"set_if\":\"$ldap_v2$\",\"description\":\"Use LDAP protocol version 2\"},\"-D\":{\"value\":\"$ldap_bind$\",\"description\":\"ldap bind DN (if required)\"},\"-H\":{\"value\":\"$ldap_address$\",\"description\":\"Host name, IP Address, or unix socket (must be an absolute path)\"},\"-P\":{\"value\":\"$ldap_pass$\",\"description\":\"ldap password (if required)\"},\"-S\":{\"set_if\":\"$ldap_ssl$\",\"description\":\"use ldaps (ldap v2 ssl method). this also sets the default port to 636\"},\"-T\":{\"set_if\":\"$ldap_starttls$\",\"description\":\"use starttls mechanism introduced in protocol version 3\"},\"-a\":{\"value\":\"$ldap_attr$\",\"description\":\"ldap attribute to search (default: \\\"(objectclass=*)\\\"\"},\"-b\":{\"value\":\"$ldap_base$\",\"required\":true,\"description\":\"ldap base (eg. ou=my unit, o=my org, c=at\"},\"-c\":{\"value\":\"$ldap_critical$\",\"description\":\"Response time to result in critical status (seconds)\"},\"-p\":{\"value\":\"$ldap_port$\",\"description\":\"Port number (default: 389)\"},\"-t\":{\"value\":\"$ldap_timeout$\",\"description\":\"Seconds before connection times out (default: 10)\"},\"-v\":{\"set_if\":\"$ldap_verbose$\",\"description\":\"Show details for command-line debugging\"},\"-w\":{\"value\":\"$ldap_warning$\",\"description\":\"Response time to result in warning status (seconds)\"}},\"command\":\"check_ldap\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"ldap\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":false,\"check_ipv6\":false,\"ldap_address\":\"$check_address$\",\"ldap_timeout\":10,\"ldap_v2\":true,\"ldap_v3\":false,\"ldap_verbose\":false}}','admin','2016-05-14 21:35:35','\"Øiªë¼{>ýI¦w\0—DS8','Ìû[„×äVŸÿãÊ³Ó‰'),(28,'icinga_command','load','create',NULL,'{\"arguments\":{\"-c\":{\"value\":\"$load_cload1$,$load_cload5$,$load_cload15$\",\"description\":\"Exit with CRITICAL status if load average exceed CLOADn; the load average format is the same used by \'uptime\' and \'w\'\"},\"-r\":{\"set_if\":\"$load_percpu$\",\"description\":\"Divide the load averages by the number of CPUs (when possible)\"},\"-w\":{\"value\":\"$load_wload1$,$load_wload5$,$load_wload15$\",\"description\":\"Exit with WARNING status if load average exceeds WLOADn\"}},\"command\":\"check_load\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"load\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"load_cload1\":10,\"load_cload15\":4,\"load_cload5\":6,\"load_percpu\":false,\"load_wload1\":5,\"load_wload15\":3,\"load_wload5\":4}}','admin','2016-05-14 21:35:35','×t˜³+áuqžrùã×MKÓ”À','\"Øiªë¼{>ýI¦w\0—DS8'),(29,'icinga_command','mailq','create',NULL,'{\"arguments\":{\"-C\":{\"value\":\"$mailq_domain_critical$\",\"description\":\"Min. number of messages for same domain in queue to generate critical alert ( W < C )\"},\"-M\":{\"value\":\"$mailq_servertype$\",\"description\":\"[ sendmail | qmail | postfix | exim | nullmailer ] (default = autodetect)\"},\"-W\":{\"value\":\"$mailq_domain_warning$\",\"description\":\"Min. number of messages for same domain in queue to generate warning\"},\"-c\":{\"value\":\"$mailq_critical$\",\"required\":true,\"description\":\"Min. number of messages in queue to generate critical alert ( w < c )\"},\"-t\":{\"value\":\"$mailq_timeout$\",\"description\":\"Plugin timeout in seconds (default = 15)\"},\"-w\":{\"value\":\"$mailq_warning$\",\"required\":true,\"description\":\"Min. number of messages in queue to generate warning\"}},\"command\":\"check_mailq\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"mailq\",\"object_type\":\"external_object\",\"timeout\":60}','admin','2016-05-14 21:35:36','CÝØ\"ãžoÿ9Ï„dðÜvb££Y','×t˜³+áuqžrùã×MKÓ”À'),(30,'icinga_command','negate','create',NULL,'{\"arguments\":{\"--wrapped-plugin\":{\"value\":{\"type\":\"Function\",\"body\":\"\\/* Unable to fetch function body through API *\\/\"},\"order\":\"1\"},\"-T\":\"$negate_timeout_result$\",\"-c\":\"$negate_critical$\",\"-o\":\"$negate_ok$\",\"-s\":{\"set_if\":\"$negate_substitute$\"},\"-t\":\"$negate_timeout$\",\"-w\":\"$negate_warning$\"},\"command\":\"negate\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"negate\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"negate_timeout_result\":\"UNKNOWN\"}}','admin','2016-05-14 21:35:36','%]¬)/j ÞÕ„Ïy¶¯ó','CÝØ\"ãžoÿ9Ï„dðÜvb££Y'),(31,'icinga_command','mysql','create',NULL,'{\"arguments\":{\"-C\":\"$mysql_cacert$\",\"-D\":\"$mysql_cadir$\",\"-H\":\"$mysql_hostname$\",\"-L\":\"$mysql_ciphers$\",\"-P\":\"$mysql_port$\",\"-S\":{\"set_if\":\"$mysql_check_slave$\"},\"-a\":\"$mysql_cert$\",\"-c\":\"$mysql_critical$\",\"-d\":\"$mysql_database$\",\"-f\":\"$mysql_file$\",\"-g\":\"$mysql_group$\",\"-k\":\"$mysql_key$\",\"-l\":{\"set_if\":\"$mysql_ssl$\"},\"-n\":{\"set_if\":\"$mysql_ignore_auth$\"},\"-p\":\"$mysql_password$\",\"-s\":\"$mysql_socket$\",\"-u\":\"$mysql_username$\",\"-w\":\"$mysql_warning$\"},\"command\":\"check_mysql\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"mysql\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":false,\"check_ipv6\":false,\"mysql_hostname\":\"$check_address$\"}}','admin','2016-05-14 21:35:36','ÊEÆ˜ñd™ºAÚ]¸ƒK8|À;9','%]¬)/j ÞÕ„Ïy¶¯ó'),(32,'icinga_command','nscp','create',NULL,'{\"arguments\":{\"-H\":\"$nscp_address$\",\"-c\":\"$nscp_crit$\",\"-d\":{\"value\":\"SHOWALL\",\"set_if\":\"$nscp_showall$\",\"description\":\"Use with SERVICESTATE to see working services or PROCSTATE for running processes\"},\"-l\":{\"value\":\"$nscp_params$\",\"repeat_key\":false},\"-p\":\"$nscp_port$\",\"-s\":\"$nscp_password$\",\"-t\":\"$nscp_timeout$\",\"-v\":{\"value\":\"$nscp_variable$\",\"required\":true},\"-w\":\"$nscp_warn$\"},\"command\":\"check_nt\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"nscp\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":false,\"check_ipv6\":false,\"nscp_address\":\"$check_address$\",\"nscp_port\":12489,\"nscp_showall\":false}}','admin','2016-05-14 21:35:36','E¤vªÆ:oÞÅrÄh³©ÀÐbv•','ÊEÆ˜ñd™ºAÚ]¸ƒK8|À;9'),(33,'icinga_command','nrpe','create',NULL,'{\"arguments\":{\"-6\":{\"set_if\":\"$nrpe_ipv6$\",\"description\":\"Use IPv6 only\"},\"-4\":{\"set_if\":\"$nrpe_ipv4$\",\"description\":\"Use IPv4 only\"},\"-H\":\"$nrpe_address$\",\"-a\":{\"value\":\"$nrpe_arguments$\",\"order\":\"1\",\"repeat_key\":false},\"-c\":\"$nrpe_command$\",\"-n\":{\"set_if\":\"$nrpe_no_ssl$\",\"description\":\"Do not use SSL.\"},\"-p\":\"$nrpe_port$\",\"-t\":\"$nrpe_timeout$\",\"-u\":{\"set_if\":\"$nrpe_timeout_unknown$\",\"description\":\"Make socket timeouts return an UNKNOWN state instead of CRITICAL\"}},\"command\":\"check_nrpe\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"nrpe\",\"object_type\":\"external_object\",\"timeout\":300,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":\"$nrpe_ipv4$\",\"check_ipv6\":\"$nrpe_ipv6$\",\"nrpe_address\":\"$check_address$\",\"nrpe_no_ssl\":false,\"nrpe_timeout_unknown\":false}}','admin','2016-05-14 21:35:36','Õ?\nëáGC]o³jøm€(ƒï','E¤vªÆ:oÞÅrÄh³©ÀÐbv•'),(34,'icinga_command','ntp_peer','create',NULL,'{\"arguments\":{\"-C\":\"$ntp_cstratum$\",\"-H\":\"$ntp_address$\",\"-W\":\"$ntp_wstratum$\",\"-c\":\"$ntp_critical$\",\"-j\":\"$ntp_wjitter$\",\"-k\":\"$ntp_cjitter$\",\"-m\":\"$ntp_wsource$\",\"-n\":\"$ntp_csource$\",\"-p\":\"$ntp_port$\",\"-t\":\"$ntp_timeout$\",\"-w\":\"$ntp_warning$\"},\"command\":\"check_ntp_peer\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"ntp_peer\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":false,\"check_ipv6\":false,\"ntp_address\":\"$check_address$\"}}','admin','2016-05-14 21:35:36','ôs»k‚h†—zYÄ/£Ö™(','Õ?\nëáGC]o³jøm€(ƒï'),(35,'icinga_command','ntp_time','create',NULL,'{\"arguments\":{\"-H\":\"$ntp_address$\",\"-c\":\"$ntp_critical$\",\"-o\":\"$ntp_timeoffset$\",\"-p\":\"$ntp_port$\",\"-q\":\"$ntp_quit$\",\"-t\":\"$ntp_timeout$\",\"-w\":\"$ntp_warning$\"},\"command\":\"check_ntp_time\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"ntp_time\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":false,\"check_ipv6\":false,\"ntp_address\":\"$check_address$\"}}','admin','2016-05-14 21:35:36','£lêÇ\'HÔQ£ý\"+õÑ8¼D‘\n','ôs»k‚h†—zYÄ/£Ö™('),(36,'icinga_command','passive','create',NULL,'{\"command\":\"check_dummy $dummy_state$ $dummy_text$\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"passive\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"dummy_state\":3,\"dummy_text\":\"No Passive Check Result Received.\"}}','admin','2016-05-14 21:35:36','Ãd+ÌäU»Ã\r|X:2D u<','£lêÇ\'HÔQ£ý\"+õÑ8¼D‘\n'),(37,'icinga_command','pgsql','create',NULL,'{\"arguments\":{\"-C\":\"$pgsql_query_critical$\",\"-H\":\"$pgsql_hostname$\",\"-P\":\"$pgsql_port$\",\"-W\":\"$pgsql_query_warning$\",\"-c\":\"$pgsql_critical$\",\"-d\":\"$pgsql_database$\",\"-l\":\"$pgsql_username$\",\"-o\":\"$pgsql_options$\",\"-p\":\"$pgsql_password$\",\"-q\":\"$pgsql_query$\",\"-t\":\"$pgsql_timeout$\",\"-w\":\"$pgsql_warning$\"},\"command\":\"check_pgsql\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"pgsql\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":false,\"check_ipv6\":false,\"pgsql_hostname\":\"$check_address$\"}}','admin','2016-05-14 21:35:36','¨Ùª¢Ü  °cþí½ê#','Ãd+ÌäU»Ã\r|X:2D u<'),(38,'icinga_command','ping','create',NULL,'{\"arguments\":{\"-H\":\"$ping_address$\",\"-c\":\"$ping_crta$,$ping_cpl$%\",\"-p\":\"$ping_packets$\",\"-t\":\"$ping_timeout$\",\"-w\":\"$ping_wrta$,$ping_wpl$%\"},\"command\":\"check_ping\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"ping\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":false,\"check_ipv6\":false,\"ping_address\":\"$check_address$\",\"ping_cpl\":15,\"ping_crta\":200,\"ping_wpl\":5,\"ping_wrta\":100}}','admin','2016-05-14 21:35:36','ŠôR;U$qŠ	@ZsYû','¨Ùª¢Ü  °cþí½ê#'),(39,'icinga_command','ping4','create',NULL,'{\"arguments\":{\"-H\":\"$ping_address$\",\"-c\":\"$ping_crta$,$ping_cpl$%\",\"-p\":\"$ping_packets$\",\"-t\":\"$ping_timeout$\",\"-w\":\"$ping_wrta$,$ping_wpl$%\"},\"command\":\"check_ping -4\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"ping4\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"ping_address\":\"$address$\",\"ping_cpl\":15,\"ping_crta\":200,\"ping_wpl\":5,\"ping_wrta\":100}}','admin','2016-05-14 21:35:36','–{ÅN¿_áó*ã‹’ïÕ¼ßœš','ŠôR;U$qŠ	@ZsYû'),(40,'icinga_command','ping6','create',NULL,'{\"arguments\":{\"-H\":\"$ping_address$\",\"-c\":\"$ping_crta$,$ping_cpl$%\",\"-p\":\"$ping_packets$\",\"-t\":\"$ping_timeout$\",\"-w\":\"$ping_wrta$,$ping_wpl$%\"},\"command\":\"check_ping -6\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"ping6\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"ping_address\":\"$address6$\",\"ping_cpl\":15,\"ping_crta\":200,\"ping_wpl\":5,\"ping_wrta\":100}}','admin','2016-05-14 21:35:36','£¢PÿÙï\0oS·‘m?ÞÚµv>÷','–{ÅN¿_áó*ã‹’ïÕ¼ßœš'),(41,'icinga_command','pop','create',NULL,'{\"arguments\":{\"-H\":\"$pop_address$\",\"-p\":\"$pop_port$\",\"-t\":\"$pop_timeout$\"},\"command\":\"check_pop\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"pop\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":false,\"check_ipv6\":false,\"pop_address\":\"$check_address$\"}}','admin','2016-05-14 21:35:36','*+Û™\nÎ2¥zE;’Å)D=’c','£¢PÿÙï\0oS·‘m?ÞÚµv>÷'),(42,'icinga_command','random','create',NULL,'{\"methods_execute\":\"PluginCheck\",\"object_name\":\"random\",\"object_type\":\"external_object\",\"timeout\":60}','admin','2016-05-14 21:35:36','+¾¹ü(Ã”¡÷üÓ¨5^Ÿ·Ìã1','*+Û™\nÎ2¥zE;’Å)D=’c'),(43,'icinga_command','simap','create',NULL,'{\"arguments\":{\"-H\":\"$simap_address$\",\"-p\":\"$simap_port$\",\"-t\":\"$simap_timeout$\"},\"command\":\"check_simap\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"simap\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":false,\"check_ipv6\":false,\"simap_address\":\"$check_address$\"}}','admin','2016-05-14 21:35:36','koùWÑ&§ÝÕÃ^@°_»×}®','+¾¹ü(Ã”¡÷üÓ¨5^Ÿ·Ìã1'),(44,'icinga_command','procs','create',NULL,'{\"arguments\":{\"--ereg-argument-array\":{\"value\":\"$procs_argument_regex$\",\"description\":\"Only scan for processes with args that contain the regex STRING\"},\"-C\":{\"value\":\"$procs_command$\",\"description\":\"Only scan for exact matches of COMMAND (without path)\"},\"-P\":{\"value\":\"$procs_pcpu$\",\"description\":\"Only scan for processes with PCPU higher than indicated\"},\"-T\":{\"set_if\":\"$procs_traditional$\",\"description\":\"Filter own process the traditional way by PID instead of \\/proc\\/pid\\/exe\"},\"-a\":{\"value\":\"$procs_argument$\",\"description\":\"Only scan for processes with args that contain STRING\"},\"-c\":{\"value\":\"$procs_critical$\",\"description\":\"Generate critical state if metric is outside this range\"},\"-k\":{\"set_if\":\"$procs_nokthreads$\",\"description\":\"Only scan for non kernel threads\"},\"-m\":{\"value\":\"$procs_metric$\",\"description\":\"Check thresholds against metric\"},\"-p\":{\"value\":\"$procs_ppid$\",\"description\":\"Only scan for children of the parent process ID indicated\"},\"-r\":{\"value\":\"$procs_rss$\",\"description\":\"Only scan for processes with RSS higher than indicated\"},\"-s\":{\"value\":\"$procs_state$\",\"description\":\"Only scan for processes that have one or more of the status flags you specify\"},\"-t\":{\"value\":\"$procs_timeout$\",\"description\":\"Seconds before plugin times out\"},\"-u\":{\"value\":\"$procs_user$\",\"description\":\"Only scan for processes with user name or ID indicated\"},\"-w\":{\"value\":\"$procs_warning$\",\"description\":\"Generate warning state if metric is outside this range\"},\"-z\":{\"value\":\"$procs_vsz$\",\"description\":\"Only scan for processes with VSZ higher than indicated\"}},\"command\":\"check_procs\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"procs\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"procs_critical\":400,\"procs_nokthreads\":false,\"procs_traditional\":false,\"procs_warning\":250}}','admin','2016-05-14 21:35:36','6´¶L5\0…¾ÿÍÆÞùp','koùWÑ&§ÝÕÃ^@°_»×}®'),(45,'icinga_command','smtp','create',NULL,'{\"arguments\":{\"-A\":\"$smtp_authtype$\",\"-C\":\"$smtp_command$\",\"-D\":\"$smtp_certificate_age$\",\"-F\":\"$smtp_helo_fqdn$\",\"-H\":\"$smtp_address$\",\"-P\":\"$smtp_authpass$\",\"-R\":\"$smtp_response$\",\"-S\":\"$smtp_starttls$\",\"-U\":\"$smtp_authuser$\",\"-c\":\"$smtp_critical$\",\"-e\":\"$smtp_expect$\",\"-f\":\"$smtp_mail_from$\",\"-p\":\"$smtp_port$\",\"-q\":\"$smtp_ignore_quit$\",\"-t\":\"$smtp_timeout$\",\"-w\":\"$smtp_warning$\"},\"command\":\"check_smtp\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"smtp\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":false,\"check_ipv6\":false,\"smtp_address\":\"$check_address$\"}}','admin','2016-05-14 21:35:37','Ó€9ü¬yqˆþcˆùÝqµT£','6´¶L5\0…¾ÿÍÆÞùp'),(46,'icinga_command','snmp','create',NULL,'{\"arguments\":{\"--invert-search\":{\"set_if\":\"$snmp_invert_search$\",\"description\":\"Invert search result and return CRITICAL if found\"},\"--rate\":{\"set_if\":\"$snmp_rate$\",\"description\":\"Enable rate calculation\"},\"--rate-multiplier\":\"$snmp_rate_multiplier$\",\"-C\":\"$snmp_community$\",\"-H\":\"$snmp_address$\",\"-P\":\"$snmp_version$\",\"-R\":\"$snmp_eregi$\",\"-c\":\"$snmp_crit$\",\"-l\":\"$snmp_label$\",\"-m\":\"$snmp_miblist$\",\"-n\":{\"set_if\":\"$snmp_getnext$\",\"description\":\"Use SNMP GETNEXT instead of SNMP GET\"},\"-o\":\"$snmp_oid$\",\"-p\":\"$snmp_port$\",\"-r\":\"$snmp_ereg$\",\"-s\":\"$snmp_string$\",\"-t\":\"$snmp_timeout$\",\"-u\":\"$snmp_units$\",\"-w\":\"$snmp_warn$\"},\"command\":\"check_snmp\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"snmp\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"snmp_address\":{\"type\":\"Function\"},\"snmp_community\":\"public\",\"snmp_invert_search\":false,\"snmp_timeout\":\"10\"}}','admin','2016-05-14 21:35:37','?ŒÆŽiDÈ¬ôÚaÛœä=Œr˜¾','Ó€9ü¬yqˆþcˆùÝqµT£'),(47,'icinga_command','snmp-uptime','create',NULL,'{\"arguments\":{\"--invert-search\":{\"set_if\":\"$snmp_invert_search$\",\"description\":\"Invert search result and return CRITICAL if found\"},\"--rate\":{\"set_if\":\"$snmp_rate$\",\"description\":\"Enable rate calculation\"},\"--rate-multiplier\":\"$snmp_rate_multiplier$\",\"-C\":\"$snmp_community$\",\"-H\":\"$snmp_address$\",\"-P\":\"$snmp_version$\",\"-R\":\"$snmp_eregi$\",\"-c\":\"$snmp_crit$\",\"-l\":\"$snmp_label$\",\"-m\":\"$snmp_miblist$\",\"-n\":{\"set_if\":\"$snmp_getnext$\",\"description\":\"Use SNMP GETNEXT instead of SNMP GET\"},\"-o\":\"$snmp_oid$\",\"-p\":\"$snmp_port$\",\"-r\":\"$snmp_ereg$\",\"-s\":\"$snmp_string$\",\"-t\":\"$snmp_timeout$\",\"-u\":\"$snmp_units$\",\"-w\":\"$snmp_warn$\"},\"command\":\"check_snmp\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"snmp-uptime\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"snmp_address\":{\"type\":\"Function\"},\"snmp_community\":\"public\",\"snmp_invert_search\":false,\"snmp_oid\":\"1.3.6.1.2.1.1.3.0\",\"snmp_timeout\":\"10\"}}','admin','2016-05-14 21:35:37','Â@`JýâCÛÔÃS“¨ ™ýwÍ','?ŒÆŽiDÈ¬ôÚaÛœä=Œr˜¾'),(48,'icinga_command','spop','create',NULL,'{\"arguments\":{\"-H\":\"$spop_address$\",\"-p\":\"$spop_port$\",\"-t\":\"$spop_timeout$\"},\"command\":\"check_spop\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"spop\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":false,\"check_ipv6\":false,\"spop_address\":\"$check_address$\"}}','admin','2016-05-14 21:35:37','&-ÒÙ\'¶HruN‚-£F·\\¬','Â@`JýâCÛÔÃS“¨ ™ýwÍ'),(49,'icinga_command','ssh','create',NULL,'{\"arguments\":{\"-p\":\"$ssh_port$\",\"-t\":\"$ssh_timeout$\",\"host\":{\"value\":\"$ssh_address$\",\"order\":\"1\"}},\"command\":\"check_ssh\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"ssh\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":false,\"check_ipv6\":false,\"ssh_address\":\"$check_address$\"}}','admin','2016-05-14 21:35:37','7!ù ˆ§¦Ó>­U/\0\0o!!´ ±','&-ÒÙ\'¶HruN‚-£F·\\¬'),(50,'icinga_command','snmpv3','create',NULL,'{\"arguments\":{\"--invert-search\":{\"set_if\":\"$snmpv3_invert_search$\",\"description\":\"Invert search result and return CRITICAL if found\"},\"--rate\":{\"set_if\":\"$snmpv3_rate$\",\"description\":\"Enable rate calculation\"},\"--rate-multiplier\":\"$snmpv3_rate_multiplier$\",\"-A\":{\"value\":\"$snmpv3_auth_key$\",\"description\":\"SNMPv3 authentication password\"},\"-H\":{\"value\":\"$snmpv3_address$\",\"description\":\"Host name, IP Address, or unix socket (must be an absolute path)\"},\"-L\":{\"value\":\"$snmpv3_seclevel$\",\"description\":\"SNMPv3 securityLevel\"},\"-P\":{\"value\":3,\"description\":\"SNMP protocol version\"},\"-R\":{\"value\":\"$snmpv3_eregi$\",\"description\":\"Return OK state (for that OID) if case-insensitive extended REGEX matches\"},\"-U\":{\"value\":\"$snmpv3_user$\",\"description\":\"SNMPv3 username\"},\"-X\":{\"value\":\"$snmpv3_priv_key$\",\"description\":\"SNMPv3 privacy password\"},\"-a\":{\"value\":\"$snmpv3_auth_alg$\",\"description\":\"SNMPv3 auth proto\"},\"-c\":{\"value\":\"$snmpv3_crit$\",\"description\":\"Critical threshold range(s)\"},\"-l\":{\"value\":\"$snmpv3_label$\",\"description\":\"Prefix label for output from plugin\"},\"-n\":{\"set_if\":\"$snmpv3_getnext$\",\"description\":\"Use SNMP GETNEXT instead of SNMP GET\"},\"-o\":{\"value\":\"$snmpv3_oid$\",\"description\":\"Object identifier(s) or SNMP variables whose value you wish to query\"},\"-r\":{\"value\":\"$snmpv3_ereg$\",\"description\":\"Return OK state (for that OID) if extended regular expression REGEX matches\"},\"-s\":{\"value\":\"$snmpv3_string$\",\"description\":\"Return OK state (for that OID) if STRING is an exact match\"},\"-t\":\"$snmpv3_timeout$\",\"-u\":\"$snmpv3_units$\",\"-w\":{\"value\":\"$snmpv3_warn$\",\"description\":\"Warning threshold range(s)\"},\"-x\":{\"value\":\"$snmpv3_priv_alg$\",\"description\":\"SNMPv3 priv proto (default DES)\"}},\"command\":\"check_snmp\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"snmpv3\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":false,\"check_ipv6\":false,\"snmpv3_address\":\"$check_address$\",\"snmpv3_auth_alg\":\"SHA\",\"snmpv3_priv_alg\":\"AES\",\"snmpv3_seclevel\":\"authPriv\",\"snmpv3_timeout\":\"10\"}}','admin','2016-05-14 21:35:37','^/èÉÍ[Ô0%‰,*a¾ö¿´.','7!ù ˆ§¦Ó>­U/\0\0o!!´ ±'),(51,'icinga_command','ssl','create',NULL,'{\"arguments\":{\"--ssl\":{},\"--timeout\":\"$ssl_timeout$\",\"-D\":\"$ssl_cert_valid_days_warn$,$ssl_cert_valid_days_critical$\",\"-H\":\"$ssl_address$\",\"-p\":\"$ssl_port$\"},\"command\":\"check_tcp\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"ssl\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":false,\"check_ipv6\":false,\"ssl_address\":\"$check_address$\"}}','admin','2016-05-14 21:35:37','§g4„ÝoFª?rº¯ðõQiPÁ','^/èÉÍ[Ô0%‰,*a¾ö¿´.'),(52,'icinga_command','swap','create',NULL,'{\"arguments\":{\"-c\":\"$swap_cfree$%\",\"-w\":\"$swap_wfree$%\"},\"command\":\"check_swap\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"swap\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"swap_cfree\":25,\"swap_wfree\":50}}','admin','2016-05-14 21:35:37','µ[Üø¸¹FŠŒézD—Ò,”H°','§g4„ÝoFª?rº¯ðõQiPÁ'),(53,'icinga_command','ssmtp','create',NULL,'{\"arguments\":{\"-H\":\"$ssmtp_address$\",\"-p\":\"$ssmtp_port$\"},\"command\":\"check_ssmtp\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"ssmtp\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":false,\"check_ipv6\":false,\"ssmtp_address\":\"$check_address$\"}}','admin','2016-05-14 21:35:37','éVýCÑ‚™¡édé¶øþ¥Á','µ[Üø¸¹FŠŒézD—Ò,”H°'),(54,'icinga_command','udp','create',NULL,'{\"arguments\":{\"-6\":{\"set_if\":\"$udp_ipv6$\",\"description\":\"Use IPv6 only\"},\"-4\":{\"set_if\":\"$udp_ipv4$\",\"description\":\"Use IPv4 only\"},\"-e\":{\"value\":\"$udp_expect$\",\"required\":true},\"-q\":\"$udp_quit$\",\"-s\":{\"value\":\"$udp_send$\",\"required\":true}},\"command\":\"check_udp -H $udp_address$ -p $udp_port$\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"udp\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":\"$udp_ipv4$\",\"check_ipv6\":\"$udp_ipv6$\",\"udp_address\":\"$check_address$\"}}','admin','2016-05-14 21:35:37','MÇ.4×ç{äK7/¿ê”“›¾','éVýCÑ‚™¡édé¶øþ¥Á'),(55,'icinga_command','ups','create',NULL,'{\"arguments\":{\"-H\":{\"value\":\"$ups_address$\",\"required\":true,\"description\":\"Address of the upsd server\"},\"-T\":{\"set_if\":\"$ups_celsius$\",\"description\":\"Display temperature in degrees Celsius instead of Fahrenheit\"},\"-c\":{\"value\":\"$ups_critical$\",\"description\":\"Critical threshold for the selected variable\"},\"-p\":{\"value\":\"$ups_port$\",\"description\":\"Port number (default: 3493)\"},\"-t\":{\"value\":\"$ups_timeout$\",\"description\":\"Seconds before the connection times out (default: 10)\"},\"-u\":{\"value\":\"$ups_name$\",\"required\":true,\"description\":\"Name of the UPS to monitor\"},\"-v\":{\"value\":\"$ups_variable$\",\"description\":\"Variable to monitor, valid strings are LINE, TEMP, BATTPCT or LOADPCT\"},\"-w\":{\"value\":\"$ups_warning$\",\"description\":\"Warning threshold for the selected variable\"}},\"command\":\"check_ups\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"ups\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":false,\"check_ipv6\":false,\"ups_address\":\"$check_address$\",\"ups_name\":\"ups\"}}','admin','2016-05-14 21:35:37','ë(óâì°¾¿p‚\në6Á+lÎ/$','MÇ.4×ç{äK7/¿ê”“›¾'),(56,'icinga_command','tcp','create',NULL,'{\"arguments\":{\"-6\":{\"set_if\":\"$tcp_ipv6$\",\"description\":\"Use IPv6 only\"},\"-4\":{\"set_if\":\"$tcp_ipv4$\",\"description\":\"Use IPv4 only\"},\"-A\":{\"set_if\":\"$tcp_all$\",\"description\":\"All expect strings need to occur in server response. Defaults to false.\"},\"-D\":{\"value\":\"$tcp_certificate$\",\"description\":\"Minimum number of days a certificate has to be valid. 1st value is number of days for warning, 2nd is critical (if not specified: 0) - seperated by comma.\"},\"-E_quit\":{\"order\":\"3\",\"set_if\":\"$tcp_escape_quit$\",\"description\":\"Enable usage of \\n, \\r, \\t or \\\\ in quit string.\"},\"-E_send\":{\"order\":\"1\",\"set_if\":\"$tcp_escape_send$\",\"description\":\"Enable usage of \\n, \\r, \\t or \\\\ in send string.\"},\"-H\":{\"value\":\"$tcp_address$\",\"description\":\"Host name, IP Address, or unix socket (must be an absolute path).\"},\"-M\":{\"value\":\"$tcp_mismatch$\",\"description\":\"Accept expected string mismatches with states ok, warn, crit. Defaults to warn.\"},\"-S\":{\"set_if\":\"$tcp_ssl$\",\"description\":\"Use SSL for the connection.\"},\"-c\":{\"value\":\"$tcp_ctime$\",\"description\":\"Response time to result in critical status (seconds).\"},\"-d\":{\"value\":\"$tcp_delay$\",\"description\":\"Seconds to wait between sending string and polling for response.\"},\"-e\":{\"value\":\"$tcp_expect$\",\"description\":\"String to expect in server response (may be repeated).\"},\"-j\":{\"set_if\":\"$tcp_jail$\",\"description\":\"Hide output from TCP socket.\"},\"-m\":{\"value\":\"$tcp_maxbytes$\",\"description\":\"Close connection once more than this number of bytes are received.\"},\"-p\":{\"value\":\"$tcp_port$\",\"description\":\"The TCP port number.\"},\"-q\":{\"value\":\"$tcp_quit$\",\"order\":\"4\",\"description\":\"String to send server to initiate a clean close of the connection.\"},\"-r\":{\"value\":\"$tcp_refuse$\",\"description\":\"Accept TCP refusals with states ok, warn, crit. Defaults to crit.\"},\"-s\":{\"value\":\"$tcp_send$\",\"order\":\"2\",\"description\":\"String to send to the server.\"},\"-t\":{\"value\":\"$tcp_timeout$\",\"description\":\"Seconds before connection times out. Defaults to 10.\"},\"-w\":{\"value\":\"$tcp_wtime$\",\"description\":\"Response time to result in warning status (seconds).\"}},\"command\":\"check_tcp\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"tcp\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"check_address\":{\"type\":\"Function\"},\"check_ipv4\":\"$tcp_ipv4$\",\"check_ipv6\":\"$tcp_ipv6$\",\"tcp_address\":\"$check_address$\",\"tcp_all\":false,\"tcp_mismatch\":\"warn\",\"tcp_refuse\":\"crit\",\"tcp_timeout\":10}}','admin','2016-05-14 21:35:37','b10óe}uC\râžšzøA.Ÿ“Ö','ë(óâì°¾¿p‚\në6Á+lÎ/$'),(57,'icinga_command','users','create',NULL,'{\"arguments\":{\"-c\":\"$users_cgreater$\",\"-w\":\"$users_wgreater$\"},\"command\":\"check_users\",\"methods_execute\":\"PluginCheck\",\"object_name\":\"users\",\"object_type\":\"external_object\",\"timeout\":60,\"vars\":{\"users_cgreater\":50,\"users_wgreater\":20}}','admin','2016-05-14 21:35:37','ÖÆ¼_€4±\\Ùô±Fš»ÜÄÀ´','b10óe}uC\râžšzøA.Ÿ“Ö'),(58,'icinga_host','apache2-docker','create',NULL,'{\"check_command\":\"http\",\"check_interval\":1,\"enable_active_checks\":true,\"enable_passive_checks\":false,\"max_check_attempts\":\"3\",\"object_name\":\"apache2-docker\",\"object_type\":\"template\",\"retry_interval\":1}','admin','2016-05-14 22:54:31','…«„Hÿz[‘á°ð_mêáöà','ÖÆ¼_€4±\\Ùô±Fš»ÜÄÀ´'),(59,'icinga_service','Web Server','create',NULL,'{\"check_command\":\"http\",\"check_interval\":1,\"enable_active_checks\":true,\"max_check_attempts\":\"3\",\"object_name\":\"Web Server\",\"object_type\":\"template\",\"retry_interval\":1}','admin','2016-05-14 22:57:19','?ë›îÉK$2ÿîÑÅÃÖ@S','…«„Hÿz[‘á°ð_mêáöà'),(60,'icinga_service','Web Server','create',NULL,'{\"host\":\"apache2-docker\",\"imports\":[\"Web Server\"],\"object_name\":\"Web Server\",\"object_type\":\"object\"}','admin','2016-05-14 22:57:50','é…»¨4ÐŸ(Ï®\"T!‹!}','?ë›îÉK$2ÿîÑÅÃÖ@S'),(61,'icinga_host','apache2-docker','modify','{\"object_name\":\"apache2-docker\",\"object_type\":\"template\",\"check_command\":\"http\",\"max_check_attempts\":\"3\",\"check_interval\":\"1\",\"retry_interval\":\"1\",\"enable_active_checks\":\"y\",\"enable_passive_checks\":\"n\",\"vars\":{}}','{\"check_command\":\"ping\",\"check_interval\":\"1\",\"enable_active_checks\":true,\"enable_passive_checks\":false,\"max_check_attempts\":\"3\",\"object_name\":\"apache2-docker\",\"object_type\":\"template\",\"retry_interval\":\"1\"}','admin','2016-05-14 22:58:06','âZ	*L¾b1}Ëg\"FZ¥La¶','é…»¨4ÐŸ(Ï®\"T!‹!}'),(62,'icinga_host','apache2-docker','delete','{\"object_name\":\"apache2-docker\",\"object_type\":\"template\",\"check_command\":\"ping\",\"max_check_attempts\":\"3\",\"check_interval\":\"1\",\"retry_interval\":\"1\",\"enable_active_checks\":\"y\",\"enable_passive_checks\":\"n\",\"vars\":{}}',NULL,'admin','2016-05-14 23:36:10','iµ;f&Žæ«dsŠ–~hæ¢ZO','âZ	*L¾b1}Ëg\"FZ¥La¶'),(63,'icinga_service','Web Server','delete','{\"object_name\":\"Web Server\",\"object_type\":\"template\",\"check_command\":\"http\",\"max_check_attempts\":\"3\",\"check_interval\":\"1\",\"retry_interval\":\"1\",\"enable_active_checks\":\"y\",\"vars\":{}}',NULL,'admin','2016-05-14 23:36:15','–Hî¤$•9Î«“hbÖÿÈ¤Z','iµ;f&Žæ«dsŠ–~hæ¢ZO');
+/*!40000 ALTER TABLE `director_activity_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `director_datafield`
+--
+
+DROP TABLE IF EXISTS `director_datafield`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `director_datafield` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `varname` varchar(64) NOT NULL,
+  `caption` varchar(255) NOT NULL,
+  `description` text,
+  `datatype` varchar(255) NOT NULL,
+  `format` enum('string','json','expression') DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `search_idx` (`varname`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `director_datafield`
+--
+
+LOCK TABLES `director_datafield` WRITE;
+/*!40000 ALTER TABLE `director_datafield` DISABLE KEYS */;
+/*!40000 ALTER TABLE `director_datafield` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `director_datafield_setting`
+--
+
+DROP TABLE IF EXISTS `director_datafield_setting`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `director_datafield_setting` (
+  `datafield_id` int(10) unsigned NOT NULL,
+  `setting_name` varchar(64) NOT NULL,
+  `setting_value` text NOT NULL,
+  PRIMARY KEY (`datafield_id`,`setting_name`),
+  CONSTRAINT `datafield_id_settings` FOREIGN KEY (`datafield_id`) REFERENCES `director_datafield` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `director_datafield_setting`
+--
+
+LOCK TABLES `director_datafield_setting` WRITE;
+/*!40000 ALTER TABLE `director_datafield_setting` DISABLE KEYS */;
+/*!40000 ALTER TABLE `director_datafield_setting` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `director_datalist`
+--
+
+DROP TABLE IF EXISTS `director_datalist`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `director_datalist` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `list_name` varchar(255) NOT NULL,
+  `owner` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `list_name` (`list_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `director_datalist`
+--
+
+LOCK TABLES `director_datalist` WRITE;
+/*!40000 ALTER TABLE `director_datalist` DISABLE KEYS */;
+/*!40000 ALTER TABLE `director_datalist` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `director_datalist_entry`
+--
+
+DROP TABLE IF EXISTS `director_datalist_entry`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `director_datalist_entry` (
+  `list_id` int(10) unsigned NOT NULL,
+  `entry_name` varchar(255) NOT NULL,
+  `entry_value` text,
+  `format` enum('string','expression','json') DEFAULT NULL,
+  PRIMARY KEY (`list_id`,`entry_name`),
+  CONSTRAINT `director_datalist_value_datalist` FOREIGN KEY (`list_id`) REFERENCES `director_datalist` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `director_datalist_entry`
+--
+
+LOCK TABLES `director_datalist_entry` WRITE;
+/*!40000 ALTER TABLE `director_datalist_entry` DISABLE KEYS */;
+/*!40000 ALTER TABLE `director_datalist_entry` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `director_deployment_log`
+--
+
+DROP TABLE IF EXISTS `director_deployment_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `director_deployment_log` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `config_checksum` varbinary(20) DEFAULT NULL,
+  `last_activity_checksum` varbinary(20) NOT NULL,
+  `peer_identity` varchar(64) NOT NULL,
+  `start_time` datetime NOT NULL,
+  `end_time` datetime DEFAULT NULL,
+  `abort_time` datetime DEFAULT NULL,
+  `duration_connection` int(10) unsigned DEFAULT NULL COMMENT 'The time it took to connect to an Icinga node (ms)',
+  `duration_dump` int(10) unsigned DEFAULT NULL COMMENT 'Time spent dumping the config (ms)',
+  `stage_name` varchar(96) DEFAULT NULL,
+  `stage_collected` enum('y','n') DEFAULT NULL,
+  `connection_succeeded` enum('y','n') DEFAULT NULL,
+  `dump_succeeded` enum('y','n') DEFAULT NULL,
+  `startup_succeeded` enum('y','n') DEFAULT NULL,
+  `username` varchar(64) DEFAULT NULL COMMENT 'The user that triggered this deployment',
+  `startup_log` mediumtext,
+  PRIMARY KEY (`id`),
+  KEY `config_checksum` (`config_checksum`),
+  CONSTRAINT `config_checksum` FOREIGN KEY (`config_checksum`) REFERENCES `director_generated_config` (`checksum`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `director_deployment_log`
+--
+
+LOCK TABLES `director_deployment_log` WRITE;
+/*!40000 ALTER TABLE `director_deployment_log` DISABLE KEYS */;
+INSERT INTO `director_deployment_log` VALUES (1,'›+œÝû“0Fk\Z.B?f	´[','…«„Hÿz[‘á°ð_mêáöà','icinga2','2016-05-14 22:54:58',NULL,NULL,NULL,120,'icinga2-1463266498-2',NULL,NULL,'y','y',NULL,'information/cli: Icinga application loader (version: r2.4.7-1)\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/icinga2.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/constants.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/zones.conf\ninformation/ConfigCompiler: Compiling config file: /usr/share/icinga2/include/itl\ninformation/ConfigCompiler: Compiling config file: /usr/share/icinga2/include/command.conf\ninformation/Utility: Loading library \'libmethods.so\'\ninformation/ConfigCompiler: Compiling config file: /usr/share/icinga2/include/command-icinga.conf\ninformation/ConfigCompiler: Compiling config file: /usr/share/icinga2/include/timeperiod.conf\ninformation/ConfigCompiler: Compiling config file: /usr/share/icinga2/include/plugins\ninformation/ConfigCompiler: Compiling config file: /usr/share/icinga2/include/command-plugins.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/features-enabled/api.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/features-enabled/checker.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/features-enabled/command.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/features-enabled/ido-mysql.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/features-enabled/mainlog.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/features-enabled/notification.conf\ninformation/Utility: Loading library \'libchecker.so\'\ninformation/Utility: Loading library \'libcompat.so\'\ninformation/Utility: Loading library \'libdb_ido_mysql.so\'\ninformation/Utility: Loading library \'libnotification.so\'\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/api-users.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/app.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/apt.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/commands.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/downtimes.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/groups.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/hosts.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/notifications.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/satellite.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/services.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/templates.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/timeperiods.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/users.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/_api/include.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/_api/ip-10-0-0-210-1463259451-1/include.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/_api/ip-10-0-0-210-1463259451-1/../active.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/_api/ip-10-0-0-210-1463259451-1/conf.d/downtimes/icinga2!load!icinga2-1463261575-0.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/_api/ip-10-0-0-210-1463259451-1/conf.d/downtimes/ip-10-0-0-210!load!ip-10-0-0-210-1463259451-0.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/director/include.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/director/icinga2-1463266498-2/include.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/director/icinga2-1463266498-2/../active.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/director/icinga2-1463266498-2/zones.d/director-global/001-director-basics.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/director/icinga2-1463266498-2/zones.d/icinga2/host_templates.conf\ninformation/ConfigItem: Committing config items\ninformation/ApiListener: My API identity: icinga2\nwarning/ConfigObject: Ignoring config object \'ip-10-0-0-210-1463259451-0\' of type \'Downtime\' due to errors: Error: Validation failed for object \'ip-10-0-0-210!load!ip-10-0-0-210-1463259451-0\' of type \'Downtime\'; Attribute \'host_name\': Object \'ip-10-0-0-210\' of type \'Host\' does not exist.\nLocation: in /var/lib/icinga2/api/packages/_api/ip-10-0-0-210-1463259451-1/conf.d/downtimes/ip-10-0-0-210!load!ip-10-0-0-210-1463259451-0.conf: 1:0-1:59\n/var/lib/icinga2/api/packages/_api/ip-10-0-0-210-1463259451-1/conf.d/downtimes/ip-10-0-0-210!load!ip-10-0-0-210-1463259451-0.conf(1): object Downtime \"ip-10-0-0-210-1463259451-0\" ignore_on_error {\n                                                                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/var/lib/icinga2/api/packages/_api/ip-10-0-0-210-1463259451-1/conf.d/downtimes/ip-10-0-0-210!load!ip-10-0-0-210-1463259451-0.conf(2):  author = \"icingaadmin\"\n/var/lib/icinga2/api/packages/_api/ip-10-0-0-210-1463259451-1/conf.d/downtimes/ip-10-0-0-210!load!ip-10-0-0-210-1463259451-0.conf(3):  comment = \"Scheduled downtime for backup\"\n\nwarning/ApplyRule: Apply rule \'satellite-host\' (in /etc/icinga2/conf.d/satellite.conf: 29:1-29:41) for type \'Dependency\' does not match anywhere!\ninformation/ConfigItem: Instantiated 1 FileLogger.\ninformation/ConfigItem: Instantiated 1 ApiUser.\ninformation/ConfigItem: Instantiated 1 ApiListener.\ninformation/ConfigItem: Instantiated 1 Zone.\ninformation/ConfigItem: Instantiated 1 Endpoint.\ninformation/ConfigItem: Instantiated 54 CheckCommands.\ninformation/ConfigItem: Instantiated 2 NotificationCommands.\ninformation/ConfigItem: Instantiated 13 Notifications.\ninformation/ConfigItem: Instantiated 1 IcingaApplication.\ninformation/ConfigItem: Instantiated 1 Host.\ninformation/ConfigItem: Instantiated 2 HostGroups.\ninformation/ConfigItem: Instantiated 1 User.\ninformation/ConfigItem: Instantiated 1 UserGroup.\ninformation/ConfigItem: Instantiated 1 Downtime.\ninformation/ConfigItem: Instantiated 12 Services.\ninformation/ConfigItem: Instantiated 3 TimePeriods.\ninformation/ConfigItem: Instantiated 3 ServiceGroups.\ninformation/ConfigItem: Instantiated 1 ScheduledDowntime.\ninformation/ConfigItem: Instantiated 1 ExternalCommandListener.\ninformation/ConfigItem: Instantiated 1 IdoMysqlConnection.\ninformation/ConfigItem: Instantiated 1 NotificationComponent.\ninformation/ConfigItem: Instantiated 1 CheckerComponent.\ninformation/ScriptGlobal: Dumping variables to file \'/var/cache/icinga2/icinga2.vars\'\ninformation/cli: Finished validating the configuration file(s).\n'),(2,'¨=kWö£Í9î—Í=U‡kh','âZ	*L¾b1}Ëg\"FZ¥La¶','icinga2','2016-05-14 22:58:42',NULL,NULL,NULL,40,'icinga2-1463266722-0',NULL,NULL,'y','y',NULL,'information/cli: Icinga application loader (version: r2.4.7-1)\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/icinga2.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/constants.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/zones.conf\ninformation/ConfigCompiler: Compiling config file: /usr/share/icinga2/include/itl\ninformation/ConfigCompiler: Compiling config file: /usr/share/icinga2/include/command.conf\ninformation/Utility: Loading library \'libmethods.so\'\ninformation/ConfigCompiler: Compiling config file: /usr/share/icinga2/include/command-icinga.conf\ninformation/ConfigCompiler: Compiling config file: /usr/share/icinga2/include/timeperiod.conf\ninformation/ConfigCompiler: Compiling config file: /usr/share/icinga2/include/plugins\ninformation/ConfigCompiler: Compiling config file: /usr/share/icinga2/include/command-plugins.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/features-enabled/api.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/features-enabled/checker.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/features-enabled/command.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/features-enabled/ido-mysql.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/features-enabled/mainlog.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/features-enabled/notification.conf\ninformation/Utility: Loading library \'libchecker.so\'\ninformation/Utility: Loading library \'libcompat.so\'\ninformation/Utility: Loading library \'libdb_ido_mysql.so\'\ninformation/Utility: Loading library \'libnotification.so\'\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/api-users.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/app.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/apt.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/commands.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/downtimes.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/groups.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/hosts.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/notifications.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/satellite.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/services.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/templates.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/timeperiods.conf\ninformation/ConfigCompiler: Compiling config file: /etc/icinga2/conf.d/users.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/_api/include.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/_api/ip-10-0-0-210-1463259451-1/include.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/_api/ip-10-0-0-210-1463259451-1/../active.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/_api/ip-10-0-0-210-1463259451-1/conf.d/downtimes/icinga2!load!icinga2-1463261575-0.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/_api/ip-10-0-0-210-1463259451-1/conf.d/downtimes/ip-10-0-0-210!load!ip-10-0-0-210-1463259451-0.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/director/include.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/director/icinga2-1463266498-2/include.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/director/icinga2-1463266722-0/include.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/director/icinga2-1463266498-2/../active.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/director/icinga2-1463266722-0/../active.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/director/icinga2-1463266722-0/zones.d/director-global/001-director-basics.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/director/icinga2-1463266722-0/zones.d/icinga2/host_templates.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/director/icinga2-1463266722-0/zones.d/icinga2/service_templates.conf\ninformation/ConfigCompiler: Compiling config file: /var/lib/icinga2/api/packages/director/icinga2-1463266722-0/zones.d/icinga2/services.conf\ninformation/ConfigItem: Committing config items\ninformation/ApiListener: My API identity: icinga2\nwarning/ConfigObject: Ignoring config object \'ip-10-0-0-210-1463259451-0\' of type \'Downtime\' due to errors: Error: Validation failed for object \'ip-10-0-0-210!load!ip-10-0-0-210-1463259451-0\' of type \'Downtime\'; Attribute \'host_name\': Object \'ip-10-0-0-210\' of type \'Host\' does not exist.\nLocation: in /var/lib/icinga2/api/packages/_api/ip-10-0-0-210-1463259451-1/conf.d/downtimes/ip-10-0-0-210!load!ip-10-0-0-210-1463259451-0.conf: 1:0-1:59\n/var/lib/icinga2/api/packages/_api/ip-10-0-0-210-1463259451-1/conf.d/downtimes/ip-10-0-0-210!load!ip-10-0-0-210-1463259451-0.conf(1): object Downtime \"ip-10-0-0-210-1463259451-0\" ignore_on_error {\n                                                                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/var/lib/icinga2/api/packages/_api/ip-10-0-0-210-1463259451-1/conf.d/downtimes/ip-10-0-0-210!load!ip-10-0-0-210-1463259451-0.conf(2):  author = \"icingaadmin\"\n/var/lib/icinga2/api/packages/_api/ip-10-0-0-210-1463259451-1/conf.d/downtimes/ip-10-0-0-210!load!ip-10-0-0-210-1463259451-0.conf(3):  comment = \"Scheduled downtime for backup\"\n\nwarning/ApplyRule: Apply rule \'satellite-host\' (in /etc/icinga2/conf.d/satellite.conf: 29:1-29:41) for type \'Dependency\' does not match anywhere!\nwarning/ApplyRule: Apply rule \'Web Server\' (in /var/lib/icinga2/api/packages/director/icinga2-1463266722-0/zones.d/icinga2/services.conf: 1:0-1:25) for type \'Service\' does not match anywhere!\ninformation/ConfigItem: Instantiated 1 FileLogger.\ninformation/ConfigItem: Instantiated 1 ApiUser.\ninformation/ConfigItem: Instantiated 1 ApiListener.\ninformation/ConfigItem: Instantiated 1 Zone.\ninformation/ConfigItem: Instantiated 1 Endpoint.\ninformation/ConfigItem: Instantiated 54 CheckCommands.\ninformation/ConfigItem: Instantiated 2 NotificationCommands.\ninformation/ConfigItem: Instantiated 13 Notifications.\ninformation/ConfigItem: Instantiated 1 IcingaApplication.\ninformation/ConfigItem: Instantiated 1 Host.\ninformation/ConfigItem: Instantiated 2 HostGroups.\ninformation/ConfigItem: Instantiated 1 User.\ninformation/ConfigItem: Instantiated 1 UserGroup.\ninformation/ConfigItem: Instantiated 1 Downtime.\ninformation/ConfigItem: Instantiated 12 Services.\ninformation/ConfigItem: Instantiated 3 TimePeriods.\ninformation/ConfigItem: Instantiated 3 ServiceGroups.\ninformation/ConfigItem: Instantiated 1 ScheduledDowntime.\ninformation/ConfigItem: Instantiated 1 ExternalCommandListener.\ninformation/ConfigItem: Instantiated 1 IdoMysqlConnection.\ninformation/ConfigItem: Instantiated 1 NotificationComponent.\ninformation/ConfigItem: Instantiated 1 CheckerComponent.\ninformation/ScriptGlobal: Dumping variables to file \'/var/cache/icinga2/icinga2.vars\'\ninformation/cli: Finished validating the configuration file(s).\n');
+/*!40000 ALTER TABLE `director_deployment_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `director_generated_config`
+--
+
+DROP TABLE IF EXISTS `director_generated_config`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `director_generated_config` (
+  `checksum` varbinary(20) NOT NULL COMMENT 'SHA1(last_activity_checksum;file_path=checksum;file_path=checksum;...)',
+  `director_version` varchar(64) DEFAULT NULL,
+  `director_db_version` int(10) DEFAULT NULL,
+  `duration` int(10) unsigned DEFAULT NULL COMMENT 'Config generation duration (ms)',
+  `first_activity_checksum` varbinary(20) NOT NULL,
+  `last_activity_checksum` varbinary(20) NOT NULL,
+  PRIMARY KEY (`checksum`),
+  KEY `director_generated_config_activity` (`last_activity_checksum`),
+  CONSTRAINT `director_generated_config_activity` FOREIGN KEY (`last_activity_checksum`) REFERENCES `director_activity_log` (`checksum`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `director_generated_config`
+--
+
+LOCK TABLES `director_generated_config` WRITE;
+/*!40000 ALTER TABLE `director_generated_config` DISABLE KEYS */;
+INSERT INTO `director_generated_config` VALUES ('›+œÝû“0Fk\Z.B?f	´[',NULL,NULL,7,'…«„Hÿz[‘á°ð_mêáöà','…«„Hÿz[‘á°ð_mêáöà'),('¨=kWö£Í9î—Í=U‡kh',NULL,NULL,8,'âZ	*L¾b1}Ëg\"FZ¥La¶','âZ	*L¾b1}Ëg\"FZ¥La¶');
+/*!40000 ALTER TABLE `director_generated_config` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `director_generated_config_file`
+--
+
+DROP TABLE IF EXISTS `director_generated_config_file`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `director_generated_config_file` (
+  `config_checksum` varbinary(20) NOT NULL,
+  `file_checksum` varbinary(20) NOT NULL,
+  `file_path` varchar(128) NOT NULL COMMENT 'e.g. zones/nafta/hosts.conf',
+  PRIMARY KEY (`config_checksum`,`file_path`),
+  KEY `search_idx` (`file_checksum`),
+  CONSTRAINT `director_generated_config_file_config` FOREIGN KEY (`config_checksum`) REFERENCES `director_generated_config` (`checksum`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `director_generated_config_file_file` FOREIGN KEY (`file_checksum`) REFERENCES `director_generated_file` (`checksum`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `director_generated_config_file`
+--
+
+LOCK TABLES `director_generated_config_file` WRITE;
+/*!40000 ALTER TABLE `director_generated_config_file` DISABLE KEYS */;
+INSERT INTO `director_generated_config_file` VALUES ('¨=kWö£Í9î—Í=U‡kh','œfïËüŠ7Â¹Gè =|5¦3þ','zones.d/icinga2/services.conf'),('›+œÝû“0Fk\Z.B?f	´[','+\0\\ÄÌÜ‹ý#õöy1=\\Å¾í','zones.d/director-global/001-director-basics.conf'),('¨=kWö£Í9î—Í=U‡kh','+\0\\ÄÌÜ‹ý#õöy1=\\Å¾í','zones.d/director-global/001-director-basics.conf'),('¨=kWö£Í9î—Í=U‡kh','d;æ@‰fïîˆÒ¤…8=Ð','zones.d/icinga2/service_templates.conf'),('›+œÝû“0Fk\Z.B?f	´[','§vp…À—þY„/Wê–ëüÝö¾','zones.d/icinga2/host_templates.conf'),('¨=kWö£Í9î—Í=U‡kh','Ò`=$ø>d©Ë\"LF–•?õ“\ZŠ','zones.d/icinga2/host_templates.conf');
+/*!40000 ALTER TABLE `director_generated_config_file` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `director_generated_file`
+--
+
+DROP TABLE IF EXISTS `director_generated_file`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `director_generated_file` (
+  `checksum` varbinary(20) NOT NULL COMMENT 'SHA1(content)',
+  `content` mediumtext NOT NULL,
+  `cnt_object` int(10) unsigned NOT NULL DEFAULT '0',
+  `cnt_template` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`checksum`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `director_generated_file`
+--
+
+LOCK TABLES `director_generated_file` WRITE;
+/*!40000 ALTER TABLE `director_generated_file` DISABLE KEYS */;
+INSERT INTO `director_generated_file` VALUES ('œfïËüŠ7Â¹Gè =|5¦3þ','apply Service \"Web Server\" {\n    import \"Web Server\"\n\n\n    assign where \"apache2-docker\" in host.templates\n}\n\n',1,0),('+\0\\ÄÌÜ‹ý#õöy1=\\Å¾í','\nconst DirectorStageDir = dirname(dirname(current_filename))\n',0,0),('d;æ@‰fïîˆÒ¤…8=Ð','template Service \"Web Server\" {\n    check_command = \"http\"\n    max_check_attempts = \"3\"\n    check_interval = 1s\n    retry_interval = 1s\n    enable_active_checks = true\n}\n\n',0,1),('§vp…À—þY„/Wê–ëüÝö¾','template Host \"apache2-docker\" {\n    check_command = \"http\"\n    max_check_attempts = \"3\"\n    check_interval = 1s\n    retry_interval = 1s\n    enable_active_checks = true\n    enable_passive_checks = false\n}\n\n',0,1),('Ò`=$ø>d©Ë\"LF–•?õ“\ZŠ','template Host \"apache2-docker\" {\n    check_command = \"ping\"\n    max_check_attempts = \"3\"\n    check_interval = 1s\n    retry_interval = 1s\n    enable_active_checks = true\n    enable_passive_checks = false\n}\n\n',0,1);
+/*!40000 ALTER TABLE `director_generated_file` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `director_schema_migration`
+--
+
+DROP TABLE IF EXISTS `director_schema_migration`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `director_schema_migration` (
+  `schema_version` smallint(5) unsigned NOT NULL,
+  `migration_time` datetime NOT NULL,
+  PRIMARY KEY (`schema_version`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `director_schema_migration`
+--
+
+LOCK TABLES `director_schema_migration` WRITE;
+/*!40000 ALTER TABLE `director_schema_migration` DISABLE KEYS */;
+INSERT INTO `director_schema_migration` VALUES (92,'2016-05-14 21:30:44');
+/*!40000 ALTER TABLE `director_schema_migration` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `director_setting`
+--
+
+DROP TABLE IF EXISTS `director_setting`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `director_setting` (
+  `setting_name` varchar(64) NOT NULL,
+  `setting_value` varchar(255) NOT NULL,
+  PRIMARY KEY (`setting_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `director_setting`
+--
+
+LOCK TABLES `director_setting` WRITE;
+/*!40000 ALTER TABLE `director_setting` DISABLE KEYS */;
+INSERT INTO `director_setting` VALUES ('master_zone','icinga2');
+/*!40000 ALTER TABLE `director_setting` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_apiuser`
+--
+
+DROP TABLE IF EXISTS `icinga_apiuser`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_apiuser` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `object_name` varchar(255) NOT NULL,
+  `object_type` enum('object','template','external_object') NOT NULL,
+  `disabled` enum('y','n') NOT NULL DEFAULT 'n',
+  `password` varchar(255) DEFAULT NULL,
+  `client_dn` varchar(64) DEFAULT NULL,
+  `permissions` text COMMENT 'JSON-encoded permissions',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_apiuser`
+--
+
+LOCK TABLES `icinga_apiuser` WRITE;
+/*!40000 ALTER TABLE `icinga_apiuser` DISABLE KEYS */;
+INSERT INTO `icinga_apiuser` VALUES (1,'root','external_object','n','a5ffa477794f1c68',NULL,NULL);
+/*!40000 ALTER TABLE `icinga_apiuser` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_command`
+--
+
+DROP TABLE IF EXISTS `icinga_command`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_command` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `object_name` varchar(255) NOT NULL,
+  `object_type` enum('object','template','external_object') NOT NULL COMMENT 'external_object is an attempt to work with existing commands',
+  `disabled` enum('y','n') NOT NULL DEFAULT 'n',
+  `methods_execute` varchar(64) DEFAULT NULL,
+  `command` text,
+  `timeout` smallint(5) unsigned DEFAULT NULL,
+  `zone_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `object_name` (`object_name`,`zone_id`),
+  KEY `icinga_command_zone` (`zone_id`),
+  CONSTRAINT `icinga_command_zone` FOREIGN KEY (`zone_id`) REFERENCES `icinga_zone` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_command`
+--
+
+LOCK TABLES `icinga_command` WRITE;
+/*!40000 ALTER TABLE `icinga_command` DISABLE KEYS */;
+INSERT INTO `icinga_command` VALUES (1,'apt','external_object','n','PluginCheck','check_apt',300,NULL),(2,'by_ssh','external_object','n','PluginCheck','check_by_ssh',60,NULL),(3,'clamd','external_object','n','PluginCheck','check_clamd',60,NULL),(4,'cluster','external_object','n','PluginCheck',NULL,60,NULL),(5,'cluster-zone','external_object','n','PluginCheck',NULL,60,NULL),(6,'dhcp','external_object','n','PluginCheck','check_dhcp',60,NULL),(7,'dig','external_object','n','PluginCheck','check_dig',60,NULL),(8,'disk','external_object','n','PluginCheck','check_disk',60,NULL),(9,'disk_smb','external_object','n','PluginCheck','check_disk_smb',60,NULL),(10,'dns','external_object','n','PluginCheck','check_dns',60,NULL),(11,'dummy','external_object','n','PluginCheck','check_dummy $dummy_state$ $dummy_text$',60,NULL),(12,'fping4','external_object','n','PluginCheck','check_fping $fping_address$ -4',60,NULL),(13,'fping6','external_object','n','PluginCheck','check_fping $fping_address$ -6',60,NULL),(14,'hostalive','external_object','n','PluginCheck','check_ping',60,NULL),(15,'ftp','external_object','n','PluginCheck','check_ftp',60,NULL),(16,'hostalive4','external_object','n','PluginCheck','check_ping -4',60,NULL),(17,'hostalive6','external_object','n','PluginCheck','check_ping -6',60,NULL),(18,'hpjd','external_object','n','PluginCheck','check_hpjd',60,NULL),(19,'icinga','external_object','n','PluginCheck',NULL,60,NULL),(20,'icmp','external_object','n','PluginCheck','check_icmp',60,NULL),(21,'ido','external_object','n','PluginCheck',NULL,60,NULL),(22,'imap','external_object','n','PluginCheck','check_imap',60,NULL),(23,'http','external_object','n','PluginCheck','check_http',60,NULL),(24,'ldap','external_object','n','PluginCheck','check_ldap',60,NULL),(25,'load','external_object','n','PluginCheck','check_load',60,NULL),(26,'mailq','external_object','n','PluginCheck','check_mailq',60,NULL),(27,'negate','external_object','n','PluginCheck','negate',60,NULL),(28,'mysql','external_object','n','PluginCheck','check_mysql',60,NULL),(29,'nscp','external_object','n','PluginCheck','check_nt',60,NULL),(30,'nrpe','external_object','n','PluginCheck','check_nrpe',300,NULL),(31,'ntp_peer','external_object','n','PluginCheck','check_ntp_peer',60,NULL),(32,'ntp_time','external_object','n','PluginCheck','check_ntp_time',60,NULL),(33,'passive','external_object','n','PluginCheck','check_dummy $dummy_state$ $dummy_text$',60,NULL),(34,'pgsql','external_object','n','PluginCheck','check_pgsql',60,NULL),(35,'ping','external_object','n','PluginCheck','check_ping',60,NULL),(36,'ping4','external_object','n','PluginCheck','check_ping -4',60,NULL),(37,'ping6','external_object','n','PluginCheck','check_ping -6',60,NULL),(38,'pop','external_object','n','PluginCheck','check_pop',60,NULL),(39,'random','external_object','n','PluginCheck',NULL,60,NULL),(40,'simap','external_object','n','PluginCheck','check_simap',60,NULL),(41,'procs','external_object','n','PluginCheck','check_procs',60,NULL),(42,'smtp','external_object','n','PluginCheck','check_smtp',60,NULL),(43,'snmp','external_object','n','PluginCheck','check_snmp',60,NULL),(44,'snmp-uptime','external_object','n','PluginCheck','check_snmp',60,NULL),(45,'spop','external_object','n','PluginCheck','check_spop',60,NULL),(46,'ssh','external_object','n','PluginCheck','check_ssh',60,NULL),(47,'snmpv3','external_object','n','PluginCheck','check_snmp',60,NULL),(48,'ssl','external_object','n','PluginCheck','check_tcp',60,NULL),(49,'swap','external_object','n','PluginCheck','check_swap',60,NULL),(50,'ssmtp','external_object','n','PluginCheck','check_ssmtp',60,NULL),(51,'udp','external_object','n','PluginCheck','check_udp -H $udp_address$ -p $udp_port$',60,NULL),(52,'ups','external_object','n','PluginCheck','check_ups',60,NULL),(53,'tcp','external_object','n','PluginCheck','check_tcp',60,NULL),(54,'users','external_object','n','PluginCheck','check_users',60,NULL);
+/*!40000 ALTER TABLE `icinga_command` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_command_argument`
+--
+
+DROP TABLE IF EXISTS `icinga_command_argument`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_command_argument` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `command_id` int(10) unsigned NOT NULL,
+  `argument_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '-x, --host',
+  `argument_value` text,
+  `argument_format` enum('string','expression','json') DEFAULT NULL,
+  `key_string` varchar(64) DEFAULT NULL COMMENT 'Overrides name',
+  `description` text,
+  `skip_key` enum('y','n') DEFAULT NULL,
+  `set_if` varchar(255) DEFAULT NULL,
+  `set_if_format` enum('string','expression','json') DEFAULT NULL,
+  `sort_order` smallint(6) DEFAULT NULL,
+  `repeat_key` enum('y','n') DEFAULT NULL COMMENT 'Useful with array values',
+  `required` enum('y','n') DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_idx` (`command_id`,`argument_name`),
+  KEY `sort_idx` (`command_id`,`sort_order`),
+  CONSTRAINT `icinga_command_argument_command` FOREIGN KEY (`command_id`) REFERENCES `icinga_command` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=458 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_command_argument`
+--
+
+LOCK TABLES `icinga_command_argument` WRITE;
+/*!40000 ALTER TABLE `icinga_command_argument` DISABLE KEYS */;
+INSERT INTO `icinga_command_argument` VALUES (1,1,'--critical','$apt_critical$','string',NULL,'If the full package information of any of the upgradable packages match this REGEXP, the plugin will return CRITICAL status. Can be specified multiple times.',NULL,NULL,NULL,NULL,NULL,NULL),(2,1,'--dist-upgrade','$apt_dist_upgrade$','string',NULL,'Perform a dist-upgrade instead of normal upgrade. Like with -U OPTS can be provided to override the default options.',NULL,NULL,NULL,NULL,NULL,NULL),(3,1,'--exclude','$apt_exclude$','string',NULL,'Exclude packages matching REGEXP from the list of packages that would otherwise be included. Can be specified multiple times.',NULL,NULL,NULL,NULL,NULL,NULL),(4,1,'--extra-opts','$apt_extra_opts$','string',NULL,'Read options from an ini file.',NULL,NULL,NULL,NULL,NULL,NULL),(5,1,'--include','$apt_include$','string',NULL,'Include only packages matching REGEXP. Can be specified multiple times the values will be combined together.',NULL,NULL,NULL,NULL,NULL,NULL),(6,1,'--timeout','$apt_timeout$','string',NULL,'Seconds before plugin times out (default: 10).',NULL,NULL,NULL,NULL,NULL,NULL),(7,1,'--upgrade','$apt_upgrade$','string',NULL,'[Default] Perform an upgrade. If an optional OPTS argument is provided, apt-get will be run with these command line options instead of the default.',NULL,NULL,NULL,NULL,NULL,NULL),(8,2,'-C','/* Unable to fetch function body through API */','expression',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(9,2,'-H','$by_ssh_address$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(10,2,'-c','$by_ssh_crit$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(11,2,'-i','$by_ssh_identity$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(12,2,'-l','$by_ssh_logname$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(13,2,'-o','$by_ssh_options$','string',NULL,'Provide ssh options (may be repeated)',NULL,NULL,NULL,NULL,NULL,NULL),(14,2,'-p','$by_ssh_port$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(15,2,'-q',NULL,NULL,NULL,NULL,NULL,'$by_ssh_quiet$',NULL,NULL,NULL,NULL),(16,2,'-t','$by_ssh_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(17,2,'-w','$by_ssh_warn$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(18,3,'-A',NULL,NULL,NULL,'All expect strings need to occur in server response. Default is any.',NULL,'$clamd_all$',NULL,NULL,NULL,NULL),(19,3,'-D','$clamd_certificate$','string',NULL,'Minimum number of days a certificate has to be valid. 1st value is number of days for warning, 2nd is critical (if not specified: 0) - seperated by comma.',NULL,NULL,NULL,NULL,NULL,NULL),(20,3,'-E_quit',NULL,NULL,NULL,'Can use \n, \r, 	 or \\ in quit string. Default is \r\n added to end of quit.',NULL,'$clamd_escape_quit$',NULL,3,NULL,NULL),(21,3,'-E_send',NULL,NULL,NULL,'Enable usage of \n, \r, 	 or \\ in send string. Default is nothing.',NULL,'$clamd_escape_send$',NULL,1,NULL,NULL),(22,3,'-H','$clamd_address$','string',NULL,'The host\'s address or unix socket (must be an absolute path).',NULL,NULL,NULL,NULL,NULL,'y'),(23,3,'-M','$clamd_mismatch$','string',NULL,'Accept expected string mismatches with states ok, warn, crit. Defaults to warn.',NULL,NULL,NULL,NULL,NULL,NULL),(24,3,'-S',NULL,NULL,NULL,'Use SSL for the connection.',NULL,'$clamd_ssl$',NULL,NULL,NULL,NULL),(25,3,'-c','$clamd_ctime$','string',NULL,'Response time to result in critical status (seconds).',NULL,NULL,NULL,NULL,NULL,NULL),(26,3,'-d','$clamd_delay$','string',NULL,'Seconds to wait between sending string and polling for response.',NULL,NULL,NULL,NULL,NULL,NULL),(27,3,'-e','$clamd_expect$','string',NULL,'String to expect in server response (may be repeated).',NULL,NULL,NULL,NULL,'y',NULL),(28,3,'-j',NULL,NULL,NULL,'Hide output from TCP socket.',NULL,'$clamd_jail$',NULL,NULL,NULL,NULL),(29,3,'-m','$clamd_maxbytes$','string',NULL,'Close connection once more than this number of bytes are received.',NULL,NULL,NULL,NULL,NULL,NULL),(30,3,'-p','$clamd_port$','string',NULL,'Port number (default: none).',NULL,NULL,NULL,NULL,NULL,NULL),(31,3,'-q','$clamd_quit$','string',NULL,'String to send server to initiate a clean close of the connection.',NULL,NULL,NULL,4,NULL,NULL),(32,3,'-r','$clamd_refuse$','string',NULL,'Accept TCP refusals with states ok, warn, crit. Defaults to crit.',NULL,NULL,NULL,NULL,NULL,NULL),(33,3,'-s','$clamd_send$','string',NULL,'String to send to the server.',NULL,NULL,NULL,2,NULL,NULL),(34,3,'-t','$clamd_timeout$','string',NULL,'Seconds before connection times out. Defaults to 10.',NULL,NULL,NULL,NULL,NULL,NULL),(35,3,'-w','$clamd_wtime$','string',NULL,'Response time to result in warning status (seconds).',NULL,NULL,NULL,NULL,NULL,NULL),(36,6,'-i','$dhcp_interface$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(37,6,'-m','$dhcp_mac$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(38,6,'-r','$dhcp_requestedip$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(39,6,'-s','$dhcp_serverip$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(40,6,'-t','$dhcp_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(41,6,'-u',NULL,NULL,NULL,NULL,NULL,'$dhcp_unicast$',NULL,NULL,NULL,NULL),(42,7,'-A','$dig_arguments$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(43,7,'-H','$dig_server$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(44,7,'-T','$dig_record_type$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(45,7,'-a','$dig_expected_address$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(46,7,'-c','$dig_critical$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(47,7,'-l','$dig_lookup$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'y'),(48,7,'-p','$dig_port$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(49,7,'-r','$dig_retries$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(50,7,'-t','$dig_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(51,7,'-w','$dig_warning$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(52,8,'-A',NULL,NULL,NULL,'Explicitly select all paths. This is equivalent to -R .*',NULL,'$disk_all$',NULL,NULL,NULL,NULL),(53,8,'-C',NULL,NULL,NULL,'Clear thresholds',NULL,'$disk_clear$',NULL,NULL,NULL,NULL),(54,8,'-E',NULL,NULL,NULL,'For paths or partitions specified with -p, only check for exact paths',NULL,'$disk_exact_match$',NULL,NULL,NULL,NULL),(55,8,'-I','$disk_ignore_eregi_path$','string',NULL,'Regular expression to ignore selected path/partition (case insensitive) (may be repeated)',NULL,NULL,NULL,2,'y',NULL),(56,8,'-K','$disk_inode_cfree$','string',NULL,'Exit with CRITICAL status if less than PERCENT of inode space is free',NULL,NULL,NULL,NULL,NULL,NULL),(57,8,'-L',NULL,NULL,NULL,'Only check local filesystems against thresholds. Yet call stat on remote filesystems to test if they are accessible (e.g. to detect Stale NFS Handles)',NULL,'$disk_stat_remote_fs$',NULL,NULL,NULL,NULL),(58,8,'-M',NULL,NULL,NULL,'Display the mountpoint instead of the partition',NULL,'$disk_mountpoint$',NULL,NULL,NULL,NULL),(59,8,'-R','$disk_eregi_path$','string',NULL,'Case insensitive regular expression for path/partition (may be repeated)',NULL,NULL,NULL,NULL,'y',NULL),(60,8,'-W','$disk_inode_wfree$','string',NULL,'Exit with WARNING status if less than PERCENT of inode space is free',NULL,NULL,NULL,NULL,NULL,NULL),(61,8,'-X','$disk_exclude_type$','string',NULL,'Ignore all filesystems of indicated type (may be repeated)',NULL,NULL,NULL,NULL,'y',NULL),(62,8,'-c','$disk_cfree$','string',NULL,'Exit with CRITICAL status if less than INTEGER units of disk are free or Exit with CRITCAL status if less than PERCENT of disk space is free',NULL,NULL,NULL,-3,NULL,'y'),(63,8,'-e',NULL,NULL,NULL,'Display only devices/mountpoints with errors',NULL,'$disk_errors_only$',NULL,NULL,NULL,NULL),(64,8,'-f',NULL,NULL,NULL,'Don\'t account root-reserved blocks into freespace in perfdata',NULL,'$disk_ignore_reserved$',NULL,NULL,NULL,NULL),(65,8,'-g','$disk_group$','string',NULL,'Group paths. Thresholds apply to (free-)space of all partitions together',NULL,NULL,NULL,NULL,NULL,NULL),(66,8,'-i','$disk_ignore_ereg_path$','string',NULL,'Regular expression to ignore selected path or partition (may be repeated)',NULL,NULL,NULL,2,'y',NULL),(67,8,'-k',NULL,NULL,NULL,'Same as --units kB',NULL,'$disk_kilobytes$',NULL,NULL,NULL,NULL),(68,8,'-l',NULL,NULL,NULL,' Only check local filesystems',NULL,'$disk_local$',NULL,NULL,NULL,NULL),(69,8,'-m',NULL,NULL,NULL,'Same as --units MB',NULL,'$disk_megabytes$',NULL,NULL,NULL,NULL),(70,8,'-p','$disk_partitions$','string',NULL,'Path or partition (may be repeated)',NULL,NULL,NULL,1,'y',NULL),(71,8,'-p_old','$disk_partition$','string',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL),(72,8,'-r','$disk_ereg_path$','string',NULL,'Regular expression for path or partition (may be repeated)',NULL,NULL,NULL,NULL,'y',NULL),(73,8,'-t','$disk_timeout$','string',NULL,'Seconds before connection times out (default: 10)',NULL,NULL,NULL,NULL,NULL,NULL),(74,8,'-u','$disk_units$','string',NULL,'Choose bytes, kB, MB, GB, TB (default: MB)',NULL,NULL,NULL,NULL,NULL,NULL),(75,8,'-w','$disk_wfree$','string',NULL,'Exit with WARNING status if less than INTEGER units of disk are free or Exit with WARNING status if less than PERCENT of disk space is free',NULL,NULL,NULL,-3,NULL,'y'),(76,8,'-x','$disk_partitions_excluded$','string',NULL,'Ignore device (only works if -p unspecified)',NULL,NULL,NULL,NULL,NULL,NULL),(77,8,'-x_old','$disk_partition_excluded$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(78,9,'-H','$disk_smb_hostname$','string',NULL,'NetBIOS name of the server.',NULL,NULL,NULL,NULL,NULL,NULL),(79,9,'-P','$disk_smb_port$','string',NULL,'Port to be used to connect to. Some Windows boxes use 139, others 445 (Defaults to smbclient default if omitted).',NULL,NULL,NULL,NULL,NULL,NULL),(80,9,'-W','$disk_smb_workgroup$','string',NULL,'Workgroup or Domain used (Defaults to \'WORKGROUP\' if omitted).',NULL,NULL,NULL,NULL,NULL,NULL),(81,9,'-a','$disk_smb_address$','string',NULL,'IP-address of HOST (only necessary if HOST is in another network).',NULL,NULL,NULL,NULL,NULL,NULL),(82,9,'-c','$disk_smb_cused$','string',NULL,'Percent of used space at which a critical will be generated (Defaults: 95%)',NULL,NULL,NULL,NULL,NULL,NULL),(83,9,'-p','$disk_smb_password$','string',NULL,'Password to log in to server. (Defaults to an empty password if omitted).',NULL,NULL,NULL,NULL,NULL,NULL),(84,9,'-s','$disk_smb_share$','string',NULL,'Share name to be tested.',NULL,NULL,NULL,NULL,NULL,NULL),(85,9,'-u','$disk_smb_username$','string',NULL,'Username to log in to server. (Defaults to \'guest\' if omitted).',NULL,NULL,NULL,NULL,NULL,NULL),(86,9,'-w','$disk_smb_wused$','string',NULL,'Percent of used space at which a warning will be generated (Default: 85%).',NULL,NULL,NULL,NULL,NULL,NULL),(87,10,'-A',NULL,NULL,NULL,NULL,NULL,'$dns_authoritative$',NULL,NULL,NULL,NULL),(88,10,'-H','$dns_lookup$','string',NULL,'The name or address you want to query.',NULL,NULL,NULL,NULL,NULL,NULL),(89,10,'-a','$dns_expected_answers$','string',NULL,'Optional ip address or host you expect the DNS server to return. Host must end with a dot (.). This option can be repeated multiple times (Returns OK if any value match). If multiple addresses are returned at once, you have to match the whole string of addresses separated with commas (sorted alphabetically).',NULL,NULL,NULL,NULL,NULL,NULL),(90,10,'-a_old','$dns_expected_answer$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(91,10,'-c','$dns_ctime$','string',NULL,'Return critical if elapsed time exceeds value.',NULL,NULL,NULL,NULL,NULL,NULL),(92,10,'-s','$dns_server$','string',NULL,'Optional DNS server you want to use for the lookup.',NULL,NULL,NULL,NULL,NULL,NULL),(93,10,'-t','$dns_timeout$','string',NULL,'Seconds before connection times out. Defaults to 10.',NULL,NULL,NULL,NULL,NULL,NULL),(94,10,'-w','$dns_wtime$','string',NULL,'Return warning if elapsed time exceeds value.',NULL,NULL,NULL,NULL,NULL,NULL),(95,12,'-I','$fping_source_interface$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(96,12,'-S','$fping_source_ip$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(97,12,'-T','$fping_target_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(98,12,'-b','$fping_bytes$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(99,12,'-c','$fping_crta$,$fping_cpl$%','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(100,12,'-i','$fping_interval$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(101,12,'-n','$fping_number$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(102,12,'-w','$fping_wrta$,$fping_wpl$%','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(103,13,'-I','$fping_source_interface$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(104,13,'-S','$fping_source_ip$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(105,13,'-T','$fping_target_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(106,13,'-b','$fping_bytes$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(107,13,'-c','$fping_crta$,$fping_cpl$%','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(108,13,'-i','$fping_interval$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(109,13,'-n','$fping_number$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(110,13,'-w','$fping_wrta$,$fping_wpl$%','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(111,14,'-H','$ping_address$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(112,14,'-c','$ping_crta$,$ping_cpl$%','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(113,14,'-p','$ping_packets$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(114,14,'-t','$ping_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(115,14,'-w','$ping_wrta$,$ping_wpl$%','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(116,15,'-A',NULL,NULL,NULL,'All expect strings need to occur in server response. Default is any.',NULL,'$ftp_all$',NULL,NULL,NULL,NULL),(117,15,'-D','$ftp_certificate$','string',NULL,'Minimum number of days a certificate has to be valid. 1st value is number of days for warning, 2nd is critical (if not specified: 0) - seperated by comma.',NULL,NULL,NULL,NULL,NULL,NULL),(118,15,'-E_quit',NULL,NULL,NULL,'Can use \n, \r, 	 or \\ in quit string. Default is \r\n added to end of quit.',NULL,'$ftp_escape_quit$',NULL,3,NULL,NULL),(119,15,'-E_send',NULL,NULL,NULL,'Enable usage of \n, \r, 	 or \\ in send string. Default is nothing.',NULL,'$ftp_escape_send$',NULL,1,NULL,NULL),(120,15,'-H','$ftp_address$','string',NULL,'The host\'s address. Defaults to $address$ or $address6$ if the address attribute is not set.',NULL,NULL,NULL,NULL,NULL,NULL),(121,15,'-M','$ftp_mismatch$','string',NULL,'Accept expected string mismatches with states ok, warn, crit. Defaults to warn.',NULL,NULL,NULL,NULL,NULL,NULL),(122,15,'-S',NULL,NULL,NULL,'Use SSL for the connection.',NULL,'$ftp_ssl$',NULL,NULL,NULL,NULL),(123,15,'-c','$ftp_ctime$','string',NULL,'Response time to result in critical status (seconds).',NULL,NULL,NULL,NULL,NULL,NULL),(124,15,'-d','$ftp_delay$','string',NULL,'Seconds to wait between sending string and polling for response.',NULL,NULL,NULL,NULL,NULL,NULL),(125,15,'-e','$ftp_expect$','string',NULL,'String to expect in server response (may be repeated).',NULL,NULL,NULL,NULL,NULL,NULL),(126,15,'-j',NULL,NULL,NULL,'Hide output from TCP socket.',NULL,'$ftp_jail$',NULL,NULL,NULL,NULL),(127,15,'-m','$ftp_maxbytes$','string',NULL,'Close connection once more than this number of bytes are received.',NULL,NULL,NULL,NULL,NULL,NULL),(128,15,'-p','$ftp_port$','string',NULL,'The FTP port number. Defaults to none',NULL,NULL,NULL,NULL,NULL,NULL),(129,15,'-q','$ftp_quit$','string',NULL,'String to send server to initiate a clean close of the connection.',NULL,NULL,NULL,4,NULL,NULL),(130,15,'-r','$ftp_refuse$','string',NULL,'Accept TCP refusals with states ok, warn, crit. Defaults to crit.',NULL,NULL,NULL,NULL,NULL,NULL),(131,15,'-s','$ftp_send$','string',NULL,'String to send to the server.',NULL,NULL,NULL,2,NULL,NULL),(132,15,'-t','$ftp_timeout$','string',NULL,'Seconds before connection times out. Defaults to 10.',NULL,NULL,NULL,NULL,NULL,NULL),(133,15,'-w','$ftp_wtime$','string',NULL,'Response time to result in warning status (seconds).',NULL,NULL,NULL,NULL,NULL,NULL),(134,16,'-H','$ping_address$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(135,16,'-c','$ping_crta$,$ping_cpl$%','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(136,16,'-p','$ping_packets$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(137,16,'-t','$ping_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(138,16,'-w','$ping_wrta$,$ping_wpl$%','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(139,17,'-H','$ping_address$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(140,17,'-c','$ping_crta$,$ping_cpl$%','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(141,17,'-p','$ping_packets$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(142,17,'-t','$ping_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(143,17,'-w','$ping_wrta$,$ping_wpl$%','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(144,18,'-C','$hpjd_community$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(145,18,'-H','$hpjd_address$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(146,18,'-p','$hpjd_port$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(147,20,'-H','$icmp_address$','string',NULL,NULL,NULL,NULL,NULL,1,'n',NULL),(148,20,'-I','$icmp_target_interval$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(149,20,'-b','$icmp_data_bytes$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(150,20,'-c','$icmp_crta$,$icmp_cpl$%','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(151,20,'-i','$icmp_packet_interval$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(152,20,'-m','$icmp_hosts_alive$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(153,20,'-n','$icmp_packets$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(154,20,'-s','$icmp_source$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(155,20,'-t','$icmp_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(156,20,'-w','$icmp_wrta$,$icmp_wpl$%','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(157,22,'-H','$imap_address$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(158,22,'-p','$imap_port$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(159,22,'-t','$imap_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(160,23,'-6',NULL,NULL,NULL,'Use IPv6 only',NULL,'$http_ipv6$',NULL,NULL,NULL,NULL),(161,23,'-4',NULL,NULL,NULL,'Use IPv4 only',NULL,'$http_ipv4$',NULL,NULL,NULL,NULL),(162,23,'--invert-regex',NULL,NULL,NULL,'Return CRITICAL if found, OK if not',NULL,'$http_invertregex$',NULL,NULL,NULL,NULL),(163,23,'--no-body',NULL,NULL,NULL,NULL,NULL,'$http_ignore_body$',NULL,NULL,NULL,NULL),(164,23,'--sni',NULL,NULL,NULL,NULL,NULL,'$http_sni$',NULL,NULL,NULL,NULL),(165,23,'-A','$http_useragent$','string',NULL,'String to be sent in http header as User Agent',NULL,NULL,NULL,NULL,NULL,NULL),(166,23,'-C','$http_certificate$','string',NULL,'Minimum number of days a certificate has to be valid. Port defaults to 443.',NULL,NULL,NULL,NULL,NULL,NULL),(167,23,'-E',NULL,NULL,NULL,'Print additional perfdata',NULL,'$http_extendedperfdata$',NULL,NULL,NULL,NULL),(168,23,'-H','$http_vhost$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(169,23,'-I','$http_address$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(170,23,'-J','$http_clientcert$','string',NULL,'Name of file contains the client certificate (PEM format)',NULL,NULL,NULL,NULL,NULL,NULL),(171,23,'-K','$http_privatekey$','string',NULL,'Name of file contains the private key (PEM format)',NULL,NULL,NULL,NULL,NULL,NULL),(172,23,'-M','$http_maxage$','string',NULL,'Warn if document is more than seconds old',NULL,NULL,NULL,NULL,NULL,NULL),(173,23,'-P','$http_post$','string',NULL,'URL encoded http POST data',NULL,NULL,NULL,NULL,NULL,NULL),(174,23,'-R','$http_expect_body_eregi$','string',NULL,'Search page for case-insensitive regex',NULL,NULL,NULL,2,NULL,NULL),(175,23,'-S',NULL,NULL,NULL,NULL,NULL,'$http_ssl$',NULL,NULL,NULL,NULL),(176,23,'-S1',NULL,NULL,NULL,NULL,NULL,'$http_ssl_force_tlsv1$',NULL,NULL,NULL,NULL),(177,23,'-S1+',NULL,NULL,NULL,NULL,NULL,'$http_ssl_force_tlsv1_or_higher$',NULL,NULL,NULL,NULL),(178,23,'-S1.1',NULL,NULL,NULL,NULL,NULL,'$http_ssl_force_tlsv1_1$',NULL,NULL,NULL,NULL),(179,23,'-S1.1+',NULL,NULL,NULL,NULL,NULL,'$http_ssl_force_tlsv1_1_or_higher$',NULL,NULL,NULL,NULL),(180,23,'-S1.2',NULL,NULL,NULL,NULL,NULL,'$http_ssl_force_tlsv1_2$',NULL,NULL,NULL,NULL),(181,23,'-S1.2+',NULL,NULL,NULL,NULL,NULL,'$http_ssl_force_tlsv1_2_or_higher$',NULL,NULL,NULL,NULL),(182,23,'-S2',NULL,NULL,NULL,NULL,NULL,'$http_ssl_force_sslv2$',NULL,NULL,NULL,NULL),(183,23,'-S2+',NULL,NULL,NULL,NULL,NULL,'$http_ssl_force_sslv2_or_higher$',NULL,NULL,NULL,NULL),(184,23,'-S3',NULL,NULL,NULL,NULL,NULL,'$http_ssl_force_sslv3$',NULL,NULL,NULL,NULL),(185,23,'-S3+',NULL,NULL,NULL,NULL,NULL,'$http_ssl_force_sslv3_or_higher$',NULL,NULL,NULL,NULL),(186,23,'-T','$http_contenttype$','string',NULL,'Specify Content-Type header when POSTing',NULL,NULL,NULL,NULL,NULL,NULL),(187,23,'-a','$http_auth_pair$','string',NULL,'Username:password on sites with basic authentication',NULL,NULL,NULL,NULL,NULL,NULL),(188,23,'-b','$http_proxy_auth_pair$','string',NULL,'Username:password on proxy-servers with basic authentication',NULL,NULL,NULL,NULL,NULL,NULL),(189,23,'-c','$http_critical_time$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(190,23,'-d','$http_headerstring$','string',NULL,'String to expect in the response headers',NULL,NULL,NULL,NULL,NULL,NULL),(191,23,'-e','$http_expect$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(192,23,'-f','$http_onredirect$','string',NULL,'How to handle redirect pages',NULL,NULL,NULL,NULL,NULL,NULL),(193,23,'-j','$http_method$','string',NULL,'Set http method (for example: HEAD, OPTIONS, TRACE, PUT, DELETE)',NULL,NULL,NULL,NULL,NULL,NULL),(194,23,'-k','$http_header$','string',NULL,'Any other tags to be sent in http header',NULL,NULL,NULL,NULL,NULL,NULL),(195,23,'-l',NULL,NULL,NULL,'Allow regex to span newline',NULL,'$http_linespan$',NULL,1,NULL,NULL),(196,23,'-m','$http_pagesize$','string',NULL,'Minim page size required:Maximum page size required',NULL,NULL,NULL,NULL,NULL,NULL),(197,23,'-p','$http_port$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(198,23,'-r','$http_expect_body_regex$','string',NULL,'Search page for regex',NULL,NULL,NULL,2,NULL,NULL),(199,23,'-s','$http_string$','string',NULL,'String to expect in the content',NULL,NULL,NULL,NULL,NULL,NULL),(200,23,'-t','$http_timeout$','string',NULL,'Seconds before connection times out',NULL,NULL,NULL,NULL,NULL,NULL),(201,23,'-u','$http_uri$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(202,23,'-w','$http_warn_time$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(203,24,'-3',NULL,NULL,NULL,'Use LDAP protocol version 3',NULL,'$ldap_v3$',NULL,NULL,NULL,NULL),(204,24,'-2',NULL,NULL,NULL,'Use LDAP protocol version 2',NULL,'$ldap_v2$',NULL,NULL,NULL,NULL),(205,24,'-D','$ldap_bind$','string',NULL,'ldap bind DN (if required)',NULL,NULL,NULL,NULL,NULL,NULL),(206,24,'-H','$ldap_address$','string',NULL,'Host name, IP Address, or unix socket (must be an absolute path)',NULL,NULL,NULL,NULL,NULL,NULL),(207,24,'-P','$ldap_pass$','string',NULL,'ldap password (if required)',NULL,NULL,NULL,NULL,NULL,NULL),(208,24,'-S',NULL,NULL,NULL,'use ldaps (ldap v2 ssl method). this also sets the default port to 636',NULL,'$ldap_ssl$',NULL,NULL,NULL,NULL),(209,24,'-T',NULL,NULL,NULL,'use starttls mechanism introduced in protocol version 3',NULL,'$ldap_starttls$',NULL,NULL,NULL,NULL),(210,24,'-a','$ldap_attr$','string',NULL,'ldap attribute to search (default: \"(objectclass=*)\"',NULL,NULL,NULL,NULL,NULL,NULL),(211,24,'-b','$ldap_base$','string',NULL,'ldap base (eg. ou=my unit, o=my org, c=at',NULL,NULL,NULL,NULL,NULL,'y'),(212,24,'-c','$ldap_critical$','string',NULL,'Response time to result in critical status (seconds)',NULL,NULL,NULL,NULL,NULL,NULL),(213,24,'-p','$ldap_port$','string',NULL,'Port number (default: 389)',NULL,NULL,NULL,NULL,NULL,NULL),(214,24,'-t','$ldap_timeout$','string',NULL,'Seconds before connection times out (default: 10)',NULL,NULL,NULL,NULL,NULL,NULL),(215,24,'-v',NULL,NULL,NULL,'Show details for command-line debugging',NULL,'$ldap_verbose$',NULL,NULL,NULL,NULL),(216,24,'-w','$ldap_warning$','string',NULL,'Response time to result in warning status (seconds)',NULL,NULL,NULL,NULL,NULL,NULL),(217,25,'-c','$load_cload1$,$load_cload5$,$load_cload15$','string',NULL,'Exit with CRITICAL status if load average exceed CLOADn; the load average format is the same used by \'uptime\' and \'w\'',NULL,NULL,NULL,NULL,NULL,NULL),(218,25,'-r',NULL,NULL,NULL,'Divide the load averages by the number of CPUs (when possible)',NULL,'$load_percpu$',NULL,NULL,NULL,NULL),(219,25,'-w','$load_wload1$,$load_wload5$,$load_wload15$','string',NULL,'Exit with WARNING status if load average exceeds WLOADn',NULL,NULL,NULL,NULL,NULL,NULL),(220,26,'-C','$mailq_domain_critical$','string',NULL,'Min. number of messages for same domain in queue to generate critical alert ( W < C )',NULL,NULL,NULL,NULL,NULL,NULL),(221,26,'-M','$mailq_servertype$','string',NULL,'[ sendmail | qmail | postfix | exim | nullmailer ] (default = autodetect)',NULL,NULL,NULL,NULL,NULL,NULL),(222,26,'-W','$mailq_domain_warning$','string',NULL,'Min. number of messages for same domain in queue to generate warning',NULL,NULL,NULL,NULL,NULL,NULL),(223,26,'-c','$mailq_critical$','string',NULL,'Min. number of messages in queue to generate critical alert ( w < c )',NULL,NULL,NULL,NULL,NULL,'y'),(224,26,'-t','$mailq_timeout$','string',NULL,'Plugin timeout in seconds (default = 15)',NULL,NULL,NULL,NULL,NULL,NULL),(225,26,'-w','$mailq_warning$','string',NULL,'Min. number of messages in queue to generate warning',NULL,NULL,NULL,NULL,NULL,'y'),(226,27,'--wrapped-plugin','/* Unable to fetch function body through API */','expression',NULL,NULL,'y',NULL,NULL,1,NULL,NULL),(227,27,'-T','$negate_timeout_result$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(228,27,'-c','$negate_critical$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(229,27,'-o','$negate_ok$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(230,27,'-s',NULL,NULL,NULL,NULL,NULL,'$negate_substitute$',NULL,NULL,NULL,NULL),(231,27,'-t','$negate_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(232,27,'-w','$negate_warning$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(233,28,'-C','$mysql_cacert$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(234,28,'-D','$mysql_cadir$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(235,28,'-H','$mysql_hostname$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(236,28,'-L','$mysql_ciphers$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(237,28,'-P','$mysql_port$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(238,28,'-S',NULL,NULL,NULL,NULL,NULL,'$mysql_check_slave$',NULL,NULL,NULL,NULL),(239,28,'-a','$mysql_cert$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(240,28,'-c','$mysql_critical$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(241,28,'-d','$mysql_database$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(242,28,'-f','$mysql_file$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(243,28,'-g','$mysql_group$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(244,28,'-k','$mysql_key$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(245,28,'-l',NULL,NULL,NULL,NULL,NULL,'$mysql_ssl$',NULL,NULL,NULL,NULL),(246,28,'-n',NULL,NULL,NULL,NULL,NULL,'$mysql_ignore_auth$',NULL,NULL,NULL,NULL),(247,28,'-p','$mysql_password$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(248,28,'-s','$mysql_socket$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(249,28,'-u','$mysql_username$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(250,28,'-w','$mysql_warning$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(251,29,'-H','$nscp_address$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(252,29,'-c','$nscp_crit$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(253,29,'-d','SHOWALL','string',NULL,'Use with SERVICESTATE to see working services or PROCSTATE for running processes',NULL,'$nscp_showall$',NULL,NULL,NULL,NULL),(254,29,'-l','$nscp_params$','string',NULL,NULL,NULL,NULL,NULL,NULL,'n',NULL),(255,29,'-p','$nscp_port$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(256,29,'-s','$nscp_password$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(257,29,'-t','$nscp_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(258,29,'-v','$nscp_variable$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'y'),(259,29,'-w','$nscp_warn$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(260,30,'-6',NULL,NULL,NULL,'Use IPv6 only',NULL,'$nrpe_ipv6$',NULL,NULL,NULL,NULL),(261,30,'-4',NULL,NULL,NULL,'Use IPv4 only',NULL,'$nrpe_ipv4$',NULL,NULL,NULL,NULL),(262,30,'-H','$nrpe_address$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(263,30,'-a','$nrpe_arguments$','string',NULL,NULL,NULL,NULL,NULL,1,'n',NULL),(264,30,'-c','$nrpe_command$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(265,30,'-n',NULL,NULL,NULL,'Do not use SSL.',NULL,'$nrpe_no_ssl$',NULL,NULL,NULL,NULL),(266,30,'-p','$nrpe_port$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(267,30,'-t','$nrpe_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(268,30,'-u',NULL,NULL,NULL,'Make socket timeouts return an UNKNOWN state instead of CRITICAL',NULL,'$nrpe_timeout_unknown$',NULL,NULL,NULL,NULL),(269,31,'-C','$ntp_cstratum$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(270,31,'-H','$ntp_address$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(271,31,'-W','$ntp_wstratum$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(272,31,'-c','$ntp_critical$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(273,31,'-j','$ntp_wjitter$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(274,31,'-k','$ntp_cjitter$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(275,31,'-m','$ntp_wsource$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(276,31,'-n','$ntp_csource$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(277,31,'-p','$ntp_port$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(278,31,'-t','$ntp_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(279,31,'-w','$ntp_warning$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(280,32,'-H','$ntp_address$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(281,32,'-c','$ntp_critical$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(282,32,'-o','$ntp_timeoffset$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(283,32,'-p','$ntp_port$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(284,32,'-q','$ntp_quit$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(285,32,'-t','$ntp_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(286,32,'-w','$ntp_warning$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(287,34,'-C','$pgsql_query_critical$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(288,34,'-H','$pgsql_hostname$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(289,34,'-P','$pgsql_port$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(290,34,'-W','$pgsql_query_warning$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(291,34,'-c','$pgsql_critical$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(292,34,'-d','$pgsql_database$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(293,34,'-l','$pgsql_username$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(294,34,'-o','$pgsql_options$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(295,34,'-p','$pgsql_password$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(296,34,'-q','$pgsql_query$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(297,34,'-t','$pgsql_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(298,34,'-w','$pgsql_warning$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(299,35,'-H','$ping_address$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(300,35,'-c','$ping_crta$,$ping_cpl$%','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(301,35,'-p','$ping_packets$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(302,35,'-t','$ping_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(303,35,'-w','$ping_wrta$,$ping_wpl$%','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(304,36,'-H','$ping_address$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(305,36,'-c','$ping_crta$,$ping_cpl$%','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(306,36,'-p','$ping_packets$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(307,36,'-t','$ping_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(308,36,'-w','$ping_wrta$,$ping_wpl$%','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(309,37,'-H','$ping_address$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(310,37,'-c','$ping_crta$,$ping_cpl$%','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(311,37,'-p','$ping_packets$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(312,37,'-t','$ping_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(313,37,'-w','$ping_wrta$,$ping_wpl$%','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(314,38,'-H','$pop_address$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(315,38,'-p','$pop_port$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(316,38,'-t','$pop_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(317,40,'-H','$simap_address$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(318,40,'-p','$simap_port$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(319,40,'-t','$simap_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(320,41,'--ereg-argument-array','$procs_argument_regex$','string',NULL,'Only scan for processes with args that contain the regex STRING',NULL,NULL,NULL,NULL,NULL,NULL),(321,41,'-C','$procs_command$','string',NULL,'Only scan for exact matches of COMMAND (without path)',NULL,NULL,NULL,NULL,NULL,NULL),(322,41,'-P','$procs_pcpu$','string',NULL,'Only scan for processes with PCPU higher than indicated',NULL,NULL,NULL,NULL,NULL,NULL),(323,41,'-T',NULL,NULL,NULL,'Filter own process the traditional way by PID instead of /proc/pid/exe',NULL,'$procs_traditional$',NULL,NULL,NULL,NULL),(324,41,'-a','$procs_argument$','string',NULL,'Only scan for processes with args that contain STRING',NULL,NULL,NULL,NULL,NULL,NULL),(325,41,'-c','$procs_critical$','string',NULL,'Generate critical state if metric is outside this range',NULL,NULL,NULL,NULL,NULL,NULL),(326,41,'-k',NULL,NULL,NULL,'Only scan for non kernel threads',NULL,'$procs_nokthreads$',NULL,NULL,NULL,NULL),(327,41,'-m','$procs_metric$','string',NULL,'Check thresholds against metric',NULL,NULL,NULL,NULL,NULL,NULL),(328,41,'-p','$procs_ppid$','string',NULL,'Only scan for children of the parent process ID indicated',NULL,NULL,NULL,NULL,NULL,NULL),(329,41,'-r','$procs_rss$','string',NULL,'Only scan for processes with RSS higher than indicated',NULL,NULL,NULL,NULL,NULL,NULL),(330,41,'-s','$procs_state$','string',NULL,'Only scan for processes that have one or more of the status flags you specify',NULL,NULL,NULL,NULL,NULL,NULL),(331,41,'-t','$procs_timeout$','string',NULL,'Seconds before plugin times out',NULL,NULL,NULL,NULL,NULL,NULL),(332,41,'-u','$procs_user$','string',NULL,'Only scan for processes with user name or ID indicated',NULL,NULL,NULL,NULL,NULL,NULL),(333,41,'-w','$procs_warning$','string',NULL,'Generate warning state if metric is outside this range',NULL,NULL,NULL,NULL,NULL,NULL),(334,41,'-z','$procs_vsz$','string',NULL,'Only scan for processes with VSZ higher than indicated',NULL,NULL,NULL,NULL,NULL,NULL),(335,42,'-A','$smtp_authtype$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(336,42,'-C','$smtp_command$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(337,42,'-D','$smtp_certificate_age$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(338,42,'-F','$smtp_helo_fqdn$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(339,42,'-H','$smtp_address$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(340,42,'-P','$smtp_authpass$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(341,42,'-R','$smtp_response$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(342,42,'-S','$smtp_starttls$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(343,42,'-U','$smtp_authuser$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(344,42,'-c','$smtp_critical$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(345,42,'-e','$smtp_expect$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(346,42,'-f','$smtp_mail_from$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(347,42,'-p','$smtp_port$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(348,42,'-q','$smtp_ignore_quit$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(349,42,'-t','$smtp_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(350,42,'-w','$smtp_warning$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(351,43,'--invert-search',NULL,NULL,NULL,'Invert search result and return CRITICAL if found',NULL,'$snmp_invert_search$',NULL,NULL,NULL,NULL),(352,43,'--rate',NULL,NULL,NULL,'Enable rate calculation',NULL,'$snmp_rate$',NULL,NULL,NULL,NULL),(353,43,'--rate-multiplier','$snmp_rate_multiplier$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(354,43,'-C','$snmp_community$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(355,43,'-H','$snmp_address$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(356,43,'-P','$snmp_version$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(357,43,'-R','$snmp_eregi$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(358,43,'-c','$snmp_crit$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(359,43,'-l','$snmp_label$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(360,43,'-m','$snmp_miblist$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(361,43,'-n',NULL,NULL,NULL,'Use SNMP GETNEXT instead of SNMP GET',NULL,'$snmp_getnext$',NULL,NULL,NULL,NULL),(362,43,'-o','$snmp_oid$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(363,43,'-p','$snmp_port$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(364,43,'-r','$snmp_ereg$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(365,43,'-s','$snmp_string$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(366,43,'-t','$snmp_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(367,43,'-u','$snmp_units$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(368,43,'-w','$snmp_warn$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(369,44,'--invert-search',NULL,NULL,NULL,'Invert search result and return CRITICAL if found',NULL,'$snmp_invert_search$',NULL,NULL,NULL,NULL),(370,44,'--rate',NULL,NULL,NULL,'Enable rate calculation',NULL,'$snmp_rate$',NULL,NULL,NULL,NULL),(371,44,'--rate-multiplier','$snmp_rate_multiplier$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(372,44,'-C','$snmp_community$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(373,44,'-H','$snmp_address$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(374,44,'-P','$snmp_version$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(375,44,'-R','$snmp_eregi$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(376,44,'-c','$snmp_crit$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(377,44,'-l','$snmp_label$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(378,44,'-m','$snmp_miblist$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(379,44,'-n',NULL,NULL,NULL,'Use SNMP GETNEXT instead of SNMP GET',NULL,'$snmp_getnext$',NULL,NULL,NULL,NULL),(380,44,'-o','$snmp_oid$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(381,44,'-p','$snmp_port$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(382,44,'-r','$snmp_ereg$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(383,44,'-s','$snmp_string$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(384,44,'-t','$snmp_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(385,44,'-u','$snmp_units$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(386,44,'-w','$snmp_warn$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(387,45,'-H','$spop_address$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(388,45,'-p','$spop_port$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(389,45,'-t','$spop_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(390,46,'-p','$ssh_port$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(391,46,'-t','$ssh_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(392,46,'host','$ssh_address$','string',NULL,NULL,'y',NULL,NULL,1,NULL,NULL),(393,47,'--invert-search',NULL,NULL,NULL,'Invert search result and return CRITICAL if found',NULL,'$snmpv3_invert_search$',NULL,NULL,NULL,NULL),(394,47,'--rate',NULL,NULL,NULL,'Enable rate calculation',NULL,'$snmpv3_rate$',NULL,NULL,NULL,NULL),(395,47,'--rate-multiplier','$snmpv3_rate_multiplier$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(396,47,'-A','$snmpv3_auth_key$','string',NULL,'SNMPv3 authentication password',NULL,NULL,NULL,NULL,NULL,NULL),(397,47,'-H','$snmpv3_address$','string',NULL,'Host name, IP Address, or unix socket (must be an absolute path)',NULL,NULL,NULL,NULL,NULL,NULL),(398,47,'-L','$snmpv3_seclevel$','string',NULL,'SNMPv3 securityLevel',NULL,NULL,NULL,NULL,NULL,NULL),(399,47,'-P','3','json',NULL,'SNMP protocol version',NULL,NULL,NULL,NULL,NULL,NULL),(400,47,'-R','$snmpv3_eregi$','string',NULL,'Return OK state (for that OID) if case-insensitive extended REGEX matches',NULL,NULL,NULL,NULL,NULL,NULL),(401,47,'-U','$snmpv3_user$','string',NULL,'SNMPv3 username',NULL,NULL,NULL,NULL,NULL,NULL),(402,47,'-X','$snmpv3_priv_key$','string',NULL,'SNMPv3 privacy password',NULL,NULL,NULL,NULL,NULL,NULL),(403,47,'-a','$snmpv3_auth_alg$','string',NULL,'SNMPv3 auth proto',NULL,NULL,NULL,NULL,NULL,NULL),(404,47,'-c','$snmpv3_crit$','string',NULL,'Critical threshold range(s)',NULL,NULL,NULL,NULL,NULL,NULL),(405,47,'-l','$snmpv3_label$','string',NULL,'Prefix label for output from plugin',NULL,NULL,NULL,NULL,NULL,NULL),(406,47,'-n',NULL,NULL,NULL,'Use SNMP GETNEXT instead of SNMP GET',NULL,'$snmpv3_getnext$',NULL,NULL,NULL,NULL),(407,47,'-o','$snmpv3_oid$','string',NULL,'Object identifier(s) or SNMP variables whose value you wish to query',NULL,NULL,NULL,NULL,NULL,NULL),(408,47,'-r','$snmpv3_ereg$','string',NULL,'Return OK state (for that OID) if extended regular expression REGEX matches',NULL,NULL,NULL,NULL,NULL,NULL),(409,47,'-s','$snmpv3_string$','string',NULL,'Return OK state (for that OID) if STRING is an exact match',NULL,NULL,NULL,NULL,NULL,NULL),(410,47,'-t','$snmpv3_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(411,47,'-u','$snmpv3_units$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(412,47,'-w','$snmpv3_warn$','string',NULL,'Warning threshold range(s)',NULL,NULL,NULL,NULL,NULL,NULL),(413,47,'-x','$snmpv3_priv_alg$','string',NULL,'SNMPv3 priv proto (default DES)',NULL,NULL,NULL,NULL,NULL,NULL),(414,48,'--ssl',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(415,48,'--timeout','$ssl_timeout$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(416,48,'-D','$ssl_cert_valid_days_warn$,$ssl_cert_valid_days_critical$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(417,48,'-H','$ssl_address$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(418,48,'-p','$ssl_port$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(419,49,'-c','$swap_cfree$%','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(420,49,'-w','$swap_wfree$%','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(421,50,'-H','$ssmtp_address$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(422,50,'-p','$ssmtp_port$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(423,51,'-6',NULL,NULL,NULL,'Use IPv6 only',NULL,'$udp_ipv6$',NULL,NULL,NULL,NULL),(424,51,'-4',NULL,NULL,NULL,'Use IPv4 only',NULL,'$udp_ipv4$',NULL,NULL,NULL,NULL),(425,51,'-e','$udp_expect$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'y'),(426,51,'-q','$udp_quit$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(427,51,'-s','$udp_send$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'y'),(428,52,'-H','$ups_address$','string',NULL,'Address of the upsd server',NULL,NULL,NULL,NULL,NULL,'y'),(429,52,'-T',NULL,NULL,NULL,'Display temperature in degrees Celsius instead of Fahrenheit',NULL,'$ups_celsius$',NULL,NULL,NULL,NULL),(430,52,'-c','$ups_critical$','string',NULL,'Critical threshold for the selected variable',NULL,NULL,NULL,NULL,NULL,NULL),(431,52,'-p','$ups_port$','string',NULL,'Port number (default: 3493)',NULL,NULL,NULL,NULL,NULL,NULL),(432,52,'-t','$ups_timeout$','string',NULL,'Seconds before the connection times out (default: 10)',NULL,NULL,NULL,NULL,NULL,NULL),(433,52,'-u','$ups_name$','string',NULL,'Name of the UPS to monitor',NULL,NULL,NULL,NULL,NULL,'y'),(434,52,'-v','$ups_variable$','string',NULL,'Variable to monitor, valid strings are LINE, TEMP, BATTPCT or LOADPCT',NULL,NULL,NULL,NULL,NULL,NULL),(435,52,'-w','$ups_warning$','string',NULL,'Warning threshold for the selected variable',NULL,NULL,NULL,NULL,NULL,NULL),(436,53,'-6',NULL,NULL,NULL,'Use IPv6 only',NULL,'$tcp_ipv6$',NULL,NULL,NULL,NULL),(437,53,'-4',NULL,NULL,NULL,'Use IPv4 only',NULL,'$tcp_ipv4$',NULL,NULL,NULL,NULL),(438,53,'-A',NULL,NULL,NULL,'All expect strings need to occur in server response. Defaults to false.',NULL,'$tcp_all$',NULL,NULL,NULL,NULL),(439,53,'-D','$tcp_certificate$','string',NULL,'Minimum number of days a certificate has to be valid. 1st value is number of days for warning, 2nd is critical (if not specified: 0) - seperated by comma.',NULL,NULL,NULL,NULL,NULL,NULL),(440,53,'-E_quit',NULL,NULL,NULL,'Enable usage of \n, \r, 	 or \\ in quit string.',NULL,'$tcp_escape_quit$',NULL,3,NULL,NULL),(441,53,'-E_send',NULL,NULL,NULL,'Enable usage of \n, \r, 	 or \\ in send string.',NULL,'$tcp_escape_send$',NULL,1,NULL,NULL),(442,53,'-H','$tcp_address$','string',NULL,'Host name, IP Address, or unix socket (must be an absolute path).',NULL,NULL,NULL,NULL,NULL,NULL),(443,53,'-M','$tcp_mismatch$','string',NULL,'Accept expected string mismatches with states ok, warn, crit. Defaults to warn.',NULL,NULL,NULL,NULL,NULL,NULL),(444,53,'-S',NULL,NULL,NULL,'Use SSL for the connection.',NULL,'$tcp_ssl$',NULL,NULL,NULL,NULL),(445,53,'-c','$tcp_ctime$','string',NULL,'Response time to result in critical status (seconds).',NULL,NULL,NULL,NULL,NULL,NULL),(446,53,'-d','$tcp_delay$','string',NULL,'Seconds to wait between sending string and polling for response.',NULL,NULL,NULL,NULL,NULL,NULL),(447,53,'-e','$tcp_expect$','string',NULL,'String to expect in server response (may be repeated).',NULL,NULL,NULL,NULL,NULL,NULL),(448,53,'-j',NULL,NULL,NULL,'Hide output from TCP socket.',NULL,'$tcp_jail$',NULL,NULL,NULL,NULL),(449,53,'-m','$tcp_maxbytes$','string',NULL,'Close connection once more than this number of bytes are received.',NULL,NULL,NULL,NULL,NULL,NULL),(450,53,'-p','$tcp_port$','string',NULL,'The TCP port number.',NULL,NULL,NULL,NULL,NULL,NULL),(451,53,'-q','$tcp_quit$','string',NULL,'String to send server to initiate a clean close of the connection.',NULL,NULL,NULL,4,NULL,NULL),(452,53,'-r','$tcp_refuse$','string',NULL,'Accept TCP refusals with states ok, warn, crit. Defaults to crit.',NULL,NULL,NULL,NULL,NULL,NULL),(453,53,'-s','$tcp_send$','string',NULL,'String to send to the server.',NULL,NULL,NULL,2,NULL,NULL),(454,53,'-t','$tcp_timeout$','string',NULL,'Seconds before connection times out. Defaults to 10.',NULL,NULL,NULL,NULL,NULL,NULL),(455,53,'-w','$tcp_wtime$','string',NULL,'Response time to result in warning status (seconds).',NULL,NULL,NULL,NULL,NULL,NULL),(456,54,'-c','$users_cgreater$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(457,54,'-w','$users_wgreater$','string',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `icinga_command_argument` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_command_field`
+--
+
+DROP TABLE IF EXISTS `icinga_command_field`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_command_field` (
+  `command_id` int(10) unsigned NOT NULL,
+  `datafield_id` int(10) unsigned NOT NULL,
+  `is_required` enum('y','n') NOT NULL,
+  PRIMARY KEY (`command_id`,`datafield_id`),
+  KEY `icinga_command_field_datafield` (`datafield_id`),
+  CONSTRAINT `icinga_command_field_command` FOREIGN KEY (`command_id`) REFERENCES `icinga_command` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `icinga_command_field_datafield` FOREIGN KEY (`datafield_id`) REFERENCES `director_datafield` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_command_field`
+--
+
+LOCK TABLES `icinga_command_field` WRITE;
+/*!40000 ALTER TABLE `icinga_command_field` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_command_field` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_command_inheritance`
+--
+
+DROP TABLE IF EXISTS `icinga_command_inheritance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_command_inheritance` (
+  `command_id` int(10) unsigned NOT NULL,
+  `parent_command_id` int(10) unsigned NOT NULL,
+  `weight` mediumint(8) unsigned DEFAULT NULL,
+  PRIMARY KEY (`command_id`,`parent_command_id`),
+  UNIQUE KEY `unique_order` (`command_id`,`weight`),
+  KEY `icinga_command_inheritance_parent_command` (`parent_command_id`),
+  CONSTRAINT `icinga_command_inheritance_command` FOREIGN KEY (`command_id`) REFERENCES `icinga_command` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `icinga_command_inheritance_parent_command` FOREIGN KEY (`parent_command_id`) REFERENCES `icinga_command` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_command_inheritance`
+--
+
+LOCK TABLES `icinga_command_inheritance` WRITE;
+/*!40000 ALTER TABLE `icinga_command_inheritance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_command_inheritance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_command_var`
+--
+
+DROP TABLE IF EXISTS `icinga_command_var`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_command_var` (
+  `command_id` int(10) unsigned NOT NULL,
+  `varname` varchar(255) NOT NULL,
+  `varvalue` text,
+  `format` enum('string','expression','json') NOT NULL DEFAULT 'string',
+  PRIMARY KEY (`command_id`,`varname`),
+  CONSTRAINT `icinga_command_var_command` FOREIGN KEY (`command_id`) REFERENCES `icinga_command` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_command_var`
+--
+
+LOCK TABLES `icinga_command_var` WRITE;
+/*!40000 ALTER TABLE `icinga_command_var` DISABLE KEYS */;
+INSERT INTO `icinga_command_var` VALUES (2,'by_ssh_address','$check_address$','string'),(2,'by_ssh_quiet','false','json'),(2,'check_address','{\"type\":\"Function\"}','json'),(2,'check_ipv4','false','json'),(2,'check_ipv6','false','json'),(3,'clamd_mismatch','warn','string'),(3,'clamd_refuse','crit','string'),(3,'clamd_ssl','false','json'),(3,'clamd_timeout','10','json'),(5,'cluster_zone','$host.name$','string'),(6,'dhcp_unicast','false','json'),(7,'check_address','{\"type\":\"Function\"}','json'),(7,'check_ipv4','false','json'),(7,'check_ipv6','false','json'),(7,'dig_server','$check_address$','string'),(8,'disk_cfree','10%','string'),(8,'disk_exclude_type','[\"none\",\"tmpfs\",\"sysfs\",\"proc\",\"devtmpfs\",\"devfs\",\"mtmfs\"]','json'),(8,'disk_inode_cfree','10%','string'),(8,'disk_inode_wfree','20%','string'),(8,'disk_megabytes','true','json'),(8,'disk_wfree','20%','string'),(9,'disk_smb_cused','95%','string'),(9,'disk_smb_wused','85%','string'),(10,'check_address','{\"type\":\"Function\"}','json'),(10,'check_ipv4','false','json'),(10,'check_ipv6','false','json'),(10,'dns_expected_answer','$check_address$','string'),(10,'dns_lookup','$host.name$','string'),(10,'dns_timeout','10','json'),(11,'dummy_state','0','json'),(11,'dummy_text','Check was successful.','string'),(12,'fping_address','$address$','string'),(12,'fping_cpl','15','json'),(12,'fping_crta','200','json'),(12,'fping_interval','500','json'),(12,'fping_number','5','json'),(12,'fping_wpl','5','json'),(12,'fping_wrta','100','json'),(13,'fping_address','$address6$','string'),(13,'fping_cpl','15','json'),(13,'fping_crta','200','json'),(13,'fping_interval','500','json'),(13,'fping_number','5','json'),(13,'fping_wpl','5','json'),(13,'fping_wrta','100','json'),(14,'check_address','{\"type\":\"Function\"}','json'),(14,'check_ipv4','false','json'),(14,'check_ipv6','false','json'),(14,'ping_address','$check_address$','string'),(14,'ping_cpl','100','json'),(14,'ping_crta','5000','json'),(14,'ping_wpl','80','json'),(14,'ping_wrta','3000','json'),(15,'check_address','{\"type\":\"Function\"}','json'),(15,'check_ipv4','false','json'),(15,'check_ipv6','false','json'),(15,'ftp_address','$check_address$','string'),(15,'ftp_mismatch','warn','string'),(15,'ftp_refuse','crit','string'),(15,'ftp_ssl','false','json'),(15,'ftp_timeout','10','json'),(16,'ping_address','$address$','string'),(16,'ping_cpl','100','json'),(16,'ping_crta','5000','json'),(16,'ping_wpl','80','json'),(16,'ping_wrta','3000','json'),(17,'ping_address','$address6$','string'),(17,'ping_cpl','100','json'),(17,'ping_crta','5000','json'),(17,'ping_wpl','80','json'),(17,'ping_wrta','3000','json'),(18,'check_address','{\"type\":\"Function\"}','json'),(18,'check_ipv4','false','json'),(18,'check_ipv6','false','json'),(18,'hpjd_address','$check_address$','string'),(20,'icmp_address','$address$','string'),(20,'icmp_cpl','15','json'),(20,'icmp_crta','200','json'),(20,'icmp_wpl','5','json'),(20,'icmp_wrta','100','json'),(22,'check_address','{\"type\":\"Function\"}','json'),(22,'check_ipv4','false','json'),(22,'check_ipv6','false','json'),(22,'imap_address','$check_address$','string'),(23,'check_address','{\"type\":\"Function\"}','json'),(23,'check_ipv4','$http_ipv4$','string'),(23,'check_ipv6','$http_ipv6$','string'),(23,'http_address','$check_address$','string'),(23,'http_invertregex','false','json'),(23,'http_linespan','false','json'),(23,'http_sni','false','json'),(23,'http_ssl','false','json'),(24,'check_address','{\"type\":\"Function\"}','json'),(24,'check_ipv4','false','json'),(24,'check_ipv6','false','json'),(24,'ldap_address','$check_address$','string'),(24,'ldap_timeout','10','json'),(24,'ldap_v2','true','json'),(24,'ldap_v3','false','json'),(24,'ldap_verbose','false','json'),(25,'load_cload1','10','json'),(25,'load_cload15','4','json'),(25,'load_cload5','6','json'),(25,'load_percpu','false','json'),(25,'load_wload1','5','json'),(25,'load_wload15','3','json'),(25,'load_wload5','4','json'),(27,'negate_timeout_result','UNKNOWN','string'),(28,'check_address','{\"type\":\"Function\"}','json'),(28,'check_ipv4','false','json'),(28,'check_ipv6','false','json'),(28,'mysql_hostname','$check_address$','string'),(29,'check_address','{\"type\":\"Function\"}','json'),(29,'check_ipv4','false','json'),(29,'check_ipv6','false','json'),(29,'nscp_address','$check_address$','string'),(29,'nscp_port','12489','json'),(29,'nscp_showall','false','json'),(30,'check_address','{\"type\":\"Function\"}','json'),(30,'check_ipv4','$nrpe_ipv4$','string'),(30,'check_ipv6','$nrpe_ipv6$','string'),(30,'nrpe_address','$check_address$','string'),(30,'nrpe_no_ssl','false','json'),(30,'nrpe_timeout_unknown','false','json'),(31,'check_address','{\"type\":\"Function\"}','json'),(31,'check_ipv4','false','json'),(31,'check_ipv6','false','json'),(31,'ntp_address','$check_address$','string'),(32,'check_address','{\"type\":\"Function\"}','json'),(32,'check_ipv4','false','json'),(32,'check_ipv6','false','json'),(32,'ntp_address','$check_address$','string'),(33,'dummy_state','3','json'),(33,'dummy_text','No Passive Check Result Received.','string'),(34,'check_address','{\"type\":\"Function\"}','json'),(34,'check_ipv4','false','json'),(34,'check_ipv6','false','json'),(34,'pgsql_hostname','$check_address$','string'),(35,'check_address','{\"type\":\"Function\"}','json'),(35,'check_ipv4','false','json'),(35,'check_ipv6','false','json'),(35,'ping_address','$check_address$','string'),(35,'ping_cpl','15','json'),(35,'ping_crta','200','json'),(35,'ping_wpl','5','json'),(35,'ping_wrta','100','json'),(36,'ping_address','$address$','string'),(36,'ping_cpl','15','json'),(36,'ping_crta','200','json'),(36,'ping_wpl','5','json'),(36,'ping_wrta','100','json'),(37,'ping_address','$address6$','string'),(37,'ping_cpl','15','json'),(37,'ping_crta','200','json'),(37,'ping_wpl','5','json'),(37,'ping_wrta','100','json'),(38,'check_address','{\"type\":\"Function\"}','json'),(38,'check_ipv4','false','json'),(38,'check_ipv6','false','json'),(38,'pop_address','$check_address$','string'),(40,'check_address','{\"type\":\"Function\"}','json'),(40,'check_ipv4','false','json'),(40,'check_ipv6','false','json'),(40,'simap_address','$check_address$','string'),(41,'procs_critical','400','json'),(41,'procs_nokthreads','false','json'),(41,'procs_traditional','false','json'),(41,'procs_warning','250','json'),(42,'check_address','{\"type\":\"Function\"}','json'),(42,'check_ipv4','false','json'),(42,'check_ipv6','false','json'),(42,'smtp_address','$check_address$','string'),(43,'snmp_address','{\"type\":\"Function\"}','json'),(43,'snmp_community','public','string'),(43,'snmp_invert_search','false','json'),(43,'snmp_timeout','10','string'),(44,'snmp_address','{\"type\":\"Function\"}','json'),(44,'snmp_community','public','string'),(44,'snmp_invert_search','false','json'),(44,'snmp_oid','1.3.6.1.2.1.1.3.0','string'),(44,'snmp_timeout','10','string'),(45,'check_address','{\"type\":\"Function\"}','json'),(45,'check_ipv4','false','json'),(45,'check_ipv6','false','json'),(45,'spop_address','$check_address$','string'),(46,'check_address','{\"type\":\"Function\"}','json'),(46,'check_ipv4','false','json'),(46,'check_ipv6','false','json'),(46,'ssh_address','$check_address$','string'),(47,'check_address','{\"type\":\"Function\"}','json'),(47,'check_ipv4','false','json'),(47,'check_ipv6','false','json'),(47,'snmpv3_address','$check_address$','string'),(47,'snmpv3_auth_alg','SHA','string'),(47,'snmpv3_priv_alg','AES','string'),(47,'snmpv3_seclevel','authPriv','string'),(47,'snmpv3_timeout','10','string'),(48,'check_address','{\"type\":\"Function\"}','json'),(48,'check_ipv4','false','json'),(48,'check_ipv6','false','json'),(48,'ssl_address','$check_address$','string'),(49,'swap_cfree','25','json'),(49,'swap_wfree','50','json'),(50,'check_address','{\"type\":\"Function\"}','json'),(50,'check_ipv4','false','json'),(50,'check_ipv6','false','json'),(50,'ssmtp_address','$check_address$','string'),(51,'check_address','{\"type\":\"Function\"}','json'),(51,'check_ipv4','$udp_ipv4$','string'),(51,'check_ipv6','$udp_ipv6$','string'),(51,'udp_address','$check_address$','string'),(52,'check_address','{\"type\":\"Function\"}','json'),(52,'check_ipv4','false','json'),(52,'check_ipv6','false','json'),(52,'ups_address','$check_address$','string'),(52,'ups_name','ups','string'),(53,'check_address','{\"type\":\"Function\"}','json'),(53,'check_ipv4','$tcp_ipv4$','string'),(53,'check_ipv6','$tcp_ipv6$','string'),(53,'tcp_address','$check_address$','string'),(53,'tcp_all','false','json'),(53,'tcp_mismatch','warn','string'),(53,'tcp_refuse','crit','string'),(53,'tcp_timeout','10','json'),(54,'users_cgreater','50','json'),(54,'users_wgreater','20','json');
+/*!40000 ALTER TABLE `icinga_command_var` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_endpoint`
+--
+
+DROP TABLE IF EXISTS `icinga_endpoint`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_endpoint` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `zone_id` int(10) unsigned DEFAULT NULL,
+  `object_name` varchar(255) NOT NULL,
+  `object_type` enum('object','template','external_object') NOT NULL,
+  `disabled` enum('y','n') NOT NULL DEFAULT 'n',
+  `host` varchar(255) DEFAULT NULL COMMENT 'IP address / hostname of remote node',
+  `port` smallint(5) unsigned DEFAULT NULL COMMENT '5665 if not set',
+  `log_duration` varchar(32) DEFAULT NULL COMMENT '1d if not set',
+  `apiuser_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `object_name` (`object_name`),
+  KEY `icinga_endpoint_zone` (`zone_id`),
+  KEY `icinga_apiuser` (`apiuser_id`),
+  CONSTRAINT `icinga_apiuser` FOREIGN KEY (`apiuser_id`) REFERENCES `icinga_apiuser` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `icinga_endpoint_zone` FOREIGN KEY (`zone_id`) REFERENCES `icinga_zone` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_endpoint`
+--
+
+LOCK TABLES `icinga_endpoint` WRITE;
+/*!40000 ALTER TABLE `icinga_endpoint` DISABLE KEYS */;
+INSERT INTO `icinga_endpoint` VALUES (1,1,'icinga2','external_object','n','icinga2',5665,'86400',1);
+/*!40000 ALTER TABLE `icinga_endpoint` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_endpoint_inheritance`
+--
+
+DROP TABLE IF EXISTS `icinga_endpoint_inheritance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_endpoint_inheritance` (
+  `endpoint_id` int(10) unsigned NOT NULL,
+  `parent_endpoint_id` int(10) unsigned NOT NULL,
+  `weight` mediumint(8) unsigned DEFAULT NULL,
+  PRIMARY KEY (`endpoint_id`,`parent_endpoint_id`),
+  UNIQUE KEY `unique_order` (`endpoint_id`,`weight`),
+  KEY `icinga_endpoint_inheritance_parent_endpoint` (`parent_endpoint_id`),
+  CONSTRAINT `icinga_endpoint_inheritance_endpoint` FOREIGN KEY (`endpoint_id`) REFERENCES `icinga_endpoint` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `icinga_endpoint_inheritance_parent_endpoint` FOREIGN KEY (`parent_endpoint_id`) REFERENCES `icinga_endpoint` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_endpoint_inheritance`
+--
+
+LOCK TABLES `icinga_endpoint_inheritance` WRITE;
+/*!40000 ALTER TABLE `icinga_endpoint_inheritance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_endpoint_inheritance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_host`
+--
+
+DROP TABLE IF EXISTS `icinga_host`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_host` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `object_name` varchar(255) NOT NULL,
+  `object_type` enum('object','template') NOT NULL,
+  `disabled` enum('y','n') NOT NULL DEFAULT 'n',
+  `display_name` varchar(255) DEFAULT NULL,
+  `address` varchar(64) DEFAULT NULL,
+  `address6` varchar(45) DEFAULT NULL,
+  `check_command_id` int(10) unsigned DEFAULT NULL,
+  `max_check_attempts` mediumint(8) unsigned DEFAULT NULL,
+  `check_period_id` int(10) unsigned DEFAULT NULL,
+  `check_interval` varchar(8) DEFAULT NULL,
+  `retry_interval` varchar(8) DEFAULT NULL,
+  `enable_notifications` enum('y','n') DEFAULT NULL,
+  `enable_active_checks` enum('y','n') DEFAULT NULL,
+  `enable_passive_checks` enum('y','n') DEFAULT NULL,
+  `enable_event_handler` enum('y','n') DEFAULT NULL,
+  `enable_flapping` enum('y','n') DEFAULT NULL,
+  `enable_perfdata` enum('y','n') DEFAULT NULL,
+  `event_command_id` int(10) unsigned DEFAULT NULL,
+  `flapping_threshold` smallint(5) unsigned DEFAULT NULL,
+  `volatile` enum('y','n') DEFAULT NULL,
+  `zone_id` int(10) unsigned DEFAULT NULL,
+  `command_endpoint_id` int(10) unsigned DEFAULT NULL,
+  `notes` text,
+  `notes_url` varchar(255) DEFAULT NULL,
+  `action_url` varchar(255) DEFAULT NULL,
+  `icon_image` varchar(255) DEFAULT NULL,
+  `icon_image_alt` varchar(255) DEFAULT NULL,
+  `has_agent` enum('y','n') DEFAULT NULL,
+  `master_should_connect` enum('y','n') DEFAULT NULL,
+  `accept_config` enum('y','n') DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `object_name` (`object_name`),
+  KEY `search_idx` (`display_name`),
+  KEY `icinga_host_zone` (`zone_id`),
+  KEY `icinga_host_check_period` (`check_period_id`),
+  KEY `icinga_host_check_command` (`check_command_id`),
+  KEY `icinga_host_event_command` (`event_command_id`),
+  KEY `icinga_host_command_endpoint` (`command_endpoint_id`),
+  CONSTRAINT `icinga_host_check_command` FOREIGN KEY (`check_command_id`) REFERENCES `icinga_command` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `icinga_host_check_period` FOREIGN KEY (`check_period_id`) REFERENCES `icinga_timeperiod` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `icinga_host_command_endpoint` FOREIGN KEY (`command_endpoint_id`) REFERENCES `icinga_endpoint` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `icinga_host_event_command` FOREIGN KEY (`event_command_id`) REFERENCES `icinga_command` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `icinga_host_zone` FOREIGN KEY (`zone_id`) REFERENCES `icinga_zone` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_host`
+--
+
+LOCK TABLES `icinga_host` WRITE;
+/*!40000 ALTER TABLE `icinga_host` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_host` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_host_field`
+--
+
+DROP TABLE IF EXISTS `icinga_host_field`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_host_field` (
+  `host_id` int(10) unsigned NOT NULL COMMENT 'Makes only sense for templates',
+  `datafield_id` int(10) unsigned NOT NULL,
+  `is_required` enum('y','n') NOT NULL,
+  PRIMARY KEY (`host_id`,`datafield_id`),
+  KEY `icinga_host_field_datafield` (`datafield_id`),
+  CONSTRAINT `icinga_host_field_datafield` FOREIGN KEY (`datafield_id`) REFERENCES `director_datafield` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `icinga_host_field_host` FOREIGN KEY (`host_id`) REFERENCES `icinga_host` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_host_field`
+--
+
+LOCK TABLES `icinga_host_field` WRITE;
+/*!40000 ALTER TABLE `icinga_host_field` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_host_field` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_host_inheritance`
+--
+
+DROP TABLE IF EXISTS `icinga_host_inheritance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_host_inheritance` (
+  `host_id` int(10) unsigned NOT NULL,
+  `parent_host_id` int(10) unsigned NOT NULL,
+  `weight` mediumint(8) unsigned DEFAULT NULL,
+  PRIMARY KEY (`host_id`,`parent_host_id`),
+  UNIQUE KEY `unique_order` (`host_id`,`weight`),
+  KEY `icinga_host_inheritance_parent_host` (`parent_host_id`),
+  CONSTRAINT `icinga_host_inheritance_host` FOREIGN KEY (`host_id`) REFERENCES `icinga_host` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `icinga_host_inheritance_parent_host` FOREIGN KEY (`parent_host_id`) REFERENCES `icinga_host` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_host_inheritance`
+--
+
+LOCK TABLES `icinga_host_inheritance` WRITE;
+/*!40000 ALTER TABLE `icinga_host_inheritance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_host_inheritance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_host_service`
+--
+
+DROP TABLE IF EXISTS `icinga_host_service`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_host_service` (
+  `host_id` int(10) unsigned NOT NULL,
+  `service_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`host_id`,`service_id`),
+  KEY `icinga_host_service_service` (`service_id`),
+  CONSTRAINT `icinga_host_service_host` FOREIGN KEY (`host_id`) REFERENCES `icinga_host` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `icinga_host_service_service` FOREIGN KEY (`service_id`) REFERENCES `icinga_service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_host_service`
+--
+
+LOCK TABLES `icinga_host_service` WRITE;
+/*!40000 ALTER TABLE `icinga_host_service` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_host_service` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_host_var`
+--
+
+DROP TABLE IF EXISTS `icinga_host_var`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_host_var` (
+  `host_id` int(10) unsigned NOT NULL,
+  `varname` varchar(255) NOT NULL,
+  `varvalue` text,
+  `format` enum('string','json','expression') DEFAULT NULL,
+  PRIMARY KEY (`host_id`,`varname`),
+  KEY `search_idx` (`varname`),
+  CONSTRAINT `icinga_host_var_host` FOREIGN KEY (`host_id`) REFERENCES `icinga_host` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_host_var`
+--
+
+LOCK TABLES `icinga_host_var` WRITE;
+/*!40000 ALTER TABLE `icinga_host_var` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_host_var` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_hostgroup`
+--
+
+DROP TABLE IF EXISTS `icinga_hostgroup`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_hostgroup` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `object_name` varchar(255) NOT NULL,
+  `object_type` enum('object','template') NOT NULL,
+  `disabled` enum('y','n') NOT NULL DEFAULT 'n',
+  `display_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `object_name` (`object_name`),
+  KEY `search_idx` (`display_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_hostgroup`
+--
+
+LOCK TABLES `icinga_hostgroup` WRITE;
+/*!40000 ALTER TABLE `icinga_hostgroup` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_hostgroup` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_hostgroup_host`
+--
+
+DROP TABLE IF EXISTS `icinga_hostgroup_host`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_hostgroup_host` (
+  `hostgroup_id` int(10) unsigned NOT NULL,
+  `host_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`hostgroup_id`,`host_id`),
+  KEY `icinga_hostgroup_host_host` (`host_id`),
+  CONSTRAINT `icinga_hostgroup_host_host` FOREIGN KEY (`host_id`) REFERENCES `icinga_host` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `icinga_hostgroup_host_hostgroup` FOREIGN KEY (`hostgroup_id`) REFERENCES `icinga_hostgroup` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_hostgroup_host`
+--
+
+LOCK TABLES `icinga_hostgroup_host` WRITE;
+/*!40000 ALTER TABLE `icinga_hostgroup_host` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_hostgroup_host` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_hostgroup_inheritance`
+--
+
+DROP TABLE IF EXISTS `icinga_hostgroup_inheritance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_hostgroup_inheritance` (
+  `hostgroup_id` int(10) unsigned NOT NULL,
+  `parent_hostgroup_id` int(10) unsigned NOT NULL,
+  `weight` mediumint(8) unsigned DEFAULT NULL,
+  PRIMARY KEY (`hostgroup_id`,`parent_hostgroup_id`),
+  UNIQUE KEY `unique_order` (`hostgroup_id`,`weight`),
+  KEY `icinga_hostgroup_inheritance_parent_hostgroup` (`parent_hostgroup_id`),
+  CONSTRAINT `icinga_hostgroup_inheritance_hostgroup` FOREIGN KEY (`hostgroup_id`) REFERENCES `icinga_hostgroup` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `icinga_hostgroup_inheritance_parent_hostgroup` FOREIGN KEY (`parent_hostgroup_id`) REFERENCES `icinga_hostgroup` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_hostgroup_inheritance`
+--
+
+LOCK TABLES `icinga_hostgroup_inheritance` WRITE;
+/*!40000 ALTER TABLE `icinga_hostgroup_inheritance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_hostgroup_inheritance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_hostgroup_parent`
+--
+
+DROP TABLE IF EXISTS `icinga_hostgroup_parent`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_hostgroup_parent` (
+  `hostgroup_id` int(10) unsigned NOT NULL,
+  `parent_hostgroup_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`hostgroup_id`,`parent_hostgroup_id`),
+  KEY `icinga_hostgroup_parent_parent` (`parent_hostgroup_id`),
+  CONSTRAINT `icinga_hostgroup_parent_hostgroup` FOREIGN KEY (`hostgroup_id`) REFERENCES `icinga_hostgroup` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `icinga_hostgroup_parent_parent` FOREIGN KEY (`parent_hostgroup_id`) REFERENCES `icinga_hostgroup` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_hostgroup_parent`
+--
+
+LOCK TABLES `icinga_hostgroup_parent` WRITE;
+/*!40000 ALTER TABLE `icinga_hostgroup_parent` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_hostgroup_parent` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_notification`
+--
+
+DROP TABLE IF EXISTS `icinga_notification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_notification` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `object_name` varchar(255) DEFAULT NULL,
+  `object_type` enum('object','template','apply') NOT NULL,
+  `disabled` enum('y','n') NOT NULL DEFAULT 'n',
+  `host_id` int(10) unsigned DEFAULT NULL,
+  `service_id` int(10) unsigned DEFAULT NULL,
+  `times_begin` int(10) unsigned DEFAULT NULL,
+  `times_end` int(10) unsigned DEFAULT NULL,
+  `notification_interval` int(10) unsigned DEFAULT NULL,
+  `command_id` int(10) unsigned DEFAULT NULL,
+  `period_id` int(10) unsigned DEFAULT NULL,
+  `zone_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `icinga_notification_host` (`host_id`),
+  KEY `icinga_notification_service` (`service_id`),
+  KEY `icinga_notification_command` (`command_id`),
+  KEY `icinga_notification_period` (`period_id`),
+  KEY `icinga_notification_zone` (`zone_id`),
+  CONSTRAINT `icinga_notification_command` FOREIGN KEY (`command_id`) REFERENCES `icinga_command` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `icinga_notification_host` FOREIGN KEY (`host_id`) REFERENCES `icinga_host` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `icinga_notification_period` FOREIGN KEY (`period_id`) REFERENCES `icinga_timeperiod` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `icinga_notification_service` FOREIGN KEY (`service_id`) REFERENCES `icinga_service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `icinga_notification_zone` FOREIGN KEY (`zone_id`) REFERENCES `icinga_zone` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_notification`
+--
+
+LOCK TABLES `icinga_notification` WRITE;
+/*!40000 ALTER TABLE `icinga_notification` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_notification` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_notification_assignment`
+--
+
+DROP TABLE IF EXISTS `icinga_notification_assignment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_notification_assignment` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `notification_id` int(10) unsigned NOT NULL,
+  `filter_string` text NOT NULL,
+  `assign_type` enum('assign','ignore') NOT NULL DEFAULT 'assign',
+  PRIMARY KEY (`id`),
+  KEY `icinga_notification_assignment` (`notification_id`),
+  CONSTRAINT `icinga_notification_assignment` FOREIGN KEY (`notification_id`) REFERENCES `icinga_notification` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_notification_assignment`
+--
+
+LOCK TABLES `icinga_notification_assignment` WRITE;
+/*!40000 ALTER TABLE `icinga_notification_assignment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_notification_assignment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_notification_inheritance`
+--
+
+DROP TABLE IF EXISTS `icinga_notification_inheritance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_notification_inheritance` (
+  `notification_id` int(10) unsigned NOT NULL,
+  `parent_notification_id` int(10) unsigned NOT NULL,
+  `weight` mediumint(8) unsigned DEFAULT NULL,
+  PRIMARY KEY (`notification_id`,`parent_notification_id`),
+  UNIQUE KEY `unique_order` (`notification_id`,`weight`),
+  KEY `icinga_notification_inheritance_parent_notification` (`parent_notification_id`),
+  CONSTRAINT `icinga_notification_inheritance_notification` FOREIGN KEY (`notification_id`) REFERENCES `icinga_notification` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `icinga_notification_inheritance_parent_notification` FOREIGN KEY (`parent_notification_id`) REFERENCES `icinga_notification` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_notification_inheritance`
+--
+
+LOCK TABLES `icinga_notification_inheritance` WRITE;
+/*!40000 ALTER TABLE `icinga_notification_inheritance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_notification_inheritance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_notification_states_set`
+--
+
+DROP TABLE IF EXISTS `icinga_notification_states_set`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_notification_states_set` (
+  `notification_id` int(10) unsigned NOT NULL,
+  `property` enum('OK','Warning','Critical','Unknown','Up','Down') NOT NULL,
+  `merge_behaviour` enum('override','extend','blacklist') NOT NULL DEFAULT 'override' COMMENT 'override: = [], extend: += [], blacklist: -= []',
+  PRIMARY KEY (`notification_id`,`property`,`merge_behaviour`),
+  CONSTRAINT `icinga_notification_states_set_notification` FOREIGN KEY (`notification_id`) REFERENCES `icinga_notification` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_notification_states_set`
+--
+
+LOCK TABLES `icinga_notification_states_set` WRITE;
+/*!40000 ALTER TABLE `icinga_notification_states_set` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_notification_states_set` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_notification_types_set`
+--
+
+DROP TABLE IF EXISTS `icinga_notification_types_set`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_notification_types_set` (
+  `notification_id` int(10) unsigned NOT NULL,
+  `property` enum('DowntimeStart','DowntimeEnd','DowntimeRemoved','Custom','Acknowledgement','Problem','Recovery','FlappingStart','FlappingEnd') NOT NULL,
+  `merge_behaviour` enum('override','extend','blacklist') NOT NULL DEFAULT 'override' COMMENT 'override: = [], extend: += [], blacklist: -= []',
+  PRIMARY KEY (`notification_id`,`property`,`merge_behaviour`),
+  CONSTRAINT `icinga_notification_types_set_notification` FOREIGN KEY (`notification_id`) REFERENCES `icinga_notification` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_notification_types_set`
+--
+
+LOCK TABLES `icinga_notification_types_set` WRITE;
+/*!40000 ALTER TABLE `icinga_notification_types_set` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_notification_types_set` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_notification_user`
+--
+
+DROP TABLE IF EXISTS `icinga_notification_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_notification_user` (
+  `notification_id` int(10) unsigned NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`notification_id`,`user_id`),
+  KEY `icinga_notification_user_user` (`user_id`),
+  CONSTRAINT `icinga_notification_user_notification` FOREIGN KEY (`notification_id`) REFERENCES `icinga_notification` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `icinga_notification_user_user` FOREIGN KEY (`user_id`) REFERENCES `icinga_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_notification_user`
+--
+
+LOCK TABLES `icinga_notification_user` WRITE;
+/*!40000 ALTER TABLE `icinga_notification_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_notification_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_notification_usergroup`
+--
+
+DROP TABLE IF EXISTS `icinga_notification_usergroup`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_notification_usergroup` (
+  `notification_id` int(10) unsigned NOT NULL,
+  `usergroup_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`notification_id`,`usergroup_id`),
+  KEY `icinga_notification_usergroup_usergroup` (`usergroup_id`),
+  CONSTRAINT `icinga_notification_usergroup_notification` FOREIGN KEY (`notification_id`) REFERENCES `icinga_notification` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `icinga_notification_usergroup_usergroup` FOREIGN KEY (`usergroup_id`) REFERENCES `icinga_usergroup` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_notification_usergroup`
+--
+
+LOCK TABLES `icinga_notification_usergroup` WRITE;
+/*!40000 ALTER TABLE `icinga_notification_usergroup` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_notification_usergroup` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_notification_var`
+--
+
+DROP TABLE IF EXISTS `icinga_notification_var`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_notification_var` (
+  `notification_id` int(10) unsigned NOT NULL,
+  `varname` varchar(255) NOT NULL,
+  `varvalue` text,
+  `format` enum('string','json','expression') DEFAULT NULL,
+  PRIMARY KEY (`notification_id`,`varname`),
+  KEY `search_idx` (`varname`),
+  CONSTRAINT `icinga_notification_var_notification` FOREIGN KEY (`notification_id`) REFERENCES `icinga_notification` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_notification_var`
+--
+
+LOCK TABLES `icinga_notification_var` WRITE;
+/*!40000 ALTER TABLE `icinga_notification_var` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_notification_var` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_service`
+--
+
+DROP TABLE IF EXISTS `icinga_service`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_service` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `object_name` varchar(255) NOT NULL,
+  `object_type` enum('object','template','apply') NOT NULL,
+  `disabled` enum('y','n') NOT NULL DEFAULT 'n',
+  `display_name` varchar(255) DEFAULT NULL,
+  `host_id` int(10) unsigned DEFAULT NULL,
+  `check_command_id` int(10) unsigned DEFAULT NULL,
+  `max_check_attempts` mediumint(8) unsigned DEFAULT NULL,
+  `check_period_id` int(10) unsigned DEFAULT NULL,
+  `check_interval` varchar(8) DEFAULT NULL,
+  `retry_interval` varchar(8) DEFAULT NULL,
+  `enable_notifications` enum('y','n') DEFAULT NULL,
+  `enable_active_checks` enum('y','n') DEFAULT NULL,
+  `enable_passive_checks` enum('y','n') DEFAULT NULL,
+  `enable_event_handler` enum('y','n') DEFAULT NULL,
+  `enable_flapping` enum('y','n') DEFAULT NULL,
+  `enable_perfdata` enum('y','n') DEFAULT NULL,
+  `event_command_id` int(10) unsigned DEFAULT NULL,
+  `flapping_threshold` smallint(5) unsigned DEFAULT NULL,
+  `volatile` enum('y','n') DEFAULT NULL,
+  `zone_id` int(10) unsigned DEFAULT NULL,
+  `command_endpoint_id` int(10) unsigned DEFAULT NULL,
+  `notes` text,
+  `notes_url` varchar(255) DEFAULT NULL,
+  `action_url` varchar(255) DEFAULT NULL,
+  `icon_image` varchar(255) DEFAULT NULL,
+  `icon_image_alt` varchar(255) DEFAULT NULL,
+  `use_agent` enum('y','n') DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `object_key` (`object_name`,`host_id`),
+  KEY `icinga_service_host` (`host_id`),
+  KEY `icinga_service_zone` (`zone_id`),
+  KEY `icinga_service_check_period` (`check_period_id`),
+  KEY `icinga_service_check_command` (`check_command_id`),
+  KEY `icinga_service_event_command` (`event_command_id`),
+  KEY `icinga_service_command_endpoint` (`command_endpoint_id`),
+  CONSTRAINT `icinga_service_check_command` FOREIGN KEY (`check_command_id`) REFERENCES `icinga_command` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `icinga_service_check_period` FOREIGN KEY (`check_period_id`) REFERENCES `icinga_timeperiod` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `icinga_service_command_endpoint` FOREIGN KEY (`command_endpoint_id`) REFERENCES `icinga_endpoint` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `icinga_service_event_command` FOREIGN KEY (`event_command_id`) REFERENCES `icinga_command` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `icinga_service_host` FOREIGN KEY (`host_id`) REFERENCES `icinga_host` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `icinga_service_zone` FOREIGN KEY (`zone_id`) REFERENCES `icinga_zone` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_service`
+--
+
+LOCK TABLES `icinga_service` WRITE;
+/*!40000 ALTER TABLE `icinga_service` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_service` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_service_assignment`
+--
+
+DROP TABLE IF EXISTS `icinga_service_assignment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_service_assignment` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `service_id` int(10) unsigned NOT NULL,
+  `filter_string` text NOT NULL,
+  `assign_type` enum('assign','ignore') NOT NULL DEFAULT 'assign',
+  PRIMARY KEY (`id`),
+  KEY `icinga_service_assignment` (`service_id`),
+  CONSTRAINT `icinga_service_assignment` FOREIGN KEY (`service_id`) REFERENCES `icinga_service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_service_assignment`
+--
+
+LOCK TABLES `icinga_service_assignment` WRITE;
+/*!40000 ALTER TABLE `icinga_service_assignment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_service_assignment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_service_field`
+--
+
+DROP TABLE IF EXISTS `icinga_service_field`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_service_field` (
+  `service_id` int(10) unsigned NOT NULL COMMENT 'Makes only sense for templates',
+  `datafield_id` int(10) unsigned NOT NULL,
+  `is_required` enum('y','n') NOT NULL,
+  PRIMARY KEY (`service_id`,`datafield_id`),
+  KEY `icinga_service_field_datafield` (`datafield_id`),
+  CONSTRAINT `icinga_service_field_datafield` FOREIGN KEY (`datafield_id`) REFERENCES `director_datafield` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `icinga_service_field_service` FOREIGN KEY (`service_id`) REFERENCES `icinga_service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_service_field`
+--
+
+LOCK TABLES `icinga_service_field` WRITE;
+/*!40000 ALTER TABLE `icinga_service_field` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_service_field` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_service_inheritance`
+--
+
+DROP TABLE IF EXISTS `icinga_service_inheritance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_service_inheritance` (
+  `service_id` int(10) unsigned NOT NULL,
+  `parent_service_id` int(10) unsigned NOT NULL,
+  `weight` mediumint(8) unsigned DEFAULT NULL,
+  PRIMARY KEY (`service_id`,`parent_service_id`),
+  UNIQUE KEY `unique_order` (`service_id`,`weight`),
+  KEY `icinga_service_inheritance_parent_service` (`parent_service_id`),
+  CONSTRAINT `icinga_service_inheritance_parent_service` FOREIGN KEY (`parent_service_id`) REFERENCES `icinga_service` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `icinga_service_inheritance_service` FOREIGN KEY (`service_id`) REFERENCES `icinga_service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_service_inheritance`
+--
+
+LOCK TABLES `icinga_service_inheritance` WRITE;
+/*!40000 ALTER TABLE `icinga_service_inheritance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_service_inheritance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_service_var`
+--
+
+DROP TABLE IF EXISTS `icinga_service_var`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_service_var` (
+  `service_id` int(10) unsigned NOT NULL,
+  `varname` varchar(255) NOT NULL,
+  `varvalue` text,
+  `format` enum('string','json','expression') DEFAULT NULL,
+  PRIMARY KEY (`service_id`,`varname`),
+  KEY `search_idx` (`varname`),
+  CONSTRAINT `icinga_service_var_service` FOREIGN KEY (`service_id`) REFERENCES `icinga_service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_service_var`
+--
+
+LOCK TABLES `icinga_service_var` WRITE;
+/*!40000 ALTER TABLE `icinga_service_var` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_service_var` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_servicegroup`
+--
+
+DROP TABLE IF EXISTS `icinga_servicegroup`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_servicegroup` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `object_name` varchar(255) DEFAULT NULL,
+  `object_type` enum('object','template') NOT NULL,
+  `disabled` enum('y','n') NOT NULL DEFAULT 'n',
+  `display_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `object_name` (`object_name`),
+  KEY `search_idx` (`display_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_servicegroup`
+--
+
+LOCK TABLES `icinga_servicegroup` WRITE;
+/*!40000 ALTER TABLE `icinga_servicegroup` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_servicegroup` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_servicegroup_inheritance`
+--
+
+DROP TABLE IF EXISTS `icinga_servicegroup_inheritance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_servicegroup_inheritance` (
+  `servicegroup_id` int(10) unsigned NOT NULL,
+  `parent_servicegroup_id` int(10) unsigned NOT NULL,
+  `weight` mediumint(8) unsigned DEFAULT NULL,
+  PRIMARY KEY (`servicegroup_id`,`parent_servicegroup_id`),
+  UNIQUE KEY `unique_order` (`servicegroup_id`,`weight`),
+  KEY `icinga_servicegroup_inheritance_parent_servicegroup` (`parent_servicegroup_id`),
+  CONSTRAINT `icinga_servicegroup_inheritance_parent_servicegroup` FOREIGN KEY (`parent_servicegroup_id`) REFERENCES `icinga_servicegroup` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `icinga_servicegroup_inheritance_servicegroup` FOREIGN KEY (`servicegroup_id`) REFERENCES `icinga_servicegroup` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_servicegroup_inheritance`
+--
+
+LOCK TABLES `icinga_servicegroup_inheritance` WRITE;
+/*!40000 ALTER TABLE `icinga_servicegroup_inheritance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_servicegroup_inheritance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_servicegroup_service`
+--
+
+DROP TABLE IF EXISTS `icinga_servicegroup_service`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_servicegroup_service` (
+  `servicegroup_id` int(10) unsigned NOT NULL,
+  `service_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`servicegroup_id`,`service_id`),
+  KEY `icinga_servicegroup_service_service` (`service_id`),
+  CONSTRAINT `icinga_servicegroup_service_service` FOREIGN KEY (`service_id`) REFERENCES `icinga_service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `icinga_servicegroup_service_servicegroup` FOREIGN KEY (`servicegroup_id`) REFERENCES `icinga_servicegroup` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_servicegroup_service`
+--
+
+LOCK TABLES `icinga_servicegroup_service` WRITE;
+/*!40000 ALTER TABLE `icinga_servicegroup_service` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_servicegroup_service` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_timeperiod`
+--
+
+DROP TABLE IF EXISTS `icinga_timeperiod`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_timeperiod` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `object_name` varchar(255) NOT NULL,
+  `display_name` varchar(255) DEFAULT NULL,
+  `update_method` varchar(64) DEFAULT NULL COMMENT 'Usually LegacyTimePeriod',
+  `zone_id` int(10) unsigned DEFAULT NULL,
+  `object_type` enum('object','template') NOT NULL,
+  `disabled` enum('y','n') NOT NULL DEFAULT 'n',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `object_name` (`object_name`,`zone_id`),
+  KEY `icinga_timeperiod_zone` (`zone_id`),
+  CONSTRAINT `icinga_timeperiod_zone` FOREIGN KEY (`zone_id`) REFERENCES `icinga_zone` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_timeperiod`
+--
+
+LOCK TABLES `icinga_timeperiod` WRITE;
+/*!40000 ALTER TABLE `icinga_timeperiod` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_timeperiod` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_timeperiod_inheritance`
+--
+
+DROP TABLE IF EXISTS `icinga_timeperiod_inheritance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_timeperiod_inheritance` (
+  `timeperiod_id` int(10) unsigned NOT NULL,
+  `parent_timeperiod_id` int(10) unsigned NOT NULL,
+  `weight` mediumint(8) unsigned DEFAULT NULL,
+  PRIMARY KEY (`timeperiod_id`,`parent_timeperiod_id`),
+  UNIQUE KEY `unique_order` (`timeperiod_id`,`weight`),
+  KEY `icinga_timeperiod_inheritance_parent_timeperiod` (`parent_timeperiod_id`),
+  CONSTRAINT `icinga_timeperiod_inheritance_parent_timeperiod` FOREIGN KEY (`parent_timeperiod_id`) REFERENCES `icinga_timeperiod` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `icinga_timeperiod_inheritance_timeperiod` FOREIGN KEY (`timeperiod_id`) REFERENCES `icinga_timeperiod` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_timeperiod_inheritance`
+--
+
+LOCK TABLES `icinga_timeperiod_inheritance` WRITE;
+/*!40000 ALTER TABLE `icinga_timeperiod_inheritance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_timeperiod_inheritance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_timeperiod_range`
+--
+
+DROP TABLE IF EXISTS `icinga_timeperiod_range`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_timeperiod_range` (
+  `timeperiod_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `timeperiod_key` varchar(255) NOT NULL COMMENT 'monday, ...',
+  `timeperiod_value` varchar(255) NOT NULL COMMENT '00:00-24:00, ...',
+  `range_type` enum('include','exclude') NOT NULL DEFAULT 'include' COMMENT 'include -> ranges {}, exclude ranges_ignore {} - not yet',
+  `merge_behaviour` enum('set','add','substract') NOT NULL DEFAULT 'set' COMMENT 'set -> = {}, add -> += {}, substract -> -= {}',
+  PRIMARY KEY (`timeperiod_id`,`range_type`,`timeperiod_key`),
+  CONSTRAINT `icinga_timeperiod_range_timeperiod` FOREIGN KEY (`timeperiod_id`) REFERENCES `icinga_timeperiod` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_timeperiod_range`
+--
+
+LOCK TABLES `icinga_timeperiod_range` WRITE;
+/*!40000 ALTER TABLE `icinga_timeperiod_range` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_timeperiod_range` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_user`
+--
+
+DROP TABLE IF EXISTS `icinga_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_user` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `object_name` varchar(255) DEFAULT NULL,
+  `object_type` enum('object','template') NOT NULL,
+  `disabled` enum('y','n') NOT NULL DEFAULT 'n',
+  `display_name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `pager` varchar(255) DEFAULT NULL,
+  `enable_notifications` enum('y','n') DEFAULT NULL,
+  `period_id` int(10) unsigned DEFAULT NULL,
+  `zone_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `object_name` (`object_name`,`zone_id`),
+  KEY `icinga_user_zone` (`zone_id`),
+  CONSTRAINT `icinga_user_zone` FOREIGN KEY (`zone_id`) REFERENCES `icinga_zone` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_user`
+--
+
+LOCK TABLES `icinga_user` WRITE;
+/*!40000 ALTER TABLE `icinga_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_user_field`
+--
+
+DROP TABLE IF EXISTS `icinga_user_field`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_user_field` (
+  `user_id` int(10) unsigned NOT NULL COMMENT 'Makes only sense for templates',
+  `datafield_id` int(10) unsigned NOT NULL,
+  `is_required` enum('y','n') NOT NULL,
+  PRIMARY KEY (`user_id`,`datafield_id`),
+  KEY `icinga_user_field_datafield` (`datafield_id`),
+  CONSTRAINT `icinga_user_field_datafield` FOREIGN KEY (`datafield_id`) REFERENCES `director_datafield` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `icinga_user_field_user` FOREIGN KEY (`user_id`) REFERENCES `icinga_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_user_field`
+--
+
+LOCK TABLES `icinga_user_field` WRITE;
+/*!40000 ALTER TABLE `icinga_user_field` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_user_field` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_user_inheritance`
+--
+
+DROP TABLE IF EXISTS `icinga_user_inheritance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_user_inheritance` (
+  `user_id` int(10) unsigned NOT NULL,
+  `parent_user_id` int(10) unsigned NOT NULL,
+  `weight` mediumint(8) unsigned DEFAULT NULL,
+  PRIMARY KEY (`user_id`,`parent_user_id`),
+  UNIQUE KEY `unique_order` (`user_id`,`weight`),
+  KEY `icinga_user_inheritance_parent_user` (`parent_user_id`),
+  CONSTRAINT `icinga_user_inheritance_parent_user` FOREIGN KEY (`parent_user_id`) REFERENCES `icinga_user` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `icinga_user_inheritance_user` FOREIGN KEY (`user_id`) REFERENCES `icinga_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_user_inheritance`
+--
+
+LOCK TABLES `icinga_user_inheritance` WRITE;
+/*!40000 ALTER TABLE `icinga_user_inheritance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_user_inheritance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_user_states_set`
+--
+
+DROP TABLE IF EXISTS `icinga_user_states_set`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_user_states_set` (
+  `user_id` int(10) unsigned NOT NULL,
+  `property` enum('OK','Warning','Critical','Unknown','Up','Down') NOT NULL,
+  `merge_behaviour` enum('override','extend','blacklist') NOT NULL DEFAULT 'override' COMMENT 'override: = [], extend: += [], blacklist: -= []',
+  PRIMARY KEY (`user_id`,`property`,`merge_behaviour`),
+  CONSTRAINT `icinga_user_states_set_user` FOREIGN KEY (`user_id`) REFERENCES `icinga_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_user_states_set`
+--
+
+LOCK TABLES `icinga_user_states_set` WRITE;
+/*!40000 ALTER TABLE `icinga_user_states_set` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_user_states_set` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_user_types_set`
+--
+
+DROP TABLE IF EXISTS `icinga_user_types_set`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_user_types_set` (
+  `user_id` int(10) unsigned NOT NULL,
+  `property` enum('DowntimeStart','DowntimeEnd','DowntimeRemoved','Custom','Acknowledgement','Problem','Recovery','FlappingStart','FlappingEnd') NOT NULL,
+  `merge_behaviour` enum('override','extend','blacklist') NOT NULL DEFAULT 'override' COMMENT 'override: = [], extend: += [], blacklist: -= []',
+  PRIMARY KEY (`user_id`,`property`,`merge_behaviour`),
+  CONSTRAINT `icinga_user_types_set_user` FOREIGN KEY (`user_id`) REFERENCES `icinga_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_user_types_set`
+--
+
+LOCK TABLES `icinga_user_types_set` WRITE;
+/*!40000 ALTER TABLE `icinga_user_types_set` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_user_types_set` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_user_var`
+--
+
+DROP TABLE IF EXISTS `icinga_user_var`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_user_var` (
+  `user_id` int(10) unsigned NOT NULL,
+  `varname` varchar(255) NOT NULL,
+  `varvalue` text,
+  `format` enum('string','json','expression') NOT NULL DEFAULT 'string',
+  PRIMARY KEY (`user_id`,`varname`),
+  KEY `search_idx` (`varname`),
+  CONSTRAINT `icinga_user_var_user` FOREIGN KEY (`user_id`) REFERENCES `icinga_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_user_var`
+--
+
+LOCK TABLES `icinga_user_var` WRITE;
+/*!40000 ALTER TABLE `icinga_user_var` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_user_var` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_usergroup`
+--
+
+DROP TABLE IF EXISTS `icinga_usergroup`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_usergroup` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `object_name` varchar(255) NOT NULL,
+  `object_type` enum('object','template') NOT NULL,
+  `disabled` enum('y','n') NOT NULL DEFAULT 'n',
+  `display_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `object_name` (`object_name`),
+  KEY `search_idx` (`display_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_usergroup`
+--
+
+LOCK TABLES `icinga_usergroup` WRITE;
+/*!40000 ALTER TABLE `icinga_usergroup` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_usergroup` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_usergroup_inheritance`
+--
+
+DROP TABLE IF EXISTS `icinga_usergroup_inheritance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_usergroup_inheritance` (
+  `usergroup_id` int(10) unsigned NOT NULL,
+  `parent_usergroup_id` int(10) unsigned NOT NULL,
+  `weight` mediumint(8) unsigned DEFAULT NULL,
+  PRIMARY KEY (`usergroup_id`,`parent_usergroup_id`),
+  UNIQUE KEY `unique_order` (`usergroup_id`,`weight`),
+  KEY `icinga_usergroup_inheritance_parent_usergroup` (`parent_usergroup_id`),
+  CONSTRAINT `icinga_usergroup_inheritance_parent_usergroup` FOREIGN KEY (`parent_usergroup_id`) REFERENCES `icinga_usergroup` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `icinga_usergroup_inheritance_usergroup` FOREIGN KEY (`usergroup_id`) REFERENCES `icinga_usergroup` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_usergroup_inheritance`
+--
+
+LOCK TABLES `icinga_usergroup_inheritance` WRITE;
+/*!40000 ALTER TABLE `icinga_usergroup_inheritance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_usergroup_inheritance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_usergroup_parent`
+--
+
+DROP TABLE IF EXISTS `icinga_usergroup_parent`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_usergroup_parent` (
+  `usergroup_id` int(10) unsigned NOT NULL,
+  `parent_usergroup_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`usergroup_id`,`parent_usergroup_id`),
+  KEY `icinga_usergroup_parent_parent` (`parent_usergroup_id`),
+  CONSTRAINT `icinga_usergroup_parent_parent` FOREIGN KEY (`parent_usergroup_id`) REFERENCES `icinga_usergroup` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `icinga_usergroup_parent_usergroup` FOREIGN KEY (`usergroup_id`) REFERENCES `icinga_usergroup` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_usergroup_parent`
+--
+
+LOCK TABLES `icinga_usergroup_parent` WRITE;
+/*!40000 ALTER TABLE `icinga_usergroup_parent` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_usergroup_parent` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_usergroup_user`
+--
+
+DROP TABLE IF EXISTS `icinga_usergroup_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_usergroup_user` (
+  `usergroup_id` int(10) unsigned NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`usergroup_id`,`user_id`),
+  KEY `icinga_usergroup_user_user` (`user_id`),
+  CONSTRAINT `icinga_usergroup_user_user` FOREIGN KEY (`user_id`) REFERENCES `icinga_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `icinga_usergroup_user_usergroup` FOREIGN KEY (`usergroup_id`) REFERENCES `icinga_usergroup` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_usergroup_user`
+--
+
+LOCK TABLES `icinga_usergroup_user` WRITE;
+/*!40000 ALTER TABLE `icinga_usergroup_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_usergroup_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_zone`
+--
+
+DROP TABLE IF EXISTS `icinga_zone`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_zone` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `parent_id` int(10) unsigned DEFAULT NULL,
+  `object_name` varchar(255) NOT NULL,
+  `object_type` enum('object','template','external_object') NOT NULL,
+  `disabled` enum('y','n') NOT NULL DEFAULT 'n',
+  `is_global` enum('y','n') NOT NULL DEFAULT 'n',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `object_name` (`object_name`),
+  KEY `icinga_zone_parent` (`parent_id`),
+  CONSTRAINT `icinga_zone_parent` FOREIGN KEY (`parent_id`) REFERENCES `icinga_zone` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_zone`
+--
+
+LOCK TABLES `icinga_zone` WRITE;
+/*!40000 ALTER TABLE `icinga_zone` DISABLE KEYS */;
+INSERT INTO `icinga_zone` VALUES (1,NULL,'icinga2','external_object','n','n');
+/*!40000 ALTER TABLE `icinga_zone` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `icinga_zone_inheritance`
+--
+
+DROP TABLE IF EXISTS `icinga_zone_inheritance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `icinga_zone_inheritance` (
+  `zone_id` int(10) unsigned NOT NULL,
+  `parent_zone_id` int(10) unsigned NOT NULL,
+  `weight` mediumint(8) unsigned DEFAULT NULL,
+  PRIMARY KEY (`zone_id`,`parent_zone_id`),
+  UNIQUE KEY `unique_order` (`zone_id`,`weight`),
+  KEY `icinga_zone_inheritance_parent_zone` (`parent_zone_id`),
+  CONSTRAINT `icinga_zone_inheritance_parent_zone` FOREIGN KEY (`parent_zone_id`) REFERENCES `icinga_zone` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `icinga_zone_inheritance_zone` FOREIGN KEY (`zone_id`) REFERENCES `icinga_zone` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `icinga_zone_inheritance`
+--
+
+LOCK TABLES `icinga_zone_inheritance` WRITE;
+/*!40000 ALTER TABLE `icinga_zone_inheritance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `icinga_zone_inheritance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `import_row_modifier`
+--
+
+DROP TABLE IF EXISTS `import_row_modifier`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `import_row_modifier` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `source_id` int(10) unsigned NOT NULL,
+  `property_name` varchar(255) NOT NULL,
+  `provider_class` varchar(72) NOT NULL,
+  `priority` smallint(5) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `search_idx` (`property_name`),
+  KEY `row_modifier_import_source` (`source_id`),
+  CONSTRAINT `row_modifier_import_source` FOREIGN KEY (`source_id`) REFERENCES `import_source` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `import_row_modifier`
+--
+
+LOCK TABLES `import_row_modifier` WRITE;
+/*!40000 ALTER TABLE `import_row_modifier` DISABLE KEYS */;
+/*!40000 ALTER TABLE `import_row_modifier` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `import_row_modifier_setting`
+--
+
+DROP TABLE IF EXISTS `import_row_modifier_setting`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `import_row_modifier_setting` (
+  `row_modifier_id` int(10) unsigned NOT NULL,
+  `setting_name` varchar(64) NOT NULL,
+  `setting_value` text,
+  PRIMARY KEY (`row_modifier_id`,`setting_name`),
+  CONSTRAINT `row_modifier_settings` FOREIGN KEY (`row_modifier_id`) REFERENCES `import_row_modifier` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `import_row_modifier_setting`
+--
+
+LOCK TABLES `import_row_modifier_setting` WRITE;
+/*!40000 ALTER TABLE `import_row_modifier_setting` DISABLE KEYS */;
+/*!40000 ALTER TABLE `import_row_modifier_setting` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `import_run`
+--
+
+DROP TABLE IF EXISTS `import_run`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `import_run` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `source_id` int(10) unsigned NOT NULL,
+  `rowset_checksum` varbinary(20) DEFAULT NULL,
+  `start_time` datetime NOT NULL,
+  `end_time` datetime DEFAULT NULL,
+  `succeeded` enum('y','n') DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `import_run_source` (`source_id`),
+  KEY `import_run_rowset` (`rowset_checksum`),
+  CONSTRAINT `import_run_rowset` FOREIGN KEY (`rowset_checksum`) REFERENCES `imported_rowset` (`checksum`) ON UPDATE CASCADE,
+  CONSTRAINT `import_run_source` FOREIGN KEY (`source_id`) REFERENCES `import_source` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `import_run`
+--
+
+LOCK TABLES `import_run` WRITE;
+/*!40000 ALTER TABLE `import_run` DISABLE KEYS */;
+/*!40000 ALTER TABLE `import_run` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `import_source`
+--
+
+DROP TABLE IF EXISTS `import_source`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `import_source` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `source_name` varchar(64) NOT NULL,
+  `key_column` varchar(64) NOT NULL,
+  `provider_class` varchar(72) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `search_idx` (`key_column`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `import_source`
+--
+
+LOCK TABLES `import_source` WRITE;
+/*!40000 ALTER TABLE `import_source` DISABLE KEYS */;
+/*!40000 ALTER TABLE `import_source` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `import_source_setting`
+--
+
+DROP TABLE IF EXISTS `import_source_setting`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `import_source_setting` (
+  `source_id` int(10) unsigned NOT NULL,
+  `setting_name` varchar(64) NOT NULL,
+  `setting_value` text NOT NULL,
+  PRIMARY KEY (`source_id`,`setting_name`),
+  CONSTRAINT `import_source_settings_source` FOREIGN KEY (`source_id`) REFERENCES `import_source` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `import_source_setting`
+--
+
+LOCK TABLES `import_source_setting` WRITE;
+/*!40000 ALTER TABLE `import_source_setting` DISABLE KEYS */;
+/*!40000 ALTER TABLE `import_source_setting` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `imported_property`
+--
+
+DROP TABLE IF EXISTS `imported_property`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `imported_property` (
+  `checksum` varbinary(20) NOT NULL,
+  `property_name` varchar(64) NOT NULL,
+  `property_value` mediumtext NOT NULL,
+  `format` enum('string','expression','json') DEFAULT NULL,
+  PRIMARY KEY (`checksum`),
+  KEY `search_idx` (`property_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `imported_property`
+--
+
+LOCK TABLES `imported_property` WRITE;
+/*!40000 ALTER TABLE `imported_property` DISABLE KEYS */;
+/*!40000 ALTER TABLE `imported_property` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `imported_row`
+--
+
+DROP TABLE IF EXISTS `imported_row`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `imported_row` (
+  `checksum` varbinary(20) NOT NULL COMMENT 'sha1(object_name;property_checksum;...)',
+  `object_name` varchar(255) NOT NULL,
+  PRIMARY KEY (`checksum`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `imported_row`
+--
+
+LOCK TABLES `imported_row` WRITE;
+/*!40000 ALTER TABLE `imported_row` DISABLE KEYS */;
+/*!40000 ALTER TABLE `imported_row` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `imported_row_property`
+--
+
+DROP TABLE IF EXISTS `imported_row_property`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `imported_row_property` (
+  `row_checksum` varbinary(20) NOT NULL,
+  `property_checksum` varbinary(20) NOT NULL,
+  PRIMARY KEY (`row_checksum`,`property_checksum`),
+  KEY `imported_row_property_property` (`property_checksum`),
+  CONSTRAINT `imported_row_property_property` FOREIGN KEY (`property_checksum`) REFERENCES `imported_property` (`checksum`) ON UPDATE CASCADE,
+  CONSTRAINT `imported_row_property_row` FOREIGN KEY (`row_checksum`) REFERENCES `imported_row` (`checksum`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `imported_row_property`
+--
+
+LOCK TABLES `imported_row_property` WRITE;
+/*!40000 ALTER TABLE `imported_row_property` DISABLE KEYS */;
+/*!40000 ALTER TABLE `imported_row_property` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `imported_rowset`
+--
+
+DROP TABLE IF EXISTS `imported_rowset`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `imported_rowset` (
+  `checksum` varbinary(20) NOT NULL,
+  PRIMARY KEY (`checksum`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `imported_rowset`
+--
+
+LOCK TABLES `imported_rowset` WRITE;
+/*!40000 ALTER TABLE `imported_rowset` DISABLE KEYS */;
+/*!40000 ALTER TABLE `imported_rowset` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `imported_rowset_row`
+--
+
+DROP TABLE IF EXISTS `imported_rowset_row`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `imported_rowset_row` (
+  `rowset_checksum` varbinary(20) NOT NULL,
+  `row_checksum` varbinary(20) NOT NULL,
+  PRIMARY KEY (`rowset_checksum`,`row_checksum`),
+  KEY `imported_rowset_row_row` (`row_checksum`),
+  CONSTRAINT `imported_rowset_row_row` FOREIGN KEY (`row_checksum`) REFERENCES `imported_row` (`checksum`) ON UPDATE CASCADE,
+  CONSTRAINT `imported_rowset_row_rowset` FOREIGN KEY (`rowset_checksum`) REFERENCES `imported_rowset` (`checksum`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `imported_rowset_row`
+--
+
+LOCK TABLES `imported_rowset_row` WRITE;
+/*!40000 ALTER TABLE `imported_rowset_row` DISABLE KEYS */;
+/*!40000 ALTER TABLE `imported_rowset_row` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sync_property`
+--
+
+DROP TABLE IF EXISTS `sync_property`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sync_property` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rule_id` int(10) unsigned NOT NULL,
+  `source_id` int(10) unsigned NOT NULL,
+  `source_expression` varchar(255) NOT NULL,
+  `destination_field` varchar(64) DEFAULT NULL,
+  `priority` smallint(5) unsigned NOT NULL,
+  `filter_expression` text,
+  `merge_policy` enum('override','merge') NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sync_property_rule` (`rule_id`),
+  KEY `sync_property_source` (`source_id`),
+  CONSTRAINT `sync_property_rule` FOREIGN KEY (`rule_id`) REFERENCES `sync_rule` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sync_property_source` FOREIGN KEY (`source_id`) REFERENCES `import_source` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sync_property`
+--
+
+LOCK TABLES `sync_property` WRITE;
+/*!40000 ALTER TABLE `sync_property` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sync_property` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sync_rule`
+--
+
+DROP TABLE IF EXISTS `sync_rule`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sync_rule` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rule_name` varchar(255) NOT NULL,
+  `object_type` enum('host','service','command','user','hostgroup','servicegroup','usergroup','datalistEntry','endpoint','zone') NOT NULL,
+  `update_policy` enum('merge','override','ignore') NOT NULL,
+  `purge_existing` enum('y','n') NOT NULL DEFAULT 'n',
+  `filter_expression` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sync_rule`
+--
+
+LOCK TABLES `sync_rule` WRITE;
+/*!40000 ALTER TABLE `sync_rule` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sync_rule` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sync_run`
+--
+
+DROP TABLE IF EXISTS `sync_run`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sync_run` (
+  `id` bigint(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rule_id` int(10) unsigned DEFAULT NULL,
+  `rule_name` varchar(255) NOT NULL,
+  `start_time` datetime NOT NULL,
+  `duration_ms` int(10) unsigned DEFAULT NULL,
+  `objects_deleted` int(10) unsigned DEFAULT '0',
+  `objects_created` int(10) unsigned DEFAULT '0',
+  `objects_modified` int(10) unsigned DEFAULT '0',
+  `last_former_activity` varbinary(20) DEFAULT NULL,
+  `last_related_activity` varbinary(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sync_run_rule` (`rule_id`),
+  CONSTRAINT `sync_run_rule` FOREIGN KEY (`rule_id`) REFERENCES `sync_rule` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sync_run`
+--
+
+LOCK TABLES `sync_run` WRITE;
+/*!40000 ALTER TABLE `sync_run` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sync_run` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-05-16 17:56:10
+
+GRANT USAGE ON *.* TO 'director'@'localhost' IDENTIFIED BY PASSWORD '*8AB4B931BB2138C7FE48142B75B45895E4F39A9A';
+GRANT ALL PRIVILEGES ON `director`.* TO 'director'@'localhost';
+GRANT USAGE ON *.* TO 'icinga2'@'localhost' IDENTIFIED BY PASSWORD '*83D2B69B2DFCC5E10A85E29C3EF5378455D58DAA';
+GRANT ALL PRIVILEGES ON `icinga2`.* TO 'icinga2'@'localhost';
+GRANT USAGE ON *.* TO 'icinga_web'@'localhost' IDENTIFIED BY PASSWORD '*BFF9A2079642462560F3571F20590990AFD5A771';
+GRANT ALL PRIVILEGES ON `icinga_web`.* TO 'icinga_web'@'localhost';
+GRANT USAGE ON *.* TO 'icingaweb_db'@'localhost' IDENTIFIED BY PASSWORD '*2BC9DBCD12FADAE3FC8FA87EBD06DD660E1DF6AC';
+GRANT CREATE TEMPORARY TABLES, EXECUTE ON `icingaweb\_db`.* TO 'icingaweb_db'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON `icingaweb_db`.`icingaweb_user` TO 'icingaweb_db'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON `icingaweb_db`.`icingaweb_group` TO 'icingaweb_db'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON `icingaweb_db`.`icingaweb_user_preference` TO 'icingaweb_db'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON `icingaweb_db`.`icingaweb_group_membership` TO 'icingaweb_db'@'localhost';
