@@ -1,68 +1,52 @@
-icinga2 Cookbook
-================
-TODO: Enter the cookbook description here.
+# Installation steps for Icinga2 with IcingaWeb2
 
-e.g.
-This cookbook makes your favorite breakfast sandwich.
+##Pre-requisites
 
-Requirements
-------------
-TODO: List your cookbook requirements. Be sure to include any requirements this cookbook has on platforms, libraries, other cookbooks, packages, operating systems, etc.
-
-e.g.
-#### packages
-- `toaster` - icinga2 needs toaster to brown your bagel.
-
-Attributes
-----------
-TODO: List you cookbook attributes here.
-
-e.g.
-#### icinga2::default
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['icinga2']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
-  </tr>
-</table>
-
-Usage
------
-#### icinga2::default
-TODO: Write usage instructions for each cookbook.
-
-e.g.
-Just include `icinga2` in your node's `run_list`:
-
-```json
-{
-  "name":"my_node",
-  "run_list": [
-    "recipe[icinga2]"
-  ]
-}
+```
+apt-get update
+apt-get upgrade
+echo "mysql-server mysql-server/root_password password toor" | debconf-set-selections
+echo "mysql-server mysql-server/root_password_again password toor" | debconf-set-selections
+apt-get install mysql-server mysql-client unzip wget
 ```
 
-Contributing
-------------
-TODO: (optional) If this is a public cookbook, detail the process for contributing. If this is a private cookbook, remove this section.
+###Add repository to apt
 
-e.g.
-1. Fork the repository on Github
-2. Create a named feature branch (like `add_component_x`)
-3. Write your change
-4. Write tests for your change (if applicable)
-5. Run the tests, ensuring they all pass
-6. Submit a Pull Request using Github
+```
+curl https://packages.icinga.org/icinga.key | apt-key add -
+echo "deb http://packages.icinga.org/ubuntu icinga-trusty main" > /etc/apt/sources.list.d/icinga2.list
+```
 
-License and Authors
--------------------
-Authors: TODO: List authors
+###Install packages
+
+```
+apt-get update
+apt-get install icinga2 icinga2-ido-mysql icinga-web nagios-plugins icingaweb2 icingacli
+```
+
+### Configure Icinga2
+
+##### Add a PHP timezone
+`sed -i 's/;date.timezone =/date.timezone = UTC/g' /etc/php5/apache2/php.ini`
+
+#### Copy configuration files and initialize the database
+
+```
+icingacli setup config directory --group www-data
+wget  --no-cookies "https://s3.amazonaws.com/icinga2-deploy/icinga2-config.tgz" -O /tmp/icinga2-config.tgz
+tar -xvzf /tmp/icinga2-config.tgz -C /
+find /etc/icingaweb2 -type f -name "*.ini" -exec chmod 660 {} \;
+find /etc/icingaweb2 -type d -exec chmod 2770 {} \;
+chmod 755 /opt/init.sh
+/opt/init.sh
+```
+
+#### Enable Icinga2 API for Icinga2web
+
+```
+icinga2 api setup
+sed -i -e 's/^.* NodeName = .*/const NodeName = "docker-icinga2"/gi' /etc/icinga2/constants.conf
+icinga2 pki new-cert --cn docker-icinga2 --key /etc/icinga2/pki/docker-icinga2.key --csr /etc/icinga2/pki/docker-icinga2.csr
+icinga2 pki sign-csr --csr /etc/icinga2/pki/docker-icinga2.csr --cert /etc/icinga2/pki/docker-icinga2.crt
+```
+
