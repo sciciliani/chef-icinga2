@@ -7,7 +7,8 @@ Please review the following Demo video:
 
 [https://youtu.be/BouLC0rZx9U](https://youtu.be/BouLC0rZx9U)
 
-Logship.sh demo:
+## Logship.sh demo:
+Logship is a tool to extract files from running containers and upload them to S3
 [https://youtu.be/Wosda3r2CFw](https://youtu.be/Wosda3r2CFw)
 
 ## Cookbooks
