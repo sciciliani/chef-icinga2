@@ -2,6 +2,7 @@
 
 ## Demo video
 Please review the following Demo video:
+[http://img.youtube.com/vi/BouLC0rZx9U/0.jpg](https://youtu.be/BouLC0rZx9U)
 [https://youtu.be/BouLC0rZx9U](https://youtu.be/BouLC0rZx9U)
 
 Logship.sh demo:
