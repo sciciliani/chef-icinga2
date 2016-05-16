@@ -9,7 +9,20 @@
 include_recipe 'apt'
 
 if node["platform"] == "ubuntu"
-  package "curl"
+  bash "mysql_root_pw" do
+	code 'echo "mysql-server mysql-server/root_password password toor" | debconf-set-selections'
+  end
+
+  bash "mysql_root_pw_again" do
+	code 'echo "mysql-server mysql-server/root_password_again password toor" | debconf-set-selections'
+  end
+  package "mysql-client"
+  package "mysql-server"
+
+  package "apache2"
+  package "php5"
+  package "php5-mysql"
+  package "php5-curl"
 
   bash "apt-key add docker" do
     code "curl http://packages.icinga.org/icinga.key | apt-key add -"
@@ -21,6 +34,11 @@ if node["platform"] == "ubuntu"
     notifies :run, "execute[apt-get update]", :immediately
   end
 
+  cookbook_file '/tmp/init.sh' do
+    source "init.sh"
+    mode 0755
+  end
+  
   package "icinga2"
   package "icinga2-ido-mysql"
   package "icinga-web"
@@ -28,12 +46,23 @@ if node["platform"] == "ubuntu"
   package "icingaweb2"
   package "icingacli"
 
-  cookbook_directory '/etc/icingaweb2' do
+  remote_directory '/etc/icingaweb2' do
     source 'icingaweb2'
     owner 'root'
     group 'root'
     mode '0755'
     action :create
+  end
+
+  execute "icingaweb2 database initialize" do
+    command "bash /tmp/init.sh"
+  end
+
+  service "apache2" do
+	action :restart
+  end
+  service "icinga2" do
+	action :restart
   end
 
 end
