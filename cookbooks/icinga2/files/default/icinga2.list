@@ -1,0 +1,3 @@
+deb http://packages.icinga.org/ubuntu icinga-trusty main
+deb-src http://packages.icinga.org/ubuntu icinga-trusty main
+
