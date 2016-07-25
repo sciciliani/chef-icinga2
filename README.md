@@ -13,7 +13,7 @@ Logship is a tool to extract files from running containers and upload them to S3
 [https://youtu.be/Wosda3r2CFw](https://youtu.be/Wosda3r2CFw)
 
 ## Cookbooks
-[https://github.com/sciciliani/crossover-icinga2/tree/master/src/cookbooks](https://github.com/sciciliani/crossover-icinga2/tree/master/src/cookbooks)
+[https://github.com/sciciliani/chef-icinga2/tree/master/src/cookbooks](https://github.com/sciciliani/chef-icinga2/tree/master/src/cookbooks)
 
 ## Dockerfiles
-[https://github.com/sciciliani/crossover-icinga2/tree/master/src/docker](https://github.com/sciciliani/crossover-icinga2/tree/master/src/docker)
+[https://github.com/sciciliani/chef-icinga2/tree/master/src/docker](https://github.com/sciciliani/chef-icinga2/tree/master/src/docker)
